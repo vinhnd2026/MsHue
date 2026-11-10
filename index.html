@@ -96,6 +96,7 @@ input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;bord
 .bigprice{font-size:46px;font-weight:800;color:#c0272d}
 .lqopts{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin:10px 0}
 .lqopts button{font-size:22px;font-weight:800;padding:13px 20px}
+.src{font-size:13.5px;color:#8a7a63;font-weight:700}
 .lqopts button.right{background:#2e7d32;color:#fff;border-color:#2e7d32}
 .lqopts button.bad{background:#c0272d;color:#fff;border-color:#c0272d}
 /* thông tin hữu ích */
@@ -139,7 +140,7 @@ input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;bord
 </style></head><body>
 <div id="topbar">
 <div class="tb-row"><button id="menuBtn" aria-label="Mở bảng chọn hạng mục">☰</button></div>
-<div id="panel"><button data-goto="mua-hang" id="pb-mua-hang">🛍️ Mua hàng & trả giá</button><button data-goto="ve-sinh" id="pb-ve-sinh">🚻 Nhà vệ sinh</button><button data-goto="nha-hang" id="pb-nha-hang">🍜 Nhà hàng & gọi món</button><button data-goto="sos" id="pb-sos">⭐ 8 câu quan trọng nhất</button><button data-goto="chao-hoi" id="pb-chao-hoi">🖐️ Chào hỏi & làm quen</button><button data-goto="cuu-nguy" id="pb-cuu-nguy">🆘 Khi không hiểu, cần giúp đỡ</button><button data-goto="san-bay" id="pb-san-bay">✈️ Sân bay & nhập cảnh</button><button data-goto="khach-san" id="pb-khach-san">🏨 Khách sạn</button><button data-goto="di-lai" id="pb-di-lai">🚕 Đi lại & hỏi đường</button><button data-goto="tham-quan" id="pb-tham-quan">📸 Tham quan & mua vé</button><button data-goto="suc-khoe" id="pb-suc-khoe">🚑 Sức khỏe & khẩn cấp</button><button data-goto="hoc-pinyin" id="pb-hoc-pinyin">🔤 Học Pinyin</button><button data-goto="hoc-so" id="pb-hoc-so">🔢 Học số</button><button data-goto="thong-tin" id="pb-thong-tin">🧭 Thông tin hữu ích</button><button data-goto="kiem-tra" id="pb-kiem-tra">📝 Bài kiểm tra</button>
+<div id="panel"><button data-goto="tim-cau" id="pb-tim-cau">🔍 Tìm câu & Dịch</button><button data-goto="mua-hang" id="pb-mua-hang">🛍️ Mua hàng & trả giá</button><button data-goto="ve-sinh" id="pb-ve-sinh">🚻 Nhà vệ sinh</button><button data-goto="nha-hang" id="pb-nha-hang">🍜 Nhà hàng & gọi món</button><button data-goto="sos" id="pb-sos">⭐ 8 câu quan trọng nhất</button><button data-goto="chao-hoi" id="pb-chao-hoi">🖐️ Chào hỏi & làm quen</button><button data-goto="cuu-nguy" id="pb-cuu-nguy">🆘 Khi không hiểu, cần giúp đỡ</button><button data-goto="san-bay" id="pb-san-bay">✈️ Sân bay & nhập cảnh</button><button data-goto="khach-san" id="pb-khach-san">🏨 Khách sạn</button><button data-goto="di-lai" id="pb-di-lai">🚕 Đi lại & hỏi đường</button><button data-goto="tham-quan" id="pb-tham-quan">📸 Tham quan & mua vé</button><button data-goto="suc-khoe" id="pb-suc-khoe">🚑 Sức khỏe & khẩn cấp</button><button data-goto="hoc-pinyin" id="pb-hoc-pinyin">🔤 Học Pinyin</button><button data-goto="hoc-so" id="pb-hoc-so">🔢 Học số</button><button data-goto="thong-tin" id="pb-thong-tin">🧭 Thông tin hữu ích</button><button data-goto="kiem-tra" id="pb-kiem-tra">📝 Bài kiểm tra</button>
 <div class="voicebox">🔊 <b>Giọng đọc:</b> <select id="voiceSel"><option value="">Giọng mặc định</option></select>
 · Tốc độ <input type="range" id="speed" min="0.5" max="1.5" step="0.05" value="0.88" style="vertical-align:middle;width:110px"> <span id="speedVal">0.88×</span>
 <div id="voiceNote" style="font-size:14.5px;color:#8a7a63"></div>
@@ -147,6 +148,20 @@ input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;bord
 </div>
 </div>
 <main class="wrap">
+<div class="tab" id="tab-tim-cau"><h2>🔍 Tìm câu trong toàn bộ tài liệu</h2>
+<p class="note" style="margin-top:0">Gõ bằng <b>tiếng Việt</b> (có dấu hoặc không dấu đều được), <b>pinyin</b> (không cần gõ dấu thanh) hoặc <b>chữ Hán</b>. Ví dụ: “nhà vệ sinh”, “xishoujian”, “洗手间”, “không cay”, “bao nhiêu tiền”.</p>
+<input type="search" id="searchIn" placeholder="🔍 Gõ từ cần tìm…" style="width:100%;padding:13px 14px;font-size:18px;border:2.5px solid #c0272d;border-radius:12px">
+<div id="searchCount" style="font-weight:700;margin:10px 0 4px"></div>
+<div id="searchResults" class="grid"></div>
+<h2>🌐 Dịch Việt ↔ Trung (dịch vụ của Trung Quốc, dùng được ngay tại Trung Quốc)</h2>
+<p class="note" style="margin-top:0">Google Dịch bị chặn ở Trung Quốc, nên ở đây dùng <b>Baidu Dịch （百度翻译）</b> và <b>Youdao （有道）</b> — dịch vụ của Trung Quốc, mở bình thường tại Trung Quốc. Gõ câu cần dịch rồi bấm nút: trang dịch mở ra với câu đã điền sẵn, có sẵn nút loa đọc to và dịch bằng ảnh/giọng nói trong đó.</p>
+<textarea id="trText" rows="3" placeholder="Gõ hoặc dán câu cần dịch vào đây…" style="width:100%;padding:12px 14px;font-size:18px;border:2px solid #d8c3a5;border-radius:12px"></textarea>
+<div class="padbtns" style="justify-content:flex-start">
+<button class="primary" id="trViZh">🇻🇳→🇨🇳 Dịch sang tiếng Trung (Baidu)</button>
+<button id="trZhVi">🇨🇳→🇻🇳 Dịch sang tiếng Việt (Baidu)</button>
+<button id="trYoudao">Tra bằng Youdao 有道</button>
+</div>
+<p class="small">Mẹo: ở Trung Quốc, mở app <b>Baidu Translate / Youdao</b> trên điện thoại còn dịch được bằng camera (chụp thực đơn, biển hiệu) và dịch hội thoại trực tiếp — nên cài sẵn hai app này trước khi đi.</p></div>
 <div class="tab active" id="tab-mua-hang">
 <div class="pad" id="pad">
 <p class="invite"><span class="zh2">请在这里输入价格，谢谢！</span><br><span style="font-size:16px;color:#8a7a63">(Qǐng zài zhèlǐ shūrù jiàgé, xièxie! — Xin nhập giá vào đây, cảm ơn!)</span></p>
@@ -318,7 +333,7 @@ input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;bord
     <button class="showbig" data-zh="有大一点的吗？" data-py="Yǒu dà yìdiǎn de ma?">🖥️ Đưa người ta xem</button>
     <label class="learned"><input type="checkbox" class="chk" data-id="mua-sam-1"> Đã thuộc</label>
   </div>
-</div><div class="card" data-zh="有别的颜色吗？">
+</div><div class="card" data-kw="màu khác mau khac" data-zh="有别的颜色吗？">
   <div class="zh">有别的颜色吗？</div>
   <div class="py">Yǒu bié de yánsè ma?</div>
   <div class="vi">Có màu khác không?</div>
@@ -354,7 +369,7 @@ input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;bord
     <button class="showbig" data-zh="我买了。" data-py="Wǒ mǎi le.">🖥️ Đưa người ta xem</button>
     <label class="learned"><input type="checkbox" class="chk" data-id="mua-sam-5"> Đã thuộc</label>
   </div>
-</div><div class="card" data-zh="可以用支付宝吗？">
+</div><div class="card" data-kw="alipay thanh toán" data-zh="可以用支付宝吗？">
   <div class="zh">可以用支付宝吗？</div>
   <div class="py">Kěyǐ yòng Zhīfùbǎo ma?</div>
   <div class="vi">Trả bằng Alipay được không?</div>
@@ -447,7 +462,7 @@ input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;bord
     <button class="showbig" data-zh="我要这个。" data-py="Wǒ yào zhège.">🖥️ Đưa người ta xem</button>
     <label class="learned"><input type="checkbox" class="chk" data-id="an-uong-2"> Đã thuộc</label>
   </div>
-</div><div class="card" data-zh="不要辣。">
+</div><div class="card" data-kw="không cay khong cay" data-zh="不要辣。">
   <div class="zh">不要辣。</div>
   <div class="py">Bú yào là.</div>
   <div class="vi">Đừng cho cay.</div>
@@ -456,7 +471,7 @@ input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;bord
     <button class="showbig" data-zh="不要辣。" data-py="Bú yào là.">🖥️ Đưa người ta xem</button>
     <label class="learned"><input type="checkbox" class="chk" data-id="an-uong-3"> Đã thuộc</label>
   </div>
-</div><div class="card" data-zh="少辣。">
+</div><div class="card" data-kw="ít cay it cay" data-zh="少辣。">
   <div class="zh">少辣。</div>
   <div class="py">Shǎo là.</div>
   <div class="vi">Cho ít cay thôi.</div>
@@ -465,7 +480,7 @@ input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;bord
     <button class="showbig" data-zh="少辣。" data-py="Shǎo là.">🖥️ Đưa người ta xem</button>
     <label class="learned"><input type="checkbox" class="chk" data-id="an-uong-4"> Đã thuộc</label>
   </div>
-</div><div class="card" data-zh="我吃素。">
+</div><div class="card" data-kw="ăn chay an chay" data-zh="我吃素。">
   <div class="zh">我吃素。</div>
   <div class="py">Wǒ chī sù.</div>
   <div class="vi">Tôi ăn chay.</div>
@@ -492,7 +507,7 @@ input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;bord
     <button class="showbig" data-zh="一碗米饭" data-py="Yì wǎn mǐfàn">🖥️ Đưa người ta xem</button>
     <label class="learned"><input type="checkbox" class="chk" data-id="an-uong-7"> Đã thuộc</label>
   </div>
-</div><div class="card" data-zh="请给我一杯热水。">
+</div><div class="card" data-kw="nước nóng nuoc nong" data-zh="请给我一杯热水。">
   <div class="zh">请给我一杯热水。</div>
   <div class="py">Qǐng gěi wǒ yì bēi rèshuǐ.</div>
   <div class="vi">Cho tôi một cốc nước nóng.</div>
@@ -501,7 +516,7 @@ input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;bord
     <button class="showbig" data-zh="请给我一杯热水。" data-py="Qǐng gěi wǒ yì bēi rèshuǐ.">🖥️ Đưa người ta xem</button>
     <label class="learned"><input type="checkbox" class="chk" data-id="an-uong-8"> Đã thuộc</label>
   </div>
-</div><div class="card" data-zh="买单。">
+</div><div class="card" data-kw="tính tiền thanh toán tinh tien" data-zh="买单。">
   <div class="zh">买单。</div>
   <div class="py">Mǎidān.</div>
   <div class="vi">Tính tiền giúp tôi.</div>
@@ -510,7 +525,7 @@ input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;bord
     <button class="showbig" data-zh="买单。" data-py="Mǎidān.">🖥️ Đưa người ta xem</button>
     <label class="learned"><input type="checkbox" class="chk" data-id="an-uong-9"> Đã thuộc</label>
   </div>
-</div><div class="card" data-zh="可以打包吗？">
+</div><div class="card" data-kw="mang về mang ve goi mang ve" data-zh="可以打包吗？">
   <div class="zh">可以打包吗？</div>
   <div class="py">Kěyǐ dǎbāo ma?</div>
   <div class="vi">Gói mang về được không?</div>
@@ -1642,6 +1657,31 @@ document.getElementById('submitQuiz').onclick=()=>{ let score=0, missing=[];
 document.getElementById('resetQuiz').onclick=()=>{ try{ localStorage.removeItem(LS_QUIZ); }catch(_){} savedQ={};
  document.querySelectorAll('.quizq').forEach(d=>{ d.classList.remove('correct','wrong'); d.querySelectorAll('input').forEach(r=>r.checked=false); });
  document.getElementById('scoreBox').style.display='none'; goTab('kiem-tra'); };
+// ===== Tìm câu (Việt / pinyin không dấu / Hán) + Dịch qua Baidu/Youdao =====
+const TAB_LABELS={"tim-cau": "🔍 Tìm câu & Dịch", "mua-hang": "🛍️ Mua hàng & trả giá", "ve-sinh": "🚻 Nhà vệ sinh", "nha-hang": "🍜 Nhà hàng & gọi món", "sos": "⭐ 8 câu quan trọng nhất", "chao-hoi": "🖐️ Chào hỏi & làm quen", "cuu-nguy": "🆘 Khi không hiểu, cần giúp đỡ", "san-bay": "✈️ Sân bay & nhập cảnh", "khach-san": "🏨 Khách sạn", "di-lai": "🚕 Đi lại & hỏi đường", "tham-quan": "📸 Tham quan & mua vé", "suc-khoe": "🚑 Sức khỏe & khẩn cấp", "hoc-pinyin": "🔤 Học Pinyin", "hoc-so": "🔢 Học số", "thong-tin": "🧭 Thông tin hữu ích", "kiem-tra": "📝 Bài kiểm tra"};
+function normStr(s){ return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d'); }
+const SEARCH_INDEX=[];
+document.querySelectorAll('.tab .card').forEach(c=>{ const zh=c.querySelector('.zh'), vi=c.querySelector('.vi');
+ if(!zh||!vi) return; const py=c.querySelector('.py');
+ const tab=c.closest('.tab'); SEARCH_INDEX.push({zh:zh.textContent.trim(), py:py?py.textContent.trim():'', vi:vi.textContent.trim(),
+  src:TAB_LABELS[tab.id.replace('tab-','')]||'', kw:c.dataset.kw||'', hay:''}); });
+SEARCH_INDEX.forEach(it=>{ it.hay=normStr(it.zh)+' | '+normStr(it.py)+' | '+normStr(it.py).replace(/ /g,'')+' | '+normStr(it.vi)+' | '+normStr(it.kw); });
+function doSearch(){ const q=document.getElementById('searchIn').value.trim();
+ const box=document.getElementById('searchResults'), cnt=document.getElementById('searchCount');
+ if(!q){ box.innerHTML=''; cnt.textContent=''; return; }
+ const tokens=normStr(q).split(/\s+/).filter(Boolean);
+ let hits=SEARCH_INDEX.filter(it=>tokens.every(tok=>it.hay.includes(tok)));
+ if(/[\u4e00-\u9fff]/.test(q)) hits=SEARCH_INDEX.filter(it=>it.zh.includes(q));
+ cnt.textContent=hits.length?('Tìm thấy '+hits.length+' câu:'):'Không tìm thấy câu nào — thử từ khác hoặc dùng phần Dịch ở dưới.';
+ box.innerHTML=hits.slice(0,30).map(it=>'<div class="card"><div class="zh">'+it.zh+'</div>'+(it.py?'<div class="py">'+it.py+'</div>':'')+'<div class="vi">'+it.vi+'</div><div class="row"><button class="speak" data-say="'+it.zh+'">🔊 Nghe</button><button class="showbig" data-zh="'+it.zh+'" data-py="'+it.py+'">🖥️ Đưa người ta xem</button><span class="src">'+it.src+'</span></div></div>').join(''); }
+document.getElementById('searchIn').oninput=doSearch;
+function trOpen(url){ const txt=document.getElementById('trText').value.trim();
+ if(!txt){ alert('Hãy gõ câu cần dịch vào ô trước đã.'); return; } window.open(url.replace('__TXT__',encodeURIComponent(txt)),'_blank'); }
+document.getElementById('trViZh').onclick=()=>trOpen('https://fanyi.baidu.com/#vie/zh/__TXT__');
+document.getElementById('trZhVi').onclick=()=>trOpen('https://fanyi.baidu.com/#zh/vie/__TXT__');
+document.getElementById('trYoudao').onclick=()=>{ const txt=document.getElementById('trText').value.trim();
+ if(!txt){ alert('Hãy gõ câu cần dịch vào ô trước đã.'); return; }
+ window.open(txt.length<=60?('https://dict.youdao.com/w/'+encodeURIComponent(txt)):'https://fanyi.youdao.com/','_blank'); };
 // ===== Học pinyin: hiện/ẩn pinyin biển hiệu + trò nghe thanh điệu =====
 document.addEventListener('click',e=>{ const b=e.target.closest('.pintgl'); if(!b) return;
  const py=b.closest('.card').querySelector('.py2'); const show=py.style.display==='none';
