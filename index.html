@@ -119,6 +119,13 @@ input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;bord
 #tab-thong-tin figcaption{font-size:15px;color:#5b6570;margin-top:6px}
 #emgPrint{display:none}
 @media print{#topbar,header,.tab{display:none!important}.tab.active{display:block!important}#tab-thong-tin .noprint{display:none!important}}
+@media(max-width:640px){ body{font-size:17px} .wrap{padding:10px} header{padding:12px 10px} header h1{font-size:21px}
+ h2{font-size:20px;margin:20px 0 8px} h3{font-size:18px} .zh{font-size:22px} .grid{grid-template-columns:1fr}
+ #display{font-size:40px;min-height:66px} .keys button{font-size:24px;padding:12px 0} .pad{padding:12px}
+ #menuBtn{font-size:17px;padding:9px 13px} #curCat{font-size:16px} #voiceNote{display:none}
+ #panel button{padding:11px 12px;font-size:17px} .bigprice{font-size:36px} #offerZh{font-size:25px}
+ .signzh{font-size:25px} .numgrid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr))}
+ .quizq .qq{font-size:17.5px} th,td{padding:6px 7px} }
 /* modal chữ to */
 #bigModal{display:none;position:fixed;inset:0;background:#111;z-index:60;color:#fff;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:20px}
 #bigModal .bzh{font-size:9vw;font-weight:800;line-height:1.3}#bigModal .bpy{font-size:25px;color:#ffd9a0;margin-top:12px}
@@ -132,7 +139,7 @@ input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;bord
 <span id="voiceNote"></span></div>
 </div>
 <header><h1>🇨🇳 Bộ tài liệu du lịch Trung Quốc của chị Huệ</h1>
-<p>Tất cả trong <b>một file duy nhất</b>: bấm nút <b>“☰ Chọn hạng mục”</b> ở góc trên để mở bảng chọn — câu thông dụng, mua hàng &amp; trả giá, nhà vệ sinh, học số, thông tin hữu ích và bài kiểm tra. Trang tự nhớ hạng mục đang mở và mọi tiến độ học.</p></header>
+</header>
 <main class="wrap">
 <div class="tab active" id="tab-thong-dung"><div class="toolbar"><div class="row2">
 <input type="search" id="search" placeholder="🔍 Tìm câu… (ví dụ: taxi, tính tiền, vệ sinh)">
@@ -141,7 +148,7 @@ input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;bord
 </div><div class="chips"><a class="chip" href="#chao-hoi">🖐️ 1. Chào hỏi & làm quen</a><a class="chip" href="#cuu-nguy">🆘 2. Câu cứu nguy khi giao tiếp</a><a class="chip" href="#so-gia">🔢 3. Số đếm, giá cả & thời gian</a><a class="chip" href="#san-bay">✈️ 4. Sân bay & nhập cảnh</a><a class="chip" href="#khach-san">🏨 5. Khách sạn</a><a class="chip" href="#an-uong">🍜 6. Ăn uống</a><a class="chip" href="#mua-sam">🛍️ 7. Mua sắm & mặc cả</a><a class="chip" href="#di-lai">🚕 8. Đi lại & hỏi đường</a><a class="chip" href="#tham-quan">📸 9. Tham quan & mua vé</a><a class="chip" href="#suc-khoe">🚑 10. Sức khỏe & khẩn cấp</a><a class="chip" href="#" data-goto="kiem-tra">📝 Bài kiểm tra</a></div>
 </div>
 
-<div class="note">💡 <b>Cách học nhanh:</b> mỗi ngày học 1 chủ đề (khoảng 10 câu), nghe đi nghe lại rồi đọc theo thành tiếng. Học thuộc xong thì tick ô <b>“Đã thuộc”</b> — trang tự nhớ, tắt máy mở lại vẫn còn. Trước chuyến đi làm <a href="#kiem-tra">bài kiểm tra</a> ở cuối trang này, được từ 24/30 là yên tâm lên đường.</div>
+
 
 <h2>⭐ 8 câu quan trọng nhất — thuộc lòng trước tiên</h2>
 <div class="grid"><div class="card sos">
@@ -1096,7 +1103,7 @@ input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;bord
 </div>
 <div class="tab" id="tab-mua-hang"><h2 style="margin-top:8px">🧮 Ô trả giá — đưa điện thoại cho người bán nhập giá</h2>
 <div class="pad" id="pad">
-<p class="invite">Cách dùng: bấm nút đỏ ở dưới để hiện câu mời bằng chữ Hán thật to, rồi đưa điện thoại cho người bán bấm giá.<br><span class="zh2">请在这里输入价格，谢谢！</span><br><span style="font-size:16px;color:#8a7a63">(Qǐng zài zhèlǐ shūrù jiàgé, xièxie! — Xin nhập giá vào đây, cảm ơn!)</span></p>
+<p class="invite"><span class="zh2">请在这里输入价格，谢谢！</span><br><span style="font-size:16px;color:#8a7a63">(Qǐng zài zhèlǐ shūrù jiàgé, xièxie! — Xin nhập giá vào đây, cảm ơn!)</span></p>
 <div class="padbtns"><button class="primary" id="inviteBtn" style="font-size:19px;padding:13px 22px">🖥️ 1. Đưa người bán xem câu mời nhập giá</button></div>
 <div id="display">¥ 0</div>
 <div id="displayVnd">≈ 0 đồng</div>
@@ -1244,8 +1251,7 @@ input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;bord
 </section>
 
 </div>
-<div class="tab" id="tab-ve-sinh"><p class="note">🚻 Hạng mục này để mở sẵn khi đang cần gấp: câu hỏi đường tới WC có nút hiện chữ to, chỉ cần bấm là đưa cho bất kỳ ai xem. Nhớ thuộc lòng hai chữ phân biệt cửa: <b>男 = Nam</b>, <b>女 = Nữ</b>.</p>
-<h2>🚻 Câu hỏi & nhờ giúp — nhà vệ sinh <span class="cnt">(18 câu)</span></h2>
+<div class="tab" id="tab-ve-sinh"><h2>🚻 Câu hỏi & nhờ giúp — nhà vệ sinh <span class="cnt">(18 câu)</span></h2>
 <div class="grid"><div class="card"><div class="zh">洗手间在哪里？</div><div class="py">Xǐshǒujiān zài nǎlǐ?</div><div class="vi">Nhà vệ sinh ở đâu? — câu chính, dùng ở mọi nơi</div>
 <div class="row"><button class="speak" data-say="洗手间在哪里？">🔊 Nghe</button><button class="showbig" data-zh="洗手间在哪里？" data-py="Xǐshǒujiān zài nǎlǐ?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我想上厕所。</div><div class="py">Wǒ xiǎng shàng cèsuǒ.</div><div class="vi">Tôi muốn đi vệ sinh.</div>
 <div class="row"><button class="speak" data-say="我想上厕所。">🔊 Nghe</button><button class="showbig" data-zh="我想上厕所。" data-py="Wǒ xiǎng shàng cèsuǒ.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">附近有洗手间吗？</div><div class="py">Fùjìn yǒu xǐshǒujiān ma?</div><div class="vi">Gần đây có nhà vệ sinh không?</div>
@@ -1275,7 +1281,7 @@ input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;bord
 <li>Tìm WC nhanh nhất: vào <b>trung tâm thương mại, cửa hàng tiện lợi lớn, quán cà phê/trà sữa, khách sạn</b> — thường sạch và miễn phí. Ở ga tàu/sân bay đi theo biển có hình người và chữ 洗手间.</li>
 <li>Bồn cầu thông minh ở khách sạn: nút xả thường ở <b>trên tường hoặc bên hông bồn</b>, có hình giọt nước/sóng nước; không thấy thì dùng câu “怎么冲水？” đưa nhân viên xem.</li>
 </ul></div></div>
-<div class="tab" id="tab-hoc-so"><p class="note">🔢 Biết đếm số là đi chợ, đi taxi, nghe giá được một nửa. Bấm vào từng ô số để nghe đọc. Quy tắc vàng: <b>hai mươi = 二十</b> (2×10), <b>hai trăm = 两百</b>, cứ ghép [số][đơn vị]: 十 (chục), 百 (trăm), 千 (nghìn), 万 (vạn = 10.000).</p>
+<div class="tab" id="tab-hoc-so"><p class="note">Ghép số: [số] + 十 (chục) / 百 (trăm) / 千 (nghìn) / 万 (vạn = 10.000). Bấm ô số để nghe.</p>
 <h2>🔢 Bảng số — bấm để nghe</h2>
 <div class="numgrid"><button class="numcard speak" data-say="零"><span class="nval">0</span><span class="nzh">零</span><span class="npy">líng</span></button><button class="numcard speak" data-say="一"><span class="nval">1</span><span class="nzh">一</span><span class="npy">yī</span></button><button class="numcard speak" data-say="二"><span class="nval">2</span><span class="nzh">二</span><span class="npy">èr</span></button><button class="numcard speak" data-say="三"><span class="nval">3</span><span class="nzh">三</span><span class="npy">sān</span></button><button class="numcard speak" data-say="四"><span class="nval">4</span><span class="nzh">四</span><span class="npy">sì</span></button><button class="numcard speak" data-say="五"><span class="nval">5</span><span class="nzh">五</span><span class="npy">wǔ</span></button><button class="numcard speak" data-say="六"><span class="nval">6</span><span class="nzh">六</span><span class="npy">liù</span></button><button class="numcard speak" data-say="七"><span class="nval">7</span><span class="nzh">七</span><span class="npy">qī</span></button><button class="numcard speak" data-say="八"><span class="nval">8</span><span class="nzh">八</span><span class="npy">bā</span></button><button class="numcard speak" data-say="九"><span class="nval">9</span><span class="nzh">九</span><span class="npy">jiǔ</span></button><button class="numcard speak" data-say="十"><span class="nval">10</span><span class="nzh">十</span><span class="npy">shí</span></button><button class="numcard speak" data-say="十一"><span class="nval">11</span><span class="nzh">十一</span><span class="npy">shíyī</span></button><button class="numcard speak" data-say="十五"><span class="nval">15</span><span class="nzh">十五</span><span class="npy">shíwǔ</span></button><button class="numcard speak" data-say="二十"><span class="nval">20</span><span class="nzh">二十</span><span class="npy">èrshí</span></button><button class="numcard speak" data-say="二十一"><span class="nval">21</span><span class="nzh">二十一</span><span class="npy">èrshíyī</span></button><button class="numcard speak" data-say="三十"><span class="nval">30</span><span class="nzh">三十</span><span class="npy">sānshí</span></button><button class="numcard speak" data-say="五十"><span class="nval">50</span><span class="nzh">五十</span><span class="npy">wǔshí</span></button><button class="numcard speak" data-say="九十九"><span class="nval">99</span><span class="nzh">九十九</span><span class="npy">jiǔshíjiǔ</span></button><button class="numcard speak" data-say="一百"><span class="nval">100</span><span class="nzh">一百</span><span class="npy">yì bǎi</span></button><button class="numcard speak" data-say="一百零一"><span class="nval">101</span><span class="nzh">一百零一</span><span class="npy">yì bǎi líng yī</span></button><button class="numcard speak" data-say="一百二十"><span class="nval">120</span><span class="nzh">一百二十</span><span class="npy">yì bǎi èrshí</span></button><button class="numcard speak" data-say="两百"><span class="nval">200</span><span class="nzh">两百</span><span class="npy">liǎng bǎi</span></button><button class="numcard speak" data-say="五百"><span class="nval">500</span><span class="nzh">五百</span><span class="npy">wǔ bǎi</span></button><button class="numcard speak" data-say="一千"><span class="nval">1000</span><span class="nzh">一千</span><span class="npy">yì qiān</span></button><button class="numcard speak" data-say="两千零二十六"><span class="nval">2026</span><span class="nzh">两千零二十六</span><span class="npy">liǎng qiān líng èrshílìu</span></button><button class="numcard speak" data-say="一万"><span class="nval">10000</span><span class="nzh">一万</span><span class="npy">yí wàn</span></button><button class="numcard speak" data-say="两万"><span class="nval">20000</span><span class="nzh">两万</span><span class="npy">liǎng wàn</span></button><button class="numcard speak" data-say="十万"><span class="nval">100000</span><span class="nzh">十万</span><span class="npy">shí wàn</span></button></div>
 <div class="note"><b>Hai chữ “hai” khác nhau:</b> đếm thứ tự/số điện thoại dùng <b>二 (èr)</b>; đếm số lượng kèm đơn vị dùng <b>两 (liǎng)</b>: hai người 两个人， hai vé 两张票， hai trăm 两百， hai vạn 两万， hai tệ 两元.<br>
