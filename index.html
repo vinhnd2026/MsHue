@@ -5,7 +5,9 @@
 *{box-sizing:border-box} body{margin:0;font-family:-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:#fdf8f2;color:#26221e;font-size:18px;line-height:1.55}
 #topbar{position:sticky;top:0;z-index:40;background:#8f1d22;color:#fff;padding:8px 12px;box-shadow:0 2px 6px #0003}
 .tb-row{display:flex;align-items:center;gap:12px}
-#menuBtn{background:#fff;color:#8f1d22;border:none;font-weight:800;font-size:18px;padding:10px 16px;border-radius:10px;cursor:pointer}
+#menuBtn{background:#fff;color:#8f1d22;border:none;font-weight:800;font-size:25px;line-height:1;padding:9px 18px;border-radius:10px;cursor:pointer}
+.voicebox{border-top:2px solid #eee;margin-top:10px;padding-top:10px;color:#26221e;font-size:16px}
+.voicebox select{font-size:16px;padding:7px 9px;border-radius:8px;border:2px solid #d8c3a5}
 #curCat{font-weight:700;font-size:18px}
 #panel{display:none;background:#fff;border-radius:14px;margin-top:10px;padding:10px;box-shadow:0 4px 14px #0003}
 #panel.open{display:block}
@@ -81,9 +83,10 @@ input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;bord
 .signzh{font-size:30px;font-weight:800;color:#17518f}
 /* học số */
 .numgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:9px}
-.numcard{display:flex;flex-direction:column;align-items:center;background:#fff;border:2px solid #d8c3a5;border-radius:12px;padding:10px 6px;cursor:pointer;color:#26221e}
-.nval{font-size:14px;color:#8a7a63;font-weight:700}
-.nzh{font-size:26px;font-weight:800}
+.numcard{display:flex;flex-direction:column;align-items:center;background:#fff;border:2.5px solid #17518f;border-radius:12px;padding:10px 6px;cursor:pointer;color:#26221e}
+.numcard:active{background:#eaf1f8}
+.nval{font-size:14px;color:#8f1d22;font-weight:800}
+.nzh{font-size:26px;font-weight:800;color:#0e2a4e}
 .npy{color:#b3541e;font-size:15px}
 .practice{background:#fff;border:2px solid #7fb069;border-radius:14px;padding:16px 18px;margin:12px 0;text-align:center}
 .bigprice{font-size:46px;font-weight:800;color:#c0272d}
@@ -122,7 +125,7 @@ input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;bord
 @media(max-width:640px){ body{font-size:17px} .wrap{padding:10px} header{padding:12px 10px} header h1{font-size:21px}
  h2{font-size:20px;margin:20px 0 8px} h3{font-size:18px} .zh{font-size:22px} .grid{grid-template-columns:1fr}
  #display{font-size:40px;min-height:66px} .keys button{font-size:24px;padding:12px 0} .pad{padding:12px}
- #menuBtn{font-size:17px;padding:9px 13px} #curCat{font-size:16px} #voiceNote{display:none}
+ #menuBtn{font-size:23px;padding:8px 15px} #voiceNote{display:none}
  #panel button{padding:11px 12px;font-size:17px} .bigprice{font-size:36px} #offerZh{font-size:25px}
  .signzh{font-size:25px} .numgrid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr))}
  .quizq .qq{font-size:17.5px} th,td{padding:6px 7px} }
@@ -132,502 +135,290 @@ input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;bord
 #bigModal button{margin-top:26px;font-size:20px;padding:12px 26px}
 </style></head><body>
 <div id="topbar">
-<div class="tb-row"><button id="menuBtn">☰ Chọn hạng mục</button><div id="curCat">🗣️ Câu thông dụng</div></div>
-<div id="panel"><button data-goto="thong-dung" id="pb-thong-dung">🗣️ Câu thông dụng — 102 câu + 8 câu cứu nguy</button><button data-goto="mua-hang" id="pb-mua-hang">🛍️ Mua hàng & trả giá — ô nhập giá cho người bán</button><button data-goto="ve-sinh" id="pb-ve-sinh">🚻 Nhà vệ sinh — hỏi WC & biển hiệu</button><button data-goto="hoc-so" id="pb-hoc-so">🔢 Học số — đếm số, đọc giá tiền, nghe số</button><button data-goto="thong-tin" id="pb-thong-tin">🧭 Thông tin hữu ích — visa, tiền, khẩn cấp, checklist</button><button data-goto="kiem-tra" id="pb-kiem-tra">📝 Bài kiểm tra — 30 câu tự chấm điểm</button></div>
-<div class="tb-row2"><span>🔊 Giọng đọc:</span><select id="voiceSel"><option value="">Giọng mặc định</option></select>
-<span>Tốc độ</span><input type="range" id="speed" min="0.5" max="1.5" step="0.05" value="0.88" style="vertical-align:middle"> <span id="speedVal">0.88×</span>
-<span id="voiceNote"></span></div>
+<div class="tb-row"><button id="menuBtn" aria-label="Mở bảng chọn hạng mục">☰</button></div>
+<div id="panel"><button data-goto="mua-hang" id="pb-mua-hang">🛍️ Mua hàng & trả giá</button><button data-goto="ve-sinh" id="pb-ve-sinh">🚻 Nhà vệ sinh</button><button data-goto="nha-hang" id="pb-nha-hang">🍜 Nhà hàng & gọi món</button><button data-goto="sos" id="pb-sos">⭐ 8 câu quan trọng nhất</button><button data-goto="chao-hoi" id="pb-chao-hoi">🖐️ Chào hỏi & làm quen</button><button data-goto="cuu-nguy" id="pb-cuu-nguy">🆘 Khi không hiểu, cần giúp đỡ</button><button data-goto="san-bay" id="pb-san-bay">✈️ Sân bay & nhập cảnh</button><button data-goto="khach-san" id="pb-khach-san">🏨 Khách sạn</button><button data-goto="di-lai" id="pb-di-lai">🚕 Đi lại & hỏi đường</button><button data-goto="tham-quan" id="pb-tham-quan">📸 Tham quan & mua vé</button><button data-goto="suc-khoe" id="pb-suc-khoe">🚑 Sức khỏe & khẩn cấp</button><button data-goto="hoc-so" id="pb-hoc-so">🔢 Học số</button><button data-goto="thong-tin" id="pb-thong-tin">🧭 Thông tin hữu ích</button><button data-goto="kiem-tra" id="pb-kiem-tra">📝 Bài kiểm tra</button>
+<div class="voicebox">🔊 <b>Giọng đọc:</b> <select id="voiceSel"><option value="">Giọng mặc định</option></select>
+· Tốc độ <input type="range" id="speed" min="0.5" max="1.5" step="0.05" value="0.88" style="vertical-align:middle;width:110px"> <span id="speedVal">0.88×</span>
+<div id="voiceNote" style="font-size:14.5px;color:#8a7a63"></div>
+<div id="prog" class="progress" style="margin-top:6px"></div></div>
 </div>
-<header><h1>🇨🇳 Bộ tài liệu du lịch Trung Quốc của chị Huệ</h1>
-</header>
+</div>
+<header><h1>🇨🇳 Bộ tài liệu du lịch Trung Quốc của chị Huệ</h1></header>
 <main class="wrap">
-<div class="tab active" id="tab-thong-dung"><div class="toolbar"><div class="row2">
-<input type="search" id="search" placeholder="🔍 Tìm câu… (ví dụ: taxi, tính tiền, vệ sinh)">
-<button id="togglePy">Ẩn pinyin</button>
-<span class="progress" id="prog">Đã thuộc: 0/102</span>
-</div><div class="chips"><a class="chip" href="#chao-hoi">🖐️ 1. Chào hỏi & làm quen</a><a class="chip" href="#cuu-nguy">🆘 2. Câu cứu nguy khi giao tiếp</a><a class="chip" href="#so-gia">🔢 3. Số đếm, giá cả & thời gian</a><a class="chip" href="#san-bay">✈️ 4. Sân bay & nhập cảnh</a><a class="chip" href="#khach-san">🏨 5. Khách sạn</a><a class="chip" href="#an-uong">🍜 6. Ăn uống</a><a class="chip" href="#mua-sam">🛍️ 7. Mua sắm & mặc cả</a><a class="chip" href="#di-lai">🚕 8. Đi lại & hỏi đường</a><a class="chip" href="#tham-quan">📸 9. Tham quan & mua vé</a><a class="chip" href="#suc-khoe">🚑 10. Sức khỏe & khẩn cấp</a><a class="chip" href="#" data-goto="kiem-tra">📝 Bài kiểm tra</a></div>
+<div class="tab active" id="tab-mua-hang">
+<div class="pad" id="pad">
+<p class="invite"><span class="zh2">请在这里输入价格，谢谢！</span><br><span style="font-size:16px;color:#8a7a63">(Qǐng zài zhèlǐ shūrù jiàgé, xièxie! — Xin nhập giá vào đây, cảm ơn!)</span></p>
+
+<div id="display">¥ 0</div>
+<div id="displayVnd">≈ 0 đồng</div>
+<div class="keys">
+<button data-k="1">1</button><button data-k="2">2</button><button data-k="3">3</button>
+<button data-k="4">4</button><button data-k="5">5</button><button data-k="6">6</button>
+<button data-k="7">7</button><button data-k="8">8</button><button data-k="9">9</button>
+<button data-k="C" style="color:#c0272d">Xóa</button><button data-k="0">0</button><button data-k="B">⌫</button>
+</div>
+<div class="padbtns">
+<button class="green" id="btnSeller" style="font-size:18px">✔ Đây là giá NGƯỜI BÁN ra</button>
+<button class="primary" id="btnMine" style="font-size:18px">🙋 Đây là giá TÔI TRẢ</button>
+</div>
+<div id="units" style="text-align:center;margin:10px 0"><b>Giá này tính theo:</b><br>
+<button data-unit="" data-label="" class="unitchip on">Cả món (giá tổng)</button>
+<button data-unit="一斤" data-label="mỗi 500g (1 jin)" class="unitchip">Mỗi 斤 — 500g</button>
+<button data-unit="一公斤" data-label="mỗi 1 kg" class="unitchip">Mỗi 公斤 — 1kg</button>
+<button data-unit="一个" data-label="mỗi cái" class="unitchip">Mỗi cái 个</button>
+<button data-unit="一件" data-label="mỗi món" class="unitchip">Mỗi món 件</button>
+<button data-unit="一瓶" data-label="mỗi chai" class="unitchip">Mỗi chai 瓶</button>
+<button data-unit="一盒" data-label="mỗi hộp" class="unitchip">Mỗi hộp 盒</button>
+<button data-unit="一袋" data-label="mỗi túi" class="unitchip">Mỗi túi 袋</button>
+<button data-unit="一包" data-label="mỗi gói" class="unitchip">Mỗi gói 包</button>
+<div id="unitNote" style="font-weight:700;color:#17518f;margin-top:6px"></div></div>
+<div id="discounts"><b>Gợi ý mức trả từ giá người bán:</b><br></div>
+<div id="offerBox">
+<div>Đưa câu này cho người bán xem / nghe:</div>
+<div id="offerZh"></div><div id="offerPy"></div><div id="offerVnd"></div>
+<div class="padbtns">
+<button class="speak" id="offerSpeak">🔊 Nghe câu trả giá</button>
+<button id="offerShow">🖥️ Đưa người bán xem (chữ to)</button>
+<button class="green" id="dealBtn">🤝 Chốt: “Được, tôi mua!”</button>
+<button id="stillExpBtn">😅 “Vẫn đắt quá”</button>
+</div></div>
+<p style="text-align:center" class="small">Tỉ giá: 1 ¥ = <input type="number" id="rateShop" value="3650" style="width:100px"> đồng (tự sửa theo tỉ giá chị đổi thực tế — trang tự nhớ)</p>
 </div>
 
+<div id="log"><b>📒 Diễn biến thương lượng</b> <span class="small">(lưu lại để chị theo dõi mình đang ở giá nào, trang tự nhớ)</span>
+<ul id="logList"></ul>
+<button id="clearLog">Xóa, bắt đầu món mới</button></div>
 
+<div class="note">💰 <b>Đổi nhanh từ tiền Việt:</b> chị định bụng “món này tối đa 300.000 đồng” thì là khoảng <input type="number" id="vndIn" placeholder="Nhập số đồng"> đồng ≈ <b id="vndToCny">¥ 0</b> — nhập con số tệ đó ở ô trên rồi bấm <b>“Đây là giá TÔI TRẢ”</b> là xong.</div>
 
-<h2>⭐ 8 câu quan trọng nhất — thuộc lòng trước tiên</h2>
-<div class="grid"><div class="card sos">
-  <div class="zh">我不会说中文。</div><div class="py">Wǒ bú huì shuō Zhōngwén.</div><div class="vi">Tôi không biết nói tiếng Trung.</div>
-  <div class="row"><button class="speak" data-say="我不会说中文。">🔊 Nghe</button><button class="showbig" data-zh="我不会说中文。" data-py="Wǒ bú huì shuō Zhōngwén.">🖥️ Đưa người ta xem</button></div>
-</div><div class="card sos">
-  <div class="zh">请说慢一点。</div><div class="py">Qǐng shuō màn yìdiǎn.</div><div class="vi">Xin nói chậm một chút.</div>
-  <div class="row"><button class="speak" data-say="请说慢一点。">🔊 Nghe</button><button class="showbig" data-zh="请说慢一点。" data-py="Qǐng shuō màn yìdiǎn.">🖥️ Đưa người ta xem</button></div>
-</div><div class="card sos">
-  <div class="zh">我听不懂。</div><div class="py">Wǒ tīng bù dǒng.</div><div class="vi">Tôi nghe không hiểu.</div>
-  <div class="row"><button class="speak" data-say="我听不懂。">🔊 Nghe</button><button class="showbig" data-zh="我听不懂。" data-py="Wǒ tīng bù dǒng.">🖥️ Đưa người ta xem</button></div>
-</div><div class="card sos">
-  <div class="zh">请帮我。</div><div class="py">Qǐng bāng wǒ.</div><div class="vi">Xin giúp tôi với.</div>
-  <div class="row"><button class="speak" data-say="请帮我。">🔊 Nghe</button><button class="showbig" data-zh="请帮我。" data-py="Qǐng bāng wǒ.">🖥️ Đưa người ta xem</button></div>
-</div><div class="card sos">
-  <div class="zh">洗手间在哪里？</div><div class="py">Xǐshǒujiān zài nǎlǐ?</div><div class="vi">Nhà vệ sinh ở đâu?</div>
-  <div class="row"><button class="speak" data-say="洗手间在哪里？">🔊 Nghe</button><button class="showbig" data-zh="洗手间在哪里？" data-py="Xǐshǒujiān zài nǎlǐ?">🖥️ Đưa người ta xem</button></div>
-</div><div class="card sos">
-  <div class="zh">多少钱？</div><div class="py">Duōshao qián?</div><div class="vi">Bao nhiêu tiền?</div>
-  <div class="row"><button class="speak" data-say="多少钱？">🔊 Nghe</button><button class="showbig" data-zh="多少钱？" data-py="Duōshao qián?">🖥️ Đưa người ta xem</button></div>
-</div><div class="card sos">
-  <div class="zh">请带我去这个地址。</div><div class="py">Qǐng dài wǒ qù zhège dìzhǐ.</div><div class="vi">Xin đưa tôi đến địa chỉ này. (kèm đưa địa chỉ tiếng Trung trên điện thoại)</div>
-  <div class="row"><button class="speak" data-say="请带我去这个地址。">🔊 Nghe</button><button class="showbig" data-zh="请带我去这个地址。" data-py="Qǐng dài wǒ qù zhège dìzhǐ.">🖥️ Đưa người ta xem</button></div>
-</div><div class="card sos">
-  <div class="zh">救命！</div><div class="py">Jiùmìng!</div><div class="vi">Cứu tôi với!</div>
-  <div class="row"><button class="speak" data-say="救命！">🔊 Nghe</button><button class="showbig" data-zh="救命！" data-py="Jiùmìng!">🖥️ Đưa người ta xem</button></div>
-</div></div>
+<section id="xem-do"><h2>👀 1. Vào xem & hỏi về món đồ <span class="cnt">(10 câu)</span></h2><div class="grid"><div class="card"><div class="zh">我只看看。</div><div class="py">Wǒ zhǐ kànkan.</div><div class="vi">Tôi chỉ xem thôi.</div>
+<div class="row"><button class="speak" data-say="我只看看。">🔊 Nghe</button><button class="showbig" data-zh="我只看看。" data-py="Wǒ zhǐ kànkan.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">这个多少钱？</div><div class="py">Zhège duōshao qián?</div><div class="vi">Cái này bao nhiêu tiền?</div>
+<div class="row"><button class="speak" data-say="这个多少钱？">🔊 Nghe</button><button class="showbig" data-zh="这个多少钱？" data-py="Zhège duōshao qián?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">有大一点的吗？</div><div class="py">Yǒu dà yìdiǎn de ma?</div><div class="vi">Có cái lớn hơn một chút không?</div>
+<div class="row"><button class="speak" data-say="有大一点的吗？">🔊 Nghe</button><button class="showbig" data-zh="有大一点的吗？" data-py="Yǒu dà yìdiǎn de ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">有小一点的吗？</div><div class="py">Yǒu xiǎo yìdiǎn de ma?</div><div class="vi">Có cái nhỏ hơn một chút không?</div>
+<div class="row"><button class="speak" data-say="有小一点的吗？">🔊 Nghe</button><button class="showbig" data-zh="有小一点的吗？" data-py="Yǒu xiǎo yìdiǎn de ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">有别的颜色吗？</div><div class="py">Yǒu bié de yánsè ma?</div><div class="vi">Có màu khác không?</div>
+<div class="row"><button class="speak" data-say="有别的颜色吗？">🔊 Nghe</button><button class="showbig" data-zh="有别的颜色吗？" data-py="Yǒu bié de yánsè ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">有别的款式吗？</div><div class="py">Yǒu bié de kuǎnshì ma?</div><div class="vi">Có kiểu khác không?</div>
+<div class="row"><button class="speak" data-say="有别的款式吗？">🔊 Nghe</button><button class="showbig" data-zh="有别的款式吗？" data-py="Yǒu bié de kuǎnshì ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">这是什么做的？</div><div class="py">Zhè shì shénme zuò de?</div><div class="vi">Cái này làm bằng chất liệu gì?</div>
+<div class="row"><button class="speak" data-say="这是什么做的？">🔊 Nghe</button><button class="showbig" data-zh="这是什么做的？" data-py="Zhè shì shénme zuò de?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">可以试一下吗？</div><div class="py">Kěyǐ shì yíxià ma?</div><div class="vi">Tôi thử một chút được không?</div>
+<div class="row"><button class="speak" data-say="可以试一下吗？">🔊 Nghe</button><button class="showbig" data-zh="可以试一下吗？" data-py="Kěyǐ shì yíxià ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">有镜子吗？</div><div class="py">Yǒu jìngzi ma?</div><div class="vi">Có gương không?</div>
+<div class="row"><button class="speak" data-say="有镜子吗？">🔊 Nghe</button><button class="showbig" data-zh="有镜子吗？" data-py="Yǒu jìngzi ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我穿多大码？</div><div class="py">Wǒ chuān duō dà mǎ?</div><div class="vi">Tôi nên mặc size bao nhiêu? (nhờ người bán tư vấn)</div>
+<div class="row"><button class="speak" data-say="我穿多大码？">🔊 Nghe</button><button class="showbig" data-zh="我穿多大码？" data-py="Wǒ chuān duō dà mǎ?">🖥️ Đưa người bán xem</button></div></div></div></section><section id="tra-gia"><h2>🤝 2. Trả giá <span class="cnt">(12 câu)</span></h2><div class="grid"><div class="card"><div class="zh">太贵了。</div><div class="py">Tài guì le.</div><div class="vi">Đắt quá.</div>
+<div class="row"><button class="speak" data-say="太贵了。">🔊 Nghe</button><button class="showbig" data-zh="太贵了。" data-py="Tài guì le.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">便宜一点吧。</div><div class="py">Piányi yìdiǎn ba.</div><div class="vi">Rẻ hơn một chút đi.</div>
+<div class="row"><button class="speak" data-say="便宜一点吧。">🔊 Nghe</button><button class="showbig" data-zh="便宜一点吧。" data-py="Piányi yìdiǎn ba.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">最低多少钱？</div><div class="py">Zuìdī duōshao qián?</div><div class="vi">Giá thấp nhất là bao nhiêu?</div>
+<div class="row"><button class="speak" data-say="最低多少钱？">🔊 Nghe</button><button class="showbig" data-zh="最低多少钱？" data-py="Zuìdī duōshao qián?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">还能再便宜吗？</div><div class="py">Hái néng zài piányi ma?</div><div class="vi">Còn rẻ hơn nữa được không?</div>
+<div class="row"><button class="speak" data-say="还能再便宜吗？">🔊 Nghe</button><button class="showbig" data-zh="还能再便宜吗？" data-py="Hái néng zài piányi ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">你说个实在价。</div><div class="py">Nǐ shuō ge shízài jià.</div><div class="vi">Anh/chị nói một cái giá thật đi.</div>
+<div class="row"><button class="speak" data-say="你说个实在价。">🔊 Nghe</button><button class="showbig" data-zh="你说个实在价。" data-py="Nǐ shuō ge shízài jià.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我出……元。</div><div class="py">Wǒ chū … yuán.</div><div class="vi">Tôi trả … tệ. (dùng Ô trả giá ở đầu trang để điền số)</div>
+<div class="row"><button class="speak" data-say="我出……元。">🔊 Nghe</button><button class="showbig" data-zh="我出……元。" data-py="Wǒ chū … yuán.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">还是太贵了。</div><div class="py">Hái shì tài guì le.</div><div class="vi">Vẫn còn đắt quá.</div>
+<div class="row"><button class="speak" data-say="还是太贵了。">🔊 Nghe</button><button class="showbig" data-zh="还是太贵了。" data-py="Hái shì tài guì le.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">两件一起，便宜一点吧。</div><div class="py">Liǎng jiàn yìqǐ, piányi yìdiǎn ba.</div><div class="vi">Tôi mua hai cái cùng lúc, rẻ hơn một chút đi.</div>
+<div class="row"><button class="speak" data-say="两件一起，便宜一点吧。">🔊 Nghe</button><button class="showbig" data-zh="两件一起，便宜一点吧。" data-py="Liǎng jiàn yìqǐ, piányi yìdiǎn ba.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">买三件呢？</div><div class="py">Mǎi sān jiàn ne?</div><div class="vi">Nếu tôi mua ba cái thì giá thế nào?</div>
+<div class="row"><button class="speak" data-say="买三件呢？">🔊 Nghe</button><button class="showbig" data-zh="买三件呢？" data-py="Mǎi sān jiàn ne?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我是真心想买。</div><div class="py">Wǒ shì zhēnxīn xiǎng mǎi.</div><div class="vi">Tôi thật lòng muốn mua đấy.</div>
+<div class="row"><button class="speak" data-say="我是真心想买。">🔊 Nghe</button><button class="showbig" data-zh="我是真心想买。" data-py="Wǒ shì zhēnxīn xiǎng mǎi.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我再看看吧。</div><div class="py">Wǒ zài kànkan ba.</div><div class="vi">Để tôi xem thêm đã.</div>
+<div class="row"><button class="speak" data-say="我再看看吧。">🔊 Nghe</button><button class="showbig" data-zh="我再看看吧。" data-py="Wǒ zài kànkan ba.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我去别家看看。</div><div class="py">Wǒ qù bié jiā kànkan.</div><div class="vi">Tôi sang hàng khác xem sao. (chiêu bỏ đi — người bán hay gọi lại và hạ giá)</div>
+<div class="row"><button class="speak" data-say="我去别家看看。">🔊 Nghe</button><button class="showbig" data-zh="我去别家看看。" data-py="Wǒ qù bié jiā kànkan.">🖥️ Đưa người bán xem</button></div></div></div></section><section id="thanh-toan"><h2>💰 3. Chốt mua & thanh toán <span class="cnt">(11 câu)</span></h2><div class="grid"><div class="card"><div class="zh">好，我买了。</div><div class="py">Hǎo, wǒ mǎi le.</div><div class="vi">Được, tôi mua cái này.</div>
+<div class="row"><button class="speak" data-say="好，我买了。">🔊 Nghe</button><button class="showbig" data-zh="好，我买了。" data-py="Hǎo, wǒ mǎi le.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">成交。</div><div class="py">Chéngjiāo.</div><div class="vi">Chốt giá nhé! (đồng ý giá)</div>
+<div class="row"><button class="speak" data-say="成交。">🔊 Nghe</button><button class="showbig" data-zh="成交。" data-py="Chéngjiāo.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我不买了，谢谢。</div><div class="py">Wǒ bù mǎi le, xièxie.</div><div class="vi">Tôi không mua nữa, cảm ơn.</div>
+<div class="row"><button class="speak" data-say="我不买了，谢谢。">🔊 Nghe</button><button class="showbig" data-zh="我不买了，谢谢。" data-py="Wǒ bù mǎi le, xièxie.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">可以用支付宝吗？</div><div class="py">Kěyǐ yòng Zhīfùbǎo ma?</div><div class="vi">Trả bằng Alipay được không?</div>
+<div class="row"><button class="speak" data-say="可以用支付宝吗？">🔊 Nghe</button><button class="showbig" data-zh="可以用支付宝吗？" data-py="Kěyǐ yòng Zhīfùbǎo ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">可以用微信支付吗？</div><div class="py">Kěyǐ yòng Wēixìn zhīfù ma?</div><div class="vi">Trả bằng WeChat Pay được không?</div>
+<div class="row"><button class="speak" data-say="可以用微信支付吗？">🔊 Nghe</button><button class="showbig" data-zh="可以用微信支付吗？" data-py="Kěyǐ yòng Wēixìn zhīfù ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我用越南的银行软件付款。</div><div class="py">Wǒ yòng Yuènán de yínháng ruǎnjiàn fùkuǎn.</div><div class="vi">Tôi thanh toán bằng ứng dụng ngân hàng Việt Nam. (quét mã Alipay+ bằng VCB Digibank/ZaloPay)</div>
+<div class="row"><button class="speak" data-say="我用越南的银行软件付款。">🔊 Nghe</button><button class="showbig" data-zh="我用越南的银行软件付款。" data-py="Wǒ yòng Yuènán de yínháng ruǎnjiàn fùkuǎn.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">可以刷卡吗？</div><div class="py">Kěyǐ shuākǎ ma?</div><div class="vi">Quẹt thẻ được không?</div>
+<div class="row"><button class="speak" data-say="可以刷卡吗？">🔊 Nghe</button><button class="showbig" data-zh="可以刷卡吗？" data-py="Kěyǐ shuākǎ ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我付现金。</div><div class="py">Wǒ fù xiànjīn.</div><div class="vi">Tôi trả tiền mặt.</div>
+<div class="row"><button class="speak" data-say="我付现金。">🔊 Nghe</button><button class="showbig" data-zh="我付现金。" data-py="Wǒ fù xiànjīn.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">请给我一个袋子。</div><div class="py">Qǐng gěi wǒ yí ge dàizi.</div><div class="vi">Cho tôi một cái túi.</div>
+<div class="row"><button class="speak" data-say="请给我一个袋子。">🔊 Nghe</button><button class="showbig" data-zh="请给我一个袋子。" data-py="Qǐng gěi wǒ yí ge dàizi.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">请给我发票。</div><div class="py">Qǐng gěi wǒ fāpiào.</div><div class="vi">Cho tôi xin hóa đơn.</div>
+<div class="row"><button class="speak" data-say="请给我发票。">🔊 Nghe</button><button class="showbig" data-zh="请给我发票。" data-py="Qǐng gěi wǒ fāpiào.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">能退税吗？</div><div class="py">Néng tuìshuì ma?</div><div class="vi">Có hoàn thuế được không?</div>
+<div class="row"><button class="speak" data-say="能退税吗？">🔊 Nghe</button><button class="showbig" data-zh="能退税吗？" data-py="Néng tuìshuì ma?">🖥️ Đưa người bán xem</button></div></div></div></section><section id="nguoi-ban"><h2>👂 4. Người bán hay nói — nghe để hiểu <span class="cnt">(10 câu)</span></h2><div class="grid"><div class="card"><div class="zh">欢迎光临！</div><div class="py">Huānyíng guānglín!</div><div class="vi">Chào mừng quý khách! (vào cửa hàng nào cũng nghe câu này)</div>
+<div class="row"><button class="speak" data-say="欢迎光临！">🔊 Nghe</button><button class="showbig" data-zh="欢迎光临！" data-py="Huānyíng guānglín!">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">随便看。</div><div class="py">Suíbiàn kàn.</div><div class="vi">Cứ xem tự nhiên đi.</div>
+<div class="row"><button class="speak" data-say="随便看。">🔊 Nghe</button><button class="showbig" data-zh="随便看。" data-py="Suíbiàn kàn.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">这个质量很好。</div><div class="py">Zhège zhìliàng hěn hǎo.</div><div class="vi">Cái này chất lượng tốt lắm. (câu giới thiệu quen thuộc)</div>
+<div class="row"><button class="speak" data-say="这个质量很好。">🔊 Nghe</button><button class="showbig" data-zh="这个质量很好。" data-py="Zhège zhìliàng hěn hǎo.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">今天给你优惠。</div><div class="py">Jīntiān gěi nǐ yōuhuì.</div><div class="vi">Hôm nay ưu đãi riêng cho chị.</div>
+<div class="row"><button class="speak" data-say="今天给你优惠。">🔊 Nghe</button><button class="showbig" data-zh="今天给你优惠。" data-py="Jīntiān gěi nǐ yōuhuì.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">最低价了。</div><div class="py">Zuìdī jià le.</div><div class="vi">Giá thấp nhất rồi đấy.</div>
+<div class="row"><button class="speak" data-say="最低价了。">🔊 Nghe</button><button class="showbig" data-zh="最低价了。" data-py="Zuìdī jià le.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">不能再便宜了。</div><div class="py">Bù néng zài piányi le.</div><div class="vi">Không rẻ hơn được nữa đâu.</div>
+<div class="row"><button class="speak" data-say="不能再便宜了。">🔊 Nghe</button><button class="showbig" data-zh="不能再便宜了。" data-py="Bù néng zài piányi le.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">你出多少钱？</div><div class="py">Nǐ chū duōshao qián?</div><div class="vi">Thế chị trả bao nhiêu? (họ hỏi ngược lại — mở Ô trả giá ở đầu trang, nhập giá rồi đưa họ xem)</div>
+<div class="row"><button class="speak" data-say="你出多少钱？">🔊 Nghe</button><button class="showbig" data-zh="你出多少钱？" data-py="Nǐ chū duōshao qián?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">不卖。</div><div class="py">Bú mài.</div><div class="vi">Không bán. (giá chị trả thấp quá, họ không bán)</div>
+<div class="row"><button class="speak" data-say="不卖。">🔊 Nghe</button><button class="showbig" data-zh="不卖。" data-py="Bú mài.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">成交！</div><div class="py">Chéngjiāo!</div><div class="vi">Chốt! (họ đồng ý giá chị trả — mua thành công 🎉)</div>
+<div class="row"><button class="speak" data-say="成交！">🔊 Nghe</button><button class="showbig" data-zh="成交！" data-py="Chéngjiāo!">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">慢走。</div><div class="py">Màn zǒu.</div><div class="vi">Đi cẩn thận nhé. (lời chào khi khách ra về)</div>
+<div class="row"><button class="speak" data-say="慢走。">🔊 Nghe</button><button class="showbig" data-zh="慢走。" data-py="Màn zǒu.">🖥️ Đưa người bán xem</button></div></div></div></section>
 
-<section id="chao-hoi"><h2>🖐️ 1. Chào hỏi & làm quen <span class="cnt">(10 câu)</span></h2><div class="grid"><div class="card" data-zh="你好">
-  <div class="zh">你好</div>
-  <div class="py">Nǐ hǎo</div>
-  <div class="vi">Xin chào</div>
+<section><h2>🎨 Màu sắc — bấm để nghe và chỉ cho người bán</h2>
+<div><button class="colorchip speak" data-say="红色"><span class="dot" style="background:#d43a31"></span>红色 · hóngsè · Đỏ</button><button class="colorchip speak" data-say="白色"><span class="dot" style="background:#f5f5f5"></span>白色 · báisè · Trắng</button><button class="colorchip speak" data-say="黑色"><span class="dot" style="background:#222"></span>黑色 · hēisè · Đen</button><button class="colorchip speak" data-say="蓝色"><span class="dot" style="background:#2b6cb0"></span>蓝色 · lánsè · Xanh dương</button><button class="colorchip speak" data-say="绿色"><span class="dot" style="background:#3d9970"></span>绿色 · lǜsè · Xanh lá</button><button class="colorchip speak" data-say="黄色"><span class="dot" style="background:#f2c230"></span>黄色 · huángsè · Vàng</button><button class="colorchip speak" data-say="粉色"><span class="dot" style="background:#f2a7c3"></span>粉色 · fěnsè · Hồng</button><button class="colorchip speak" data-say="紫色"><span class="dot" style="background:#7d4fa6"></span>紫色 · zǐsè · Tím</button><button class="colorchip speak" data-say="灰色"><span class="dot" style="background:#9a9a9a"></span>灰色 · huīsè · Xám</button><button class="colorchip speak" data-say="金色"><span class="dot" style="background:#c9a227"></span>金色 · jīnsè · Vàng kim</button></div>
+<p class="small">Muốn hỏi màu khác: nói <b>有别的颜色吗？</b>(Có màu khác không?) rồi chỉ vào màu chị muốn ở hàng trên.</p></section>
+
+<section><h2>⚖️ Đơn vị tính giá — hỏi giá theo cân, cái, chai…</h2>
+<div class="warn" style="background:#fff5f5;border:1.5px solid #e5aaaa;border-radius:12px;padding:12px 16px">⚠️ <b>Điều dễ bị hớ nhất khi mua ở chợ Trung Quốc:</b> giá thường tính theo <b>斤 (jīn) = 500 gram</b> chứ không phải 1 kg. Biển ghi “20 tệ” rất có thể là 20 tệ/500g — mua 1 kg là 40 tệ. Trước khi chốt, luôn hỏi rõ đơn vị bằng các câu dưới đây, và trong Ô trả giá ở đầu trang nhớ chọn đúng nút đơn vị （斤 / kg / cái…) để trang tính đúng tiền và câu trả giá có kèm đơn vị.</div>
+<table><tr><th>Đơn vị</th><th>Đọc</th><th>Bằng bao nhiêu</th><th>Dùng cho</th></tr>
+<tr><td><b>斤</b></td><td>jīn</td><td><b>500 g</b> (nửa cân)</td><td>Đơn vị chợ phổ biến nhất: trái cây, thịt, hải sản, đồ khô</td></tr>
+<tr><td><b>公斤 / 千克</b></td><td>gōngjīn / qiānkè</td><td>1 kg = 2 斤</td><td>Siêu thị, cửa hàng lớn</td></tr>
+<tr><td><b>两</b></td><td>liǎng</td><td>50 g (10 两 = 1 斤）</td><td>Trà, gia vị, đồ khô bán lượng nhỏ</td></tr>
+<tr><td><b>克</b></td><td>kè</td><td>1 gram</td><td>Hàng đóng gói sẵn ghi trên bao bì</td></tr>
+<tr><td><b>个</b></td><td>gè</td><td>1 cái/chiếc/quả</td><td>Đồ vật nói chung, trái cây đếm quả</td></tr>
+<tr><td><b>件</b></td><td>jiàn</td><td>1 món</td><td>Quần áo, hành lý, sự việc</td></tr>
+<tr><td><b>瓶</b></td><td>píng</td><td>1 chai</td><td>Nước, bia, mỹ phẩm chai</td></tr>
+<tr><td><b>盒</b></td><td>hé</td><td>1 hộp</td><td>Bánh kẹo, quà hộp</td></tr>
+<tr><td><b>袋</b></td><td>dài</td><td>1 túi/gói</td><td>Đồ đóng túi</td></tr>
+<tr><td><b>双</b></td><td>shuāng</td><td>1 đôi</td><td>Giày, đũa, tất, găng tay</td></tr></table>
+<p>Người bán trả lời cũng theo mẫu này, nghe để hiểu: <b>“二十块一斤”</b> (èrshí kuài yí jīn) = 20 tệ một 斤 (500g); <b>“十五块一个”</b> = 15 tệ một cái.</p>
+<div class="grid"><div class="card"><div class="zh">这个多少钱一斤？</div><div class="py">Zhège duōshao qián yí jīn?</div><div class="vi">Cái này bao nhiêu tiền nửa cân (500g)? — câu hỏi giá quan trọng nhất ở chợ</div>
+<div class="row"><button class="speak" data-say="这个多少钱一斤？">🔊 Nghe</button><button class="showbig" data-zh="这个多少钱一斤？" data-py="Zhège duōshao qián yí jīn?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">多少钱一公斤？</div><div class="py">Duōshao qián yì gōngjīn?</div><div class="vi">Bao nhiêu tiền một ký (1 kg)?</div>
+<div class="row"><button class="speak" data-say="多少钱一公斤？">🔊 Nghe</button><button class="showbig" data-zh="多少钱一公斤？" data-py="Duōshao qián yì gōngjīn?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">多少钱一个？</div><div class="py">Duōshao qián yí gè?</div><div class="vi">Bao nhiêu tiền một cái?</div>
+<div class="row"><button class="speak" data-say="多少钱一个？">🔊 Nghe</button><button class="showbig" data-zh="多少钱一个？" data-py="Duōshao qián yí gè?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">多少钱一件？</div><div class="py">Duōshao qián yí jiàn?</div><div class="vi">Bao nhiêu tiền một món (áo, hàng)?</div>
+<div class="row"><button class="speak" data-say="多少钱一件？">🔊 Nghe</button><button class="showbig" data-zh="多少钱一件？" data-py="Duōshao qián yí jiàn?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">多少钱一瓶？</div><div class="py">Duōshao qián yí píng?</div><div class="vi">Bao nhiêu tiền một chai?</div>
+<div class="row"><button class="speak" data-say="多少钱一瓶？">🔊 Nghe</button><button class="showbig" data-zh="多少钱一瓶？" data-py="Duōshao qián yí píng?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">多少钱一盒？</div><div class="py">Duōshao qián yí hé?</div><div class="vi">Bao nhiêu tiền một hộp?</div>
+<div class="row"><button class="speak" data-say="多少钱一盒？">🔊 Nghe</button><button class="showbig" data-zh="多少钱一盒？" data-py="Duōshao qián yí hé?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">多少钱一双？</div><div class="py">Duōshao qián yì shuāng?</div><div class="vi">Bao nhiêu tiền một đôi (giày, đũa, tất)?</div>
+<div class="row"><button class="speak" data-say="多少钱一双？">🔊 Nghe</button><button class="showbig" data-zh="多少钱一双？" data-py="Duōshao qián yì shuāng?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">来一斤。</div><div class="py">Lái yí jīn.</div><div class="vi">Cho tôi nửa cân (500g).</div>
+<div class="row"><button class="speak" data-say="来一斤。">🔊 Nghe</button><button class="showbig" data-zh="来一斤。" data-py="Lái yí jīn.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">来半斤。</div><div class="py">Lái bàn jīn.</div><div class="vi">Cho tôi một phần tư cân (250g).</div>
+<div class="row"><button class="speak" data-say="来半斤。">🔊 Nghe</button><button class="showbig" data-zh="来半斤。" data-py="Lái bàn jīn.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">来两斤。</div><div class="py">Lái liǎng jīn.</div><div class="vi">Cho tôi một ký (2 jin = 1 kg).</div>
+<div class="row"><button class="speak" data-say="来两斤。">🔊 Nghe</button><button class="showbig" data-zh="来两斤。" data-py="Lái liǎng jīn.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">太多了，只要半斤。</div><div class="py">Tài duō le, zhǐ yào bàn jīn.</div><div class="vi">Nhiều quá, tôi chỉ lấy 250g thôi.</div>
+<div class="row"><button class="speak" data-say="太多了，只要半斤。">🔊 Nghe</button><button class="showbig" data-zh="太多了，只要半斤。" data-py="Tài duō le, zhǐ yào bàn jīn.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">多少钱一袋？</div><div class="py">Duōshao qián yí dài?</div><div class="vi">Bao nhiêu tiền một túi?</div>
+<div class="row"><button class="speak" data-say="多少钱一袋？">🔊 Nghe</button><button class="showbig" data-zh="多少钱一袋？" data-py="Duōshao qián yí dài?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">多少钱一包？</div><div class="py">Duōshao qián yí bāo?</div><div class="vi">Bao nhiêu tiền một gói?</div>
+<div class="row"><button class="speak" data-say="多少钱一包？">🔊 Nghe</button><button class="showbig" data-zh="多少钱一包？" data-py="Duōshao qián yí bāo?">🖥️ Đưa người bán xem</button></div></div></div></section>
+<section><h2>📏 Bảng size — size Trung Quốc thường nhỏ hơn của Việt Nam</h2>
+<h3>Giày dép (theo chiều dài bàn chân)</h3>
+<table><tr><th>Size châu Âu / Việt Nam</th><th>Chiều dài chân</th><th>Người bán ghi</th></tr>
+<tr><td>36</td><td>23 cm</td><td>230 / 码 36</td></tr>
+<tr><td>37</td><td>23,5 cm</td><td>235 / 码 37</td></tr>
+<tr><td>38</td><td>24 cm</td><td>240 / 码 38</td></tr>
+<tr><td>39</td><td>24,5 cm</td><td>245 / 码 39</td></tr>
+<tr><td>40</td><td>25 cm</td><td>250 / 码 40</td></tr>
+<tr><td>41</td><td>25,5 cm</td><td>255 / 码 41</td></tr>
+<tr><td>42</td><td>26 cm</td><td>260 / 码 42</td></tr></table>
+<h3>Quần áo</h3>
+<ul>
+<li>Trên mác quần áo Trung Quốc thường ghi dạng <b>165/88A</b>: số đầu là chiều cao (cm) vừa với người mặc, số sau là vòng ngực (cm), chữ A là dáng người thường.</li>
+<li>Kinh nghiệm chung: đồ Trung Quốc (nhất là hàng chợ, hàng nội địa) <b>nhỏ hơn đồ Việt khoảng 1–2 size</b> — chị mặc M ở nhà thì ở đây thường phải lấy L, thậm chí XL. <b>Luôn thử trực tiếp</b> (câu “可以试一下吗？”) và đừng tin mỗi chữ size.</li>
+<li>Sợ chật thì đưa người bán xem câu: <b>我穿多大码？</b> (Tôi nên mặc size bao nhiêu?) — họ nhìn người là chọn khá chuẩn.</li>
+</ul></section>
+
+<section><h2>🧭 Mẹo mặc cả &amp; mua sắm an toàn</h2>
+<div class="note"><ul style="margin:0;padding-left:20px">
+<li><b>Nơi mặc cả được:</b> chợ, quầy hàng lưu niệm, phố đi bộ, cửa hàng nhỏ không niêm yết giá. Ở những nơi này giá nói ra thường cao hơn giá bán thật nhiều: bắt đầu trả ở khoảng <b>40–50% giá họ nói</b>, rồi nâng dần từng bước nhỏ, điểm chốt thường ở khoảng 60–70%.</li>
+<li><b>Nơi KHÔNG mặc cả:</b> siêu thị, trung tâm thương mại, cửa hàng có giá niêm yết, nhà ga/sân bay, nhà thuốc — giá in trên tem là giá bán, trả giá chỉ mất thời gian.</li>
+<li><b>Quy trình mặc cả bằng ô số ở đầu trang:</b> người bán nhập giá → chị xem số tiền Việt → bấm mức gợi ý giảm 40–50% → đưa câu trả giá cho họ xem → họ nhập giá mới → chị nâng nhẹ một chút. Hai bên “nói chuyện” hoàn toàn bằng số, không cần tiếng Trung giỏi.</li>
+<li><b>Chiêu bỏ đi:</b> nếu giá chưa ưng, cảm ơn (谢谢), nói “我去别家看看” rồi đi thật chậm — ở chợ, người bán gọi lại và hạ thêm là chuyện rất thường. Họ không gọi thì quay lại mua vẫn chưa muộn.</li>
+<li>Đã gật đầu chốt giá (成交) thì nên mua — lật lọng sau khi chốt bị coi là rất thiếu lịch sự.</li>
+<li>Mua đồ điện tử, đồ giá trị: kiểm tra hàng ngay tại quầy, xin hóa đơn (发票), chụp lại; đồ lưu niệm dễ vỡ nhớ dặn gói kỹ và xách tay.</li>
+<li>Trả bằng app ngân hàng Việt Nam (VCB Digibank/ZaloPay quét Alipay+) hoặc Alipay như hướng dẫn ở <a href="#" data-goto="thong-tin">hạng mục Thông tin hữu ích</a>; trả tiền mặt thì đếm lại tiền thối ngay tại quầy.</li>
+</ul></div>
+<div class="warn"><b>⚠️ Tránh:</b> người lạ rủ đi xem “hàng đặc biệt giá rẻ” ở nơi khác, cân/đong không rõ ràng ở hàng ăn vặt bán theo cân (Trung Quốc tính giá theo <b>500 gram = 一斤 (yí jīn)</b> — biển giá “10 tệ” thường là 10 tệ/nửa cân, không phải 1 kg!), và mã QR dán chồng lên mã gốc của cửa hàng.</div>
+</section>
+
+<h2>🗣️ Câu mua sắm thường dùng</h2><div class="grid"><div class="card" data-zh="我只看看。">
+  <div class="zh">我只看看。</div>
+  <div class="py">Wǒ zhǐ kànkan.</div>
+  <div class="vi">Tôi chỉ xem thôi.</div>
   <div class="row">
-    <button class="speak" data-say="你好">🔊 Nghe</button>
-    <button class="showbig" data-zh="你好" data-py="Nǐ hǎo">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="chao-hoi-0"> Đã thuộc</label>
+    <button class="speak" data-say="我只看看。">🔊 Nghe</button>
+    <button class="showbig" data-zh="我只看看。" data-py="Wǒ zhǐ kànkan.">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="mua-sam-0"> Đã thuộc</label>
   </div>
-</div><div class="card" data-zh="您好">
-  <div class="zh">您好</div>
-  <div class="py">Nín hǎo</div>
-  <div class="vi">Xin chào — cách lịch sự, dùng với người lớn tuổi, nhân viên, người lạ</div>
+</div><div class="card" data-zh="有大一点的吗？">
+  <div class="zh">有大一点的吗？</div>
+  <div class="py">Yǒu dà yìdiǎn de ma?</div>
+  <div class="vi">Có cái lớn hơn một chút không?</div>
   <div class="row">
-    <button class="speak" data-say="您好">🔊 Nghe</button>
-    <button class="showbig" data-zh="您好" data-py="Nín hǎo">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="chao-hoi-1"> Đã thuộc</label>
+    <button class="speak" data-say="有大一点的吗？">🔊 Nghe</button>
+    <button class="showbig" data-zh="有大一点的吗？" data-py="Yǒu dà yìdiǎn de ma?">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="mua-sam-1"> Đã thuộc</label>
   </div>
-</div><div class="card" data-zh="早上好">
-  <div class="zh">早上好</div>
-  <div class="py">Zǎoshang hǎo</div>
-  <div class="vi">Chào buổi sáng</div>
+</div><div class="card" data-zh="有别的颜色吗？">
+  <div class="zh">有别的颜色吗？</div>
+  <div class="py">Yǒu bié de yánsè ma?</div>
+  <div class="vi">Có màu khác không?</div>
   <div class="row">
-    <button class="speak" data-say="早上好">🔊 Nghe</button>
-    <button class="showbig" data-zh="早上好" data-py="Zǎoshang hǎo">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="chao-hoi-2"> Đã thuộc</label>
+    <button class="speak" data-say="有别的颜色吗？">🔊 Nghe</button>
+    <button class="showbig" data-zh="有别的颜色吗？" data-py="Yǒu bié de yánsè ma?">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="mua-sam-2"> Đã thuộc</label>
   </div>
-</div><div class="card" data-zh="谢谢">
-  <div class="zh">谢谢</div>
-  <div class="py">Xièxie</div>
-  <div class="vi">Cảm ơn</div>
+</div><div class="card" data-zh="可以试一下吗？">
+  <div class="zh">可以试一下吗？</div>
+  <div class="py">Kěyǐ shì yíxià ma?</div>
+  <div class="vi">Tôi thử một chút được không?</div>
   <div class="row">
-    <button class="speak" data-say="谢谢">🔊 Nghe</button>
-    <button class="showbig" data-zh="谢谢" data-py="Xièxie">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="chao-hoi-3"> Đã thuộc</label>
+    <button class="speak" data-say="可以试一下吗？">🔊 Nghe</button>
+    <button class="showbig" data-zh="可以试一下吗？" data-py="Kěyǐ shì yíxià ma?">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="mua-sam-3"> Đã thuộc</label>
   </div>
-</div><div class="card" data-zh="不客气">
-  <div class="zh">不客气</div>
-  <div class="py">Bú kèqi</div>
-  <div class="vi">Không có chi / Đừng khách sáo</div>
+</div><div class="card" data-zh="最低多少钱？">
+  <div class="zh">最低多少钱？</div>
+  <div class="py">Zuìdī duōshao qián?</div>
+  <div class="vi">Giá thấp nhất là bao nhiêu?</div>
   <div class="row">
-    <button class="speak" data-say="不客气">🔊 Nghe</button>
-    <button class="showbig" data-zh="不客气" data-py="Bú kèqi">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="chao-hoi-4"> Đã thuộc</label>
+    <button class="speak" data-say="最低多少钱？">🔊 Nghe</button>
+    <button class="showbig" data-zh="最低多少钱？" data-py="Zuìdī duōshao qián?">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="mua-sam-4"> Đã thuộc</label>
   </div>
-</div><div class="card" data-zh="对不起">
-  <div class="zh">对不起</div>
-  <div class="py">Duìbuqǐ</div>
-  <div class="vi">Xin lỗi</div>
+</div><div class="card" data-zh="我买了。">
+  <div class="zh">我买了。</div>
+  <div class="py">Wǒ mǎi le.</div>
+  <div class="vi">Tôi mua cái này.</div>
   <div class="row">
-    <button class="speak" data-say="对不起">🔊 Nghe</button>
-    <button class="showbig" data-zh="对不起" data-py="Duìbuqǐ">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="chao-hoi-5"> Đã thuộc</label>
+    <button class="speak" data-say="我买了。">🔊 Nghe</button>
+    <button class="showbig" data-zh="我买了。" data-py="Wǒ mǎi le.">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="mua-sam-5"> Đã thuộc</label>
   </div>
-</div><div class="card" data-zh="没关系">
-  <div class="zh">没关系</div>
-  <div class="py">Méi guānxi</div>
-  <div class="vi">Không sao đâu</div>
+</div><div class="card" data-zh="可以用支付宝吗？">
+  <div class="zh">可以用支付宝吗？</div>
+  <div class="py">Kěyǐ yòng Zhīfùbǎo ma?</div>
+  <div class="vi">Trả bằng Alipay được không?</div>
   <div class="row">
-    <button class="speak" data-say="没关系">🔊 Nghe</button>
-    <button class="showbig" data-zh="没关系" data-py="Méi guānxi">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="chao-hoi-6"> Đã thuộc</label>
+    <button class="speak" data-say="可以用支付宝吗？">🔊 Nghe</button>
+    <button class="showbig" data-zh="可以用支付宝吗？" data-py="Kěyǐ yòng Zhīfùbǎo ma?">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="mua-sam-6"> Đã thuộc</label>
   </div>
-</div><div class="card" data-zh="再见">
-  <div class="zh">再见</div>
-  <div class="py">Zàijiàn</div>
-  <div class="vi">Tạm biệt</div>
+</div><div class="card" data-zh="可以刷卡吗？">
+  <div class="zh">可以刷卡吗？</div>
+  <div class="py">Kěyǐ shuākǎ ma?</div>
+  <div class="vi">Quẹt thẻ được không?</div>
   <div class="row">
-    <button class="speak" data-say="再见">🔊 Nghe</button>
-    <button class="showbig" data-zh="再见" data-py="Zàijiàn">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="chao-hoi-7"> Đã thuộc</label>
+    <button class="speak" data-say="可以刷卡吗？">🔊 Nghe</button>
+    <button class="showbig" data-zh="可以刷卡吗？" data-py="Kěyǐ shuākǎ ma?">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="mua-sam-7"> Đã thuộc</label>
   </div>
-</div><div class="card" data-zh="我是越南人。">
-  <div class="zh">我是越南人。</div>
-  <div class="py">Wǒ shì Yuènán rén.</div>
-  <div class="vi">Tôi là người Việt Nam.</div>
+</div><div class="card" data-zh="请给我一个袋子。">
+  <div class="zh">请给我一个袋子。</div>
+  <div class="py">Qǐng gěi wǒ yí ge dàizi.</div>
+  <div class="vi">Cho tôi một cái túi.</div>
   <div class="row">
-    <button class="speak" data-say="我是越南人。">🔊 Nghe</button>
-    <button class="showbig" data-zh="我是越南人。" data-py="Wǒ shì Yuènán rén.">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="chao-hoi-8"> Đã thuộc</label>
+    <button class="speak" data-say="请给我一个袋子。">🔊 Nghe</button>
+    <button class="showbig" data-zh="请给我一个袋子。" data-py="Qǐng gěi wǒ yí ge dàizi.">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="mua-sam-8"> Đã thuộc</label>
   </div>
-</div><div class="card" data-zh="很高兴认识你。">
-  <div class="zh">很高兴认识你。</div>
-  <div class="py">Hěn gāoxìng rènshi nǐ.</div>
-  <div class="vi">Rất vui được gặp bạn.</div>
+</div><div class="card" data-zh="能退税吗？">
+  <div class="zh">能退税吗？</div>
+  <div class="py">Néng tuìshuì ma?</div>
+  <div class="vi">Có hoàn thuế được không?</div>
   <div class="row">
-    <button class="speak" data-say="很高兴认识你。">🔊 Nghe</button>
-    <button class="showbig" data-zh="很高兴认识你。" data-py="Hěn gāoxìng rènshi nǐ.">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="chao-hoi-9"> Đã thuộc</label>
+    <button class="speak" data-say="能退税吗？">🔊 Nghe</button>
+    <button class="showbig" data-zh="能退税吗？" data-py="Néng tuìshuì ma?">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="mua-sam-9"> Đã thuộc</label>
   </div>
-</div></div></section><section id="cuu-nguy"><h2>🆘 2. Câu cứu nguy khi giao tiếp <span class="cnt">(10 câu)</span></h2><div class="grid"><div class="card" data-zh="我不会说中文。">
-  <div class="zh">我不会说中文。</div>
-  <div class="py">Wǒ bú huì shuō Zhōngwén.</div>
-  <div class="vi">Tôi không biết nói tiếng Trung.</div>
-  <div class="row">
-    <button class="speak" data-say="我不会说中文。">🔊 Nghe</button>
-    <button class="showbig" data-zh="我不会说中文。" data-py="Wǒ bú huì shuō Zhōngwén.">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="cuu-nguy-0"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="你会说英语吗？">
-  <div class="zh">你会说英语吗？</div>
-  <div class="py">Nǐ huì shuō Yīngyǔ ma?</div>
-  <div class="vi">Bạn có nói được tiếng Anh không?</div>
-  <div class="row">
-    <button class="speak" data-say="你会说英语吗？">🔊 Nghe</button>
-    <button class="showbig" data-zh="你会说英语吗？" data-py="Nǐ huì shuō Yīngyǔ ma?">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="cuu-nguy-1"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="请说慢一点。">
-  <div class="zh">请说慢一点。</div>
-  <div class="py">Qǐng shuō màn yìdiǎn.</div>
-  <div class="vi">Xin nói chậm một chút.</div>
-  <div class="row">
-    <button class="speak" data-say="请说慢一点。">🔊 Nghe</button>
-    <button class="showbig" data-zh="请说慢一点。" data-py="Qǐng shuō màn yìdiǎn.">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="cuu-nguy-2"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="请再说一遍。">
-  <div class="zh">请再说一遍。</div>
-  <div class="py">Qǐng zài shuō yí biàn.</div>
-  <div class="vi">Xin nói lại một lần nữa.</div>
-  <div class="row">
-    <button class="speak" data-say="请再说一遍。">🔊 Nghe</button>
-    <button class="showbig" data-zh="请再说一遍。" data-py="Qǐng zài shuō yí biàn.">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="cuu-nguy-3"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="我听不懂。">
-  <div class="zh">我听不懂。</div>
-  <div class="py">Wǒ tīng bù dǒng.</div>
-  <div class="vi">Tôi nghe không hiểu.</div>
-  <div class="row">
-    <button class="speak" data-say="我听不懂。">🔊 Nghe</button>
-    <button class="showbig" data-zh="我听不懂。" data-py="Wǒ tīng bù dǒng.">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="cuu-nguy-4"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="请写下来。">
-  <div class="zh">请写下来。</div>
-  <div class="py">Qǐng xiě xiàlai.</div>
-  <div class="vi">Xin viết ra giúp tôi.</div>
-  <div class="row">
-    <button class="speak" data-say="请写下来。">🔊 Nghe</button>
-    <button class="showbig" data-zh="请写下来。" data-py="Qǐng xiě xiàlai.">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="cuu-nguy-5"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="这是什么意思？">
-  <div class="zh">这是什么意思？</div>
-  <div class="py">Zhè shì shénme yìsi?</div>
-  <div class="vi">Cái này nghĩa là gì?</div>
-  <div class="row">
-    <button class="speak" data-say="这是什么意思？">🔊 Nghe</button>
-    <button class="showbig" data-zh="这是什么意思？" data-py="Zhè shì shénme yìsi?">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="cuu-nguy-6"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="等一下。">
-  <div class="zh">等一下。</div>
-  <div class="py">Děng yíxià.</div>
-  <div class="vi">Đợi một chút.</div>
-  <div class="row">
-    <button class="speak" data-say="等一下。">🔊 Nghe</button>
-    <button class="showbig" data-zh="等一下。" data-py="Děng yíxià.">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="cuu-nguy-7"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="我可以用手机翻译吗？">
-  <div class="zh">我可以用手机翻译吗？</div>
-  <div class="py">Wǒ kěyǐ yòng shǒujī fānyì ma?</div>
-  <div class="vi">Tôi dùng điện thoại để dịch được không?</div>
-  <div class="row">
-    <button class="speak" data-say="我可以用手机翻译吗？">🔊 Nghe</button>
-    <button class="showbig" data-zh="我可以用手机翻译吗？" data-py="Wǒ kěyǐ yòng shǒujī fānyì ma?">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="cuu-nguy-8"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="请帮我。">
-  <div class="zh">请帮我。</div>
-  <div class="py">Qǐng bāng wǒ.</div>
-  <div class="vi">Xin giúp tôi với.</div>
-  <div class="row">
-    <button class="speak" data-say="请帮我。">🔊 Nghe</button>
-    <button class="showbig" data-zh="请帮我。" data-py="Qǐng bāng wǒ.">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="cuu-nguy-9"> Đã thuộc</label>
-  </div>
-</div></div></section><section id="so-gia"><h2>🔢 3. Số đếm, giá cả & thời gian <span class="cnt">(10 câu)</span></h2><div class="grid"><div class="card" data-zh="一、二、三、四、五、六、七、八、九、十">
-  <div class="zh">一、二、三、四、五、六、七、八、九、十</div>
-  <div class="py">Yī, èr, sān, sì, wǔ, liù, qī, bā, jiǔ, shí</div>
-  <div class="vi">Một, hai, ba, bốn, năm, sáu, bảy, tám, chín, mười</div>
-  <div class="row">
-    <button class="speak" data-say="一、二、三、四、五、六、七、八、九、十">🔊 Nghe</button>
-    <button class="showbig" data-zh="一、二、三、四、五、六、七、八、九、十" data-py="Yī, èr, sān, sì, wǔ, liù, qī, bā, jiǔ, shí">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="so-gia-0"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="多少钱？">
-  <div class="zh">多少钱？</div>
-  <div class="py">Duōshao qián?</div>
-  <div class="vi">Bao nhiêu tiền?</div>
-  <div class="row">
-    <button class="speak" data-say="多少钱？">🔊 Nghe</button>
-    <button class="showbig" data-zh="多少钱？" data-py="Duōshao qián?">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="so-gia-1"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="太贵了。">
-  <div class="zh">太贵了。</div>
-  <div class="py">Tài guì le.</div>
-  <div class="vi">Đắt quá.</div>
-  <div class="row">
-    <button class="speak" data-say="太贵了。">🔊 Nghe</button>
-    <button class="showbig" data-zh="太贵了。" data-py="Tài guì le.">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="so-gia-2"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="便宜一点吧。">
-  <div class="zh">便宜一点吧。</div>
-  <div class="py">Piányi yìdiǎn ba.</div>
-  <div class="vi">Rẻ hơn một chút đi.</div>
-  <div class="row">
-    <button class="speak" data-say="便宜一点吧。">🔊 Nghe</button>
-    <button class="showbig" data-zh="便宜一点吧。" data-py="Piányi yìdiǎn ba.">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="so-gia-3"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="现在几点？">
-  <div class="zh">现在几点？</div>
-  <div class="py">Xiànzài jǐ diǎn?</div>
-  <div class="vi">Bây giờ là mấy giờ?</div>
-  <div class="row">
-    <button class="speak" data-say="现在几点？">🔊 Nghe</button>
-    <button class="showbig" data-zh="现在几点？" data-py="Xiànzài jǐ diǎn?">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="so-gia-4"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="今天">
-  <div class="zh">今天</div>
-  <div class="py">Jīntiān</div>
-  <div class="vi">Hôm nay</div>
-  <div class="row">
-    <button class="speak" data-say="今天">🔊 Nghe</button>
-    <button class="showbig" data-zh="今天" data-py="Jīntiān">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="so-gia-5"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="明天">
-  <div class="zh">明天</div>
-  <div class="py">Míngtiān</div>
-  <div class="vi">Ngày mai</div>
-  <div class="row">
-    <button class="speak" data-say="明天">🔊 Nghe</button>
-    <button class="showbig" data-zh="明天" data-py="Míngtiān">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="so-gia-6"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="昨天">
-  <div class="zh">昨天</div>
-  <div class="py">Zuótiān</div>
-  <div class="vi">Hôm qua</div>
-  <div class="row">
-    <button class="speak" data-say="昨天">🔊 Nghe</button>
-    <button class="showbig" data-zh="昨天" data-py="Zuótiān">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="so-gia-7"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="一个人">
-  <div class="zh">一个人</div>
-  <div class="py">Yí ge rén</div>
-  <div class="vi">Một người</div>
-  <div class="row">
-    <button class="speak" data-say="一个人">🔊 Nghe</button>
-    <button class="showbig" data-zh="一个人" data-py="Yí ge rén">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="so-gia-8"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="两个人">
-  <div class="zh">两个人</div>
-  <div class="py">Liǎng ge rén</div>
-  <div class="vi">Hai người</div>
-  <div class="row">
-    <button class="speak" data-say="两个人">🔊 Nghe</button>
-    <button class="showbig" data-zh="两个人" data-py="Liǎng ge rén">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="so-gia-9"> Đã thuộc</label>
-  </div>
-</div></div></section><section id="san-bay"><h2>✈️ 4. Sân bay & nhập cảnh <span class="cnt">(10 câu)</span></h2><div class="grid"><div class="card" data-zh="我的护照在这里。">
-  <div class="zh">我的护照在这里。</div>
-  <div class="py">Wǒ de hùzhào zài zhèlǐ.</div>
-  <div class="vi">Hộ chiếu của tôi đây.</div>
-  <div class="row">
-    <button class="speak" data-say="我的护照在这里。">🔊 Nghe</button>
-    <button class="showbig" data-zh="我的护照在这里。" data-py="Wǒ de hùzhào zài zhèlǐ.">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="san-bay-0"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="我是来旅游的。">
-  <div class="zh">我是来旅游的。</div>
-  <div class="py">Wǒ shì lái lǚyóu de.</div>
-  <div class="vi">Tôi đến đây du lịch.</div>
-  <div class="row">
-    <button class="speak" data-say="我是来旅游的。">🔊 Nghe</button>
-    <button class="showbig" data-zh="我是来旅游的。" data-py="Wǒ shì lái lǚyóu de.">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="san-bay-1"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="我住这个酒店。">
-  <div class="zh">我住这个酒店。</div>
-  <div class="py">Wǒ zhù zhège jiǔdiàn.</div>
-  <div class="vi">Tôi ở khách sạn này. (kèm đưa điện thoại/ giấy đặt phòng)</div>
-  <div class="row">
-    <button class="speak" data-say="我住这个酒店。">🔊 Nghe</button>
-    <button class="showbig" data-zh="我住这个酒店。" data-py="Wǒ zhù zhège jiǔdiàn.">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="san-bay-2"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="我的行李不见了。">
-  <div class="zh">我的行李不见了。</div>
-  <div class="py">Wǒ de xíngli bù jiàn le.</div>
-  <div class="vi">Hành lý của tôi không thấy / bị mất.</div>
-  <div class="row">
-    <button class="speak" data-say="我的行李不见了。">🔊 Nghe</button>
-    <button class="showbig" data-zh="我的行李不见了。" data-py="Wǒ de xíngli bù jiàn le.">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="san-bay-3"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="托运行李在哪里？">
-  <div class="zh">托运行李在哪里？</div>
-  <div class="py">Tuōyùn xíngli zài nǎlǐ?</div>
-  <div class="vi">Hành lý ký gửi lấy ở đâu?</div>
-  <div class="row">
-    <button class="speak" data-say="托运行李在哪里？">🔊 Nghe</button>
-    <button class="showbig" data-zh="托运行李在哪里？" data-py="Tuōyùn xíngli zài nǎlǐ?">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="san-bay-4"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="出口在哪里？">
-  <div class="zh">出口在哪里？</div>
-  <div class="py">Chūkǒu zài nǎlǐ?</div>
-  <div class="vi">Lối ra ở đâu?</div>
-  <div class="row">
-    <button class="speak" data-say="出口在哪里？">🔊 Nghe</button>
-    <button class="showbig" data-zh="出口在哪里？" data-py="Chūkǒu zài nǎlǐ?">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="san-bay-5"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="我要去这个地址。">
-  <div class="zh">我要去这个地址。</div>
-  <div class="py">Wǒ yào qù zhège dìzhǐ.</div>
-  <div class="vi">Tôi muốn đi đến địa chỉ này.</div>
-  <div class="row">
-    <button class="speak" data-say="我要去这个地址。">🔊 Nghe</button>
-    <button class="showbig" data-zh="我要去这个地址。" data-py="Wǒ yào qù zhège dìzhǐ.">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="san-bay-6"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="洗手间在哪里？">
-  <div class="zh">洗手间在哪里？</div>
-  <div class="py">Xǐshǒujiān zài nǎlǐ?</div>
-  <div class="vi">Nhà vệ sinh ở đâu?</div>
-  <div class="row">
-    <button class="speak" data-say="洗手间在哪里？">🔊 Nghe</button>
-    <button class="showbig" data-zh="洗手间在哪里？" data-py="Xǐshǒujiān zài nǎlǐ?">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="san-bay-7"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="我的航班晚点了。">
-  <div class="zh">我的航班晚点了。</div>
-  <div class="py">Wǒ de hángbān wǎndiǎn le.</div>
-  <div class="vi">Chuyến bay của tôi bị trễ.</div>
-  <div class="row">
-    <button class="speak" data-say="我的航班晚点了。">🔊 Nghe</button>
-    <button class="showbig" data-zh="我的航班晚点了。" data-py="Wǒ de hángbān wǎndiǎn le.">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="san-bay-8"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="请问，换钱的地方在哪里？">
-  <div class="zh">请问，换钱的地方在哪里？</div>
-  <div class="py">Qǐngwèn, huàn qián de dìfang zài nǎlǐ?</div>
-  <div class="vi">Xin hỏi, chỗ đổi tiền ở đâu?</div>
-  <div class="row">
-    <button class="speak" data-say="请问，换钱的地方在哪里？">🔊 Nghe</button>
-    <button class="showbig" data-zh="请问，换钱的地方在哪里？" data-py="Qǐngwèn, huàn qián de dìfang zài nǎlǐ?">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="san-bay-9"> Đã thuộc</label>
-  </div>
-</div></div></section><section id="khach-san"><h2>🏨 5. Khách sạn <span class="cnt">(10 câu)</span></h2><div class="grid"><div class="card" data-zh="我订了房间。">
-  <div class="zh">我订了房间。</div>
-  <div class="py">Wǒ dìng le fángjiān.</div>
-  <div class="vi">Tôi đã đặt phòng.</div>
-  <div class="row">
-    <button class="speak" data-say="我订了房间。">🔊 Nghe</button>
-    <button class="showbig" data-zh="我订了房间。" data-py="Wǒ dìng le fángjiān.">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="khach-san-0"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="这是我的预订信息。">
-  <div class="zh">这是我的预订信息。</div>
-  <div class="py">Zhè shì wǒ de yùdìng xìnxī.</div>
-  <div class="vi">Đây là thông tin đặt phòng của tôi.</div>
-  <div class="row">
-    <button class="speak" data-say="这是我的预订信息。">🔊 Nghe</button>
-    <button class="showbig" data-zh="这是我的预订信息。" data-py="Zhè shì wǒ de yùdìng xìnxī.">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="khach-san-1"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="我要一个大床房。">
-  <div class="zh">我要一个大床房。</div>
-  <div class="py">Wǒ yào yí ge dàchuáng fáng.</div>
-  <div class="vi">Tôi muốn một phòng giường lớn.</div>
-  <div class="row">
-    <button class="speak" data-say="我要一个大床房。">🔊 Nghe</button>
-    <button class="showbig" data-zh="我要一个大床房。" data-py="Wǒ yào yí ge dàchuáng fáng.">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="khach-san-2"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="房间里有热水吗？">
-  <div class="zh">房间里有热水吗？</div>
-  <div class="py">Fángjiān lǐ yǒu rèshuǐ ma?</div>
-  <div class="vi">Trong phòng có nước nóng không?</div>
-  <div class="row">
-    <button class="speak" data-say="房间里有热水吗？">🔊 Nghe</button>
-    <button class="showbig" data-zh="房间里有热水吗？" data-py="Fángjiān lǐ yǒu rèshuǐ ma?">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="khach-san-3"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="空调不凉。">
-  <div class="zh">空调不凉。</div>
-  <div class="py">Kōngtiáo bù liáng.</div>
-  <div class="vi">Điều hòa không mát.</div>
-  <div class="row">
-    <button class="speak" data-say="空调不凉。">🔊 Nghe</button>
-    <button class="showbig" data-zh="空调不凉。" data-py="Kōngtiáo bù liáng.">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="khach-san-4"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="请给我一条毛巾。">
-  <div class="zh">请给我一条毛巾。</div>
-  <div class="py">Qǐng gěi wǒ yì tiáo máojīn.</div>
-  <div class="vi">Cho tôi thêm một chiếc khăn tắm.</div>
-  <div class="row">
-    <button class="speak" data-say="请给我一条毛巾。">🔊 Nghe</button>
-    <button class="showbig" data-zh="请给我一条毛巾。" data-py="Qǐng gěi wǒ yì tiáo máojīn.">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="khach-san-5"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="早餐几点开始？">
-  <div class="zh">早餐几点开始？</div>
-  <div class="py">Zǎocān jǐ diǎn kāishǐ?</div>
-  <div class="vi">Bữa sáng bắt đầu lúc mấy giờ?</div>
-  <div class="row">
-    <button class="speak" data-say="早餐几点开始？">🔊 Nghe</button>
-    <button class="showbig" data-zh="早餐几点开始？" data-py="Zǎocān jǐ diǎn kāishǐ?">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="khach-san-6"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="我可以晚点退房吗？">
-  <div class="zh">我可以晚点退房吗？</div>
-  <div class="py">Wǒ kěyǐ wǎndiǎn tuì fáng ma?</div>
-  <div class="vi">Tôi trả phòng muộn hơn một chút được không?</div>
-  <div class="row">
-    <button class="speak" data-say="我可以晚点退房吗？">🔊 Nghe</button>
-    <button class="showbig" data-zh="我可以晚点退房吗？" data-py="Wǒ kěyǐ wǎndiǎn tuì fáng ma?">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="khach-san-7"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="请帮我叫出租车。">
-  <div class="zh">请帮我叫出租车。</div>
-  <div class="py">Qǐng bāng wǒ jiào chūzūchē.</div>
-  <div class="vi">Giúp tôi gọi một chiếc taxi.</div>
-  <div class="row">
-    <button class="speak" data-say="请帮我叫出租车。">🔊 Nghe</button>
-    <button class="showbig" data-zh="请帮我叫出租车。" data-py="Qǐng bāng wǒ jiào chūzūchē.">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="khach-san-8"> Đã thuộc</label>
-  </div>
-</div><div class="card" data-zh="退房。">
-  <div class="zh">退房。</div>
-  <div class="py">Tuì fáng.</div>
-  <div class="vi">Tôi muốn trả phòng.</div>
-  <div class="row">
-    <button class="speak" data-say="退房。">🔊 Nghe</button>
-    <button class="showbig" data-zh="退房。" data-py="Tuì fáng.">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="khach-san-9"> Đã thuộc</label>
-  </div>
-</div></div></section><section id="an-uong"><h2>🍜 6. Ăn uống <span class="cnt">(12 câu)</span></h2><div class="grid"><div class="card" data-zh="我要看菜单。">
+</div></div></div>
+<div class="tab" id="tab-ve-sinh"><div class="grid"><div class="card"><div class="zh">洗手间在哪里？</div><div class="py">Xǐshǒujiān zài nǎlǐ?</div><div class="vi">Nhà vệ sinh ở đâu? — câu chính, dùng ở mọi nơi</div>
+<div class="row"><button class="speak" data-say="洗手间在哪里？">🔊 Nghe</button><button class="showbig" data-zh="洗手间在哪里？" data-py="Xǐshǒujiān zài nǎlǐ?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我想上厕所。</div><div class="py">Wǒ xiǎng shàng cèsuǒ.</div><div class="vi">Tôi muốn đi vệ sinh.</div>
+<div class="row"><button class="speak" data-say="我想上厕所。">🔊 Nghe</button><button class="showbig" data-zh="我想上厕所。" data-py="Wǒ xiǎng shàng cèsuǒ.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">附近有洗手间吗？</div><div class="py">Fùjìn yǒu xǐshǒujiān ma?</div><div class="vi">Gần đây có nhà vệ sinh không?</div>
+<div class="row"><button class="speak" data-say="附近有洗手间吗？">🔊 Nghe</button><button class="showbig" data-zh="附近有洗手间吗？" data-py="Fùjìn yǒu xǐshǒujiān ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">女洗手间在哪里？</div><div class="py">Nǚ xǐshǒujiān zài nǎlǐ?</div><div class="vi">Nhà vệ sinh nữ ở đâu?</div>
+<div class="row"><button class="speak" data-say="女洗手间在哪里？">🔊 Nghe</button><button class="showbig" data-zh="女洗手间在哪里？" data-py="Nǚ xǐshǒujiān zài nǎlǐ?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">男洗手间在哪里？</div><div class="py">Nán xǐshǒujiān zài nǎlǐ?</div><div class="vi">Nhà vệ sinh nam ở đâu?</div>
+<div class="row"><button class="speak" data-say="男洗手间在哪里？">🔊 Nghe</button><button class="showbig" data-zh="男洗手间在哪里？" data-py="Nán xǐshǒujiān zài nǎlǐ?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">请问，洗手间怎么走？</div><div class="py">Qǐngwèn, xǐshǒujiān zěnme zǒu?</div><div class="vi">Xin hỏi, đi tới nhà vệ sinh thì đi đường nào?</div>
+<div class="row"><button class="speak" data-say="请问，洗手间怎么走？">🔊 Nghe</button><button class="showbig" data-zh="请问，洗手间怎么走？" data-py="Qǐngwèn, xǐshǒujiān zěnme zǒu?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">可以借用一下洗手间吗？</div><div class="py">Kěyǐ jièyòng yíxià xǐshǒujiān ma?</div><div class="vi">Cho tôi dùng nhờ nhà vệ sinh một chút được không? (ở quán ăn/cửa hàng nhỏ)</div>
+<div class="row"><button class="speak" data-say="可以借用一下洗手间吗？">🔊 Nghe</button><button class="showbig" data-zh="可以借用一下洗手间吗？" data-py="Kěyǐ jièyòng yíxià xǐshǒujiān ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">是蹲厕还是坐厕？</div><div class="py">Shì dūncè hái shì zuòcè?</div><div class="vi">Là kiểu ngồi xổm hay bồn ngồi vậy? (hỏi trước nếu chị không quen ngồi xổm)</div>
+<div class="row"><button class="speak" data-say="是蹲厕还是坐厕？">🔊 Nghe</button><button class="showbig" data-zh="是蹲厕还是坐厕？" data-py="Shì dūncè hái shì zuòcè?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">有纸吗？</div><div class="py">Yǒu zhǐ ma?</div><div class="vi">Có giấy (vệ sinh) không?</div>
+<div class="row"><button class="speak" data-say="有纸吗？">🔊 Nghe</button><button class="showbig" data-zh="有纸吗？" data-py="Yǒu zhǐ ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">没有纸了。</div><div class="py">Méiyǒu zhǐ le.</div><div class="vi">Hết giấy rồi. (nói để nhờ lấy thêm)</div>
+<div class="row"><button class="speak" data-say="没有纸了。">🔊 Nghe</button><button class="showbig" data-zh="没有纸了。" data-py="Méiyǒu zhǐ le.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">请给我一点纸。</div><div class="py">Qǐng gěi wǒ yìdiǎn zhǐ.</div><div class="vi">Cho tôi một ít giấy.</div>
+<div class="row"><button class="speak" data-say="请给我一点纸。">🔊 Nghe</button><button class="showbig" data-zh="请给我一点纸。" data-py="Qǐng gěi wǒ yìdiǎn zhǐ.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">怎么冲水？</div><div class="py">Zěnme chōngshuǐ?</div><div class="vi">Xả nước như thế nào? (không thấy nút/gạt xả)</div>
+<div class="row"><button class="speak" data-say="怎么冲水？">🔊 Nghe</button><button class="showbig" data-zh="怎么冲水？" data-py="Zěnme chōngshuǐ?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">门打不开。</div><div class="py">Mén dǎ bù kāi.</div><div class="vi">Cửa không mở được.</div>
+<div class="row"><button class="speak" data-say="门打不开。">🔊 Nghe</button><button class="showbig" data-zh="门打不开。" data-py="Mén dǎ bù kāi.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">有人！</div><div class="py">Yǒu rén!</div><div class="vi">Có người! (đáp lại khi đang ở trong mà có người gõ cửa/đẩy cửa)</div>
+<div class="row"><button class="speak" data-say="有人！">🔊 Nghe</button><button class="showbig" data-zh="有人！" data-py="Yǒu rén!">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">请等一下。</div><div class="py">Qǐng děng yíxià.</div><div class="vi">Xin đợi một chút. (đang ở trong, nói vọng ra)</div>
+<div class="row"><button class="speak" data-say="请等一下。">🔊 Nghe</button><button class="showbig" data-zh="请等一下。" data-py="Qǐng děng yíxià.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我想洗手。</div><div class="py">Wǒ xiǎng xǐshǒu.</div><div class="vi">Tôi muốn rửa tay.</div>
+<div class="row"><button class="speak" data-say="我想洗手。">🔊 Nghe</button><button class="showbig" data-zh="我想洗手。" data-py="Wǒ xiǎng xǐshǒu.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">洗手在哪里？</div><div class="py">Xǐshǒu zài nǎlǐ?</div><div class="vi">Chỗ rửa tay ở đâu?</div>
+<div class="row"><button class="speak" data-say="洗手在哪里？">🔊 Nghe</button><button class="showbig" data-zh="洗手在哪里？" data-py="Xǐshǒu zài nǎlǐ?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我不会用这个。</div><div class="py">Wǒ bú huì yòng zhège.</div><div class="vi">Tôi không biết dùng cái này. (bồn cầu thông minh, vòi lạ…)</div>
+<div class="row"><button class="speak" data-say="我不会用这个。">🔊 Nghe</button><button class="showbig" data-zh="我不会用这个。" data-py="Wǒ bú huì yòng zhège.">🖥️ Đưa người bán xem</button></div></div></div>
+<h2>🪧 Biển hiệu phải nhận mặt chữ</h2>
+<div class="signgrid"><div class="signcard"><div class="signzh">男</div><div>Nam</div></div><div class="signcard"><div class="signzh">女</div><div>Nữ</div></div><div class="signcard"><div class="signzh">洗手间</div><div>Nhà vệ sinh</div></div><div class="signcard"><div class="signzh">卫生间</div><div>Nhà vệ sinh (cách ghi khác)</div></div><div class="signcard"><div class="signzh">公厕 / 公共厕所</div><div>WC công cộng</div></div><div class="signcard"><div class="signzh">母婴室</div><div>Phòng mẹ & bé (có chỗ thay tã, cho con bú)</div></div><div class="signcard"><div class="signzh">无障碍卫生间</div><div>WC cho người khuyết tật / xe lăn</div></div><div class="signcard"><div class="signzh">小心地滑</div><div>Cẩn thận, sàn trơn</div></div><div class="signcard"><div class="signzh">请冲水</div><div>Xin xả nước sau khi dùng</div></div><div class="signcard"><div class="signzh">节约用水</div><div>Tiết kiệm nước</div></div><div class="signcard"><div class="signzh">禁止吸烟</div><div>Cấm hút thuốc</div></div><div class="signcard"><div class="signzh">洗手液</div><div>Xà phòng rửa tay</div></div></div>
+<h2>🧻 Lưu ý thực tế ở Trung Quốc</h2>
+<div class="note"><ul style="margin:0;padding-left:20px">
+<li><b>Luôn mang khăn giấy trong túi:</b> nhiều WC công cộng (nhất là ngoài trung tâm thương mại) không có giấy, hoặc máy bán giấy phải quét mã.</li>
+<li><b>Ngồi xổm （蹲厕） vẫn rất phổ biến</b> ở nhà ga, điểm tham quan, quán nhỏ; bồn ngồi （坐厕） có nhiều ở khách sạn, sân bay, trung tâm thương mại. WC cho người khuyết tật (biển xe lăn) thường là bồn ngồi và rộng rãi.</li>
+<li>Giấy đã dùng ở nhiều nơi được dặn <b>bỏ vào sọt rác bên cạnh</b>, không bỏ vào bồn cầu (đường ống nhỏ dễ tắc) — nhìn sọt rác và biển 请勿将纸巾扔进马桶 là dấu hiệu.</li>
+<li>Tìm WC nhanh nhất: vào <b>trung tâm thương mại, cửa hàng tiện lợi lớn, quán cà phê/trà sữa, khách sạn</b> — thường sạch và miễn phí. Ở ga tàu/sân bay đi theo biển có hình người và chữ 洗手间.</li>
+<li>Bồn cầu thông minh ở khách sạn: nút xả thường ở <b>trên tường hoặc bên hông bồn</b>, có hình giọt nước/sóng nước; không thấy thì dùng câu “怎么冲水？” đưa nhân viên xem.</li>
+</ul></div></div>
+<div class="tab" id="tab-nha-hang"><div class="grid"><div class="card" data-zh="我要看菜单。">
   <div class="zh">我要看菜单。</div>
   <div class="py">Wǒ yào kàn càidān.</div>
   <div class="vi">Cho tôi xem thực đơn.</div>
@@ -735,97 +526,397 @@ input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;bord
     <button class="showbig" data-zh="真好吃。" data-py="Zhēn hǎochī.">🖥️ Đưa người ta xem</button>
     <label class="learned"><input type="checkbox" class="chk" data-id="an-uong-11"> Đã thuộc</label>
   </div>
-</div></div></section><section id="mua-sam"><h2>🛍️ 7. Mua sắm & mặc cả <span class="cnt">(10 câu)</span></h2><div class="grid"><div class="card" data-zh="我只看看。">
-  <div class="zh">我只看看。</div>
-  <div class="py">Wǒ zhǐ kànkan.</div>
-  <div class="vi">Tôi chỉ xem thôi.</div>
+</div></div></div>
+<div class="tab" id="tab-sos"><div class="grid"><div class="card sos">
+  <div class="zh">我不会说中文。</div><div class="py">Wǒ bú huì shuō Zhōngwén.</div><div class="vi">Tôi không biết nói tiếng Trung.</div>
+  <div class="row"><button class="speak" data-say="我不会说中文。">🔊 Nghe</button><button class="showbig" data-zh="我不会说中文。" data-py="Wǒ bú huì shuō Zhōngwén.">🖥️ Đưa người ta xem</button></div>
+</div><div class="card sos">
+  <div class="zh">请说慢一点。</div><div class="py">Qǐng shuō màn yìdiǎn.</div><div class="vi">Xin nói chậm một chút.</div>
+  <div class="row"><button class="speak" data-say="请说慢一点。">🔊 Nghe</button><button class="showbig" data-zh="请说慢一点。" data-py="Qǐng shuō màn yìdiǎn.">🖥️ Đưa người ta xem</button></div>
+</div><div class="card sos">
+  <div class="zh">我听不懂。</div><div class="py">Wǒ tīng bù dǒng.</div><div class="vi">Tôi nghe không hiểu.</div>
+  <div class="row"><button class="speak" data-say="我听不懂。">🔊 Nghe</button><button class="showbig" data-zh="我听不懂。" data-py="Wǒ tīng bù dǒng.">🖥️ Đưa người ta xem</button></div>
+</div><div class="card sos">
+  <div class="zh">请帮我。</div><div class="py">Qǐng bāng wǒ.</div><div class="vi">Xin giúp tôi với.</div>
+  <div class="row"><button class="speak" data-say="请帮我。">🔊 Nghe</button><button class="showbig" data-zh="请帮我。" data-py="Qǐng bāng wǒ.">🖥️ Đưa người ta xem</button></div>
+</div><div class="card sos">
+  <div class="zh">洗手间在哪里？</div><div class="py">Xǐshǒujiān zài nǎlǐ?</div><div class="vi">Nhà vệ sinh ở đâu?</div>
+  <div class="row"><button class="speak" data-say="洗手间在哪里？">🔊 Nghe</button><button class="showbig" data-zh="洗手间在哪里？" data-py="Xǐshǒujiān zài nǎlǐ?">🖥️ Đưa người ta xem</button></div>
+</div><div class="card sos">
+  <div class="zh">多少钱？</div><div class="py">Duōshao qián?</div><div class="vi">Bao nhiêu tiền?</div>
+  <div class="row"><button class="speak" data-say="多少钱？">🔊 Nghe</button><button class="showbig" data-zh="多少钱？" data-py="Duōshao qián?">🖥️ Đưa người ta xem</button></div>
+</div><div class="card sos">
+  <div class="zh">请带我去这个地址。</div><div class="py">Qǐng dài wǒ qù zhège dìzhǐ.</div><div class="vi">Xin đưa tôi đến địa chỉ này. (kèm đưa địa chỉ tiếng Trung trên điện thoại)</div>
+  <div class="row"><button class="speak" data-say="请带我去这个地址。">🔊 Nghe</button><button class="showbig" data-zh="请带我去这个地址。" data-py="Qǐng dài wǒ qù zhège dìzhǐ.">🖥️ Đưa người ta xem</button></div>
+</div><div class="card sos">
+  <div class="zh">救命！</div><div class="py">Jiùmìng!</div><div class="vi">Cứu tôi với!</div>
+  <div class="row"><button class="speak" data-say="救命！">🔊 Nghe</button><button class="showbig" data-zh="救命！" data-py="Jiùmìng!">🖥️ Đưa người ta xem</button></div>
+</div></div></div>
+<div class="tab" id="tab-chao-hoi"><div class="grid"><div class="card" data-zh="你好">
+  <div class="zh">你好</div>
+  <div class="py">Nǐ hǎo</div>
+  <div class="vi">Xin chào</div>
   <div class="row">
-    <button class="speak" data-say="我只看看。">🔊 Nghe</button>
-    <button class="showbig" data-zh="我只看看。" data-py="Wǒ zhǐ kànkan.">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="mua-sam-0"> Đã thuộc</label>
+    <button class="speak" data-say="你好">🔊 Nghe</button>
+    <button class="showbig" data-zh="你好" data-py="Nǐ hǎo">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="chao-hoi-0"> Đã thuộc</label>
   </div>
-</div><div class="card" data-zh="有大一点的吗？">
-  <div class="zh">有大一点的吗？</div>
-  <div class="py">Yǒu dà yìdiǎn de ma?</div>
-  <div class="vi">Có cái lớn hơn một chút không?</div>
+</div><div class="card" data-zh="您好">
+  <div class="zh">您好</div>
+  <div class="py">Nín hǎo</div>
+  <div class="vi">Xin chào — cách lịch sự, dùng với người lớn tuổi, nhân viên, người lạ</div>
   <div class="row">
-    <button class="speak" data-say="有大一点的吗？">🔊 Nghe</button>
-    <button class="showbig" data-zh="有大一点的吗？" data-py="Yǒu dà yìdiǎn de ma?">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="mua-sam-1"> Đã thuộc</label>
+    <button class="speak" data-say="您好">🔊 Nghe</button>
+    <button class="showbig" data-zh="您好" data-py="Nín hǎo">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="chao-hoi-1"> Đã thuộc</label>
   </div>
-</div><div class="card" data-zh="有别的颜色吗？">
-  <div class="zh">有别的颜色吗？</div>
-  <div class="py">Yǒu bié de yánsè ma?</div>
-  <div class="vi">Có màu khác không?</div>
+</div><div class="card" data-zh="早上好">
+  <div class="zh">早上好</div>
+  <div class="py">Zǎoshang hǎo</div>
+  <div class="vi">Chào buổi sáng</div>
   <div class="row">
-    <button class="speak" data-say="有别的颜色吗？">🔊 Nghe</button>
-    <button class="showbig" data-zh="有别的颜色吗？" data-py="Yǒu bié de yánsè ma?">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="mua-sam-2"> Đã thuộc</label>
+    <button class="speak" data-say="早上好">🔊 Nghe</button>
+    <button class="showbig" data-zh="早上好" data-py="Zǎoshang hǎo">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="chao-hoi-2"> Đã thuộc</label>
   </div>
-</div><div class="card" data-zh="可以试一下吗？">
-  <div class="zh">可以试一下吗？</div>
-  <div class="py">Kěyǐ shì yíxià ma?</div>
-  <div class="vi">Tôi thử một chút được không?</div>
+</div><div class="card" data-zh="谢谢">
+  <div class="zh">谢谢</div>
+  <div class="py">Xièxie</div>
+  <div class="vi">Cảm ơn</div>
   <div class="row">
-    <button class="speak" data-say="可以试一下吗？">🔊 Nghe</button>
-    <button class="showbig" data-zh="可以试一下吗？" data-py="Kěyǐ shì yíxià ma?">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="mua-sam-3"> Đã thuộc</label>
+    <button class="speak" data-say="谢谢">🔊 Nghe</button>
+    <button class="showbig" data-zh="谢谢" data-py="Xièxie">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="chao-hoi-3"> Đã thuộc</label>
   </div>
-</div><div class="card" data-zh="最低多少钱？">
-  <div class="zh">最低多少钱？</div>
-  <div class="py">Zuìdī duōshao qián?</div>
-  <div class="vi">Giá thấp nhất là bao nhiêu?</div>
+</div><div class="card" data-zh="不客气">
+  <div class="zh">不客气</div>
+  <div class="py">Bú kèqi</div>
+  <div class="vi">Không có chi / Đừng khách sáo</div>
   <div class="row">
-    <button class="speak" data-say="最低多少钱？">🔊 Nghe</button>
-    <button class="showbig" data-zh="最低多少钱？" data-py="Zuìdī duōshao qián?">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="mua-sam-4"> Đã thuộc</label>
+    <button class="speak" data-say="不客气">🔊 Nghe</button>
+    <button class="showbig" data-zh="不客气" data-py="Bú kèqi">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="chao-hoi-4"> Đã thuộc</label>
   </div>
-</div><div class="card" data-zh="我买了。">
-  <div class="zh">我买了。</div>
-  <div class="py">Wǒ mǎi le.</div>
-  <div class="vi">Tôi mua cái này.</div>
+</div><div class="card" data-zh="对不起">
+  <div class="zh">对不起</div>
+  <div class="py">Duìbuqǐ</div>
+  <div class="vi">Xin lỗi</div>
   <div class="row">
-    <button class="speak" data-say="我买了。">🔊 Nghe</button>
-    <button class="showbig" data-zh="我买了。" data-py="Wǒ mǎi le.">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="mua-sam-5"> Đã thuộc</label>
+    <button class="speak" data-say="对不起">🔊 Nghe</button>
+    <button class="showbig" data-zh="对不起" data-py="Duìbuqǐ">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="chao-hoi-5"> Đã thuộc</label>
   </div>
-</div><div class="card" data-zh="可以用支付宝吗？">
-  <div class="zh">可以用支付宝吗？</div>
-  <div class="py">Kěyǐ yòng Zhīfùbǎo ma?</div>
-  <div class="vi">Trả bằng Alipay được không?</div>
+</div><div class="card" data-zh="没关系">
+  <div class="zh">没关系</div>
+  <div class="py">Méi guānxi</div>
+  <div class="vi">Không sao đâu</div>
   <div class="row">
-    <button class="speak" data-say="可以用支付宝吗？">🔊 Nghe</button>
-    <button class="showbig" data-zh="可以用支付宝吗？" data-py="Kěyǐ yòng Zhīfùbǎo ma?">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="mua-sam-6"> Đã thuộc</label>
+    <button class="speak" data-say="没关系">🔊 Nghe</button>
+    <button class="showbig" data-zh="没关系" data-py="Méi guānxi">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="chao-hoi-6"> Đã thuộc</label>
   </div>
-</div><div class="card" data-zh="可以刷卡吗？">
-  <div class="zh">可以刷卡吗？</div>
-  <div class="py">Kěyǐ shuākǎ ma?</div>
-  <div class="vi">Quẹt thẻ được không?</div>
+</div><div class="card" data-zh="再见">
+  <div class="zh">再见</div>
+  <div class="py">Zàijiàn</div>
+  <div class="vi">Tạm biệt</div>
   <div class="row">
-    <button class="speak" data-say="可以刷卡吗？">🔊 Nghe</button>
-    <button class="showbig" data-zh="可以刷卡吗？" data-py="Kěyǐ shuākǎ ma?">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="mua-sam-7"> Đã thuộc</label>
+    <button class="speak" data-say="再见">🔊 Nghe</button>
+    <button class="showbig" data-zh="再见" data-py="Zàijiàn">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="chao-hoi-7"> Đã thuộc</label>
   </div>
-</div><div class="card" data-zh="请给我一个袋子。">
-  <div class="zh">请给我一个袋子。</div>
-  <div class="py">Qǐng gěi wǒ yí ge dàizi.</div>
-  <div class="vi">Cho tôi một cái túi.</div>
+</div><div class="card" data-zh="我是越南人。">
+  <div class="zh">我是越南人。</div>
+  <div class="py">Wǒ shì Yuènán rén.</div>
+  <div class="vi">Tôi là người Việt Nam.</div>
   <div class="row">
-    <button class="speak" data-say="请给我一个袋子。">🔊 Nghe</button>
-    <button class="showbig" data-zh="请给我一个袋子。" data-py="Qǐng gěi wǒ yí ge dàizi.">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="mua-sam-8"> Đã thuộc</label>
+    <button class="speak" data-say="我是越南人。">🔊 Nghe</button>
+    <button class="showbig" data-zh="我是越南人。" data-py="Wǒ shì Yuènán rén.">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="chao-hoi-8"> Đã thuộc</label>
   </div>
-</div><div class="card" data-zh="能退税吗？">
-  <div class="zh">能退税吗？</div>
-  <div class="py">Néng tuìshuì ma?</div>
-  <div class="vi">Có hoàn thuế được không?</div>
+</div><div class="card" data-zh="很高兴认识你。">
+  <div class="zh">很高兴认识你。</div>
+  <div class="py">Hěn gāoxìng rènshi nǐ.</div>
+  <div class="vi">Rất vui được gặp bạn.</div>
   <div class="row">
-    <button class="speak" data-say="能退税吗？">🔊 Nghe</button>
-    <button class="showbig" data-zh="能退税吗？" data-py="Néng tuìshuì ma?">🖥️ Đưa người ta xem</button>
-    <label class="learned"><input type="checkbox" class="chk" data-id="mua-sam-9"> Đã thuộc</label>
+    <button class="speak" data-say="很高兴认识你。">🔊 Nghe</button>
+    <button class="showbig" data-zh="很高兴认识你。" data-py="Hěn gāoxìng rènshi nǐ.">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="chao-hoi-9"> Đã thuộc</label>
   </div>
-</div></div></section><section id="di-lai"><h2>🚕 8. Đi lại & hỏi đường <span class="cnt">(12 câu)</span></h2><div class="grid"><div class="card" data-zh="请带我去这个地址。">
+</div></div></div>
+<div class="tab" id="tab-cuu-nguy"><div class="grid"><div class="card" data-zh="我不会说中文。">
+  <div class="zh">我不会说中文。</div>
+  <div class="py">Wǒ bú huì shuō Zhōngwén.</div>
+  <div class="vi">Tôi không biết nói tiếng Trung.</div>
+  <div class="row">
+    <button class="speak" data-say="我不会说中文。">🔊 Nghe</button>
+    <button class="showbig" data-zh="我不会说中文。" data-py="Wǒ bú huì shuō Zhōngwén.">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="cuu-nguy-0"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="你会说英语吗？">
+  <div class="zh">你会说英语吗？</div>
+  <div class="py">Nǐ huì shuō Yīngyǔ ma?</div>
+  <div class="vi">Bạn có nói được tiếng Anh không?</div>
+  <div class="row">
+    <button class="speak" data-say="你会说英语吗？">🔊 Nghe</button>
+    <button class="showbig" data-zh="你会说英语吗？" data-py="Nǐ huì shuō Yīngyǔ ma?">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="cuu-nguy-1"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="请说慢一点。">
+  <div class="zh">请说慢一点。</div>
+  <div class="py">Qǐng shuō màn yìdiǎn.</div>
+  <div class="vi">Xin nói chậm một chút.</div>
+  <div class="row">
+    <button class="speak" data-say="请说慢一点。">🔊 Nghe</button>
+    <button class="showbig" data-zh="请说慢一点。" data-py="Qǐng shuō màn yìdiǎn.">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="cuu-nguy-2"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="请再说一遍。">
+  <div class="zh">请再说一遍。</div>
+  <div class="py">Qǐng zài shuō yí biàn.</div>
+  <div class="vi">Xin nói lại một lần nữa.</div>
+  <div class="row">
+    <button class="speak" data-say="请再说一遍。">🔊 Nghe</button>
+    <button class="showbig" data-zh="请再说一遍。" data-py="Qǐng zài shuō yí biàn.">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="cuu-nguy-3"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="我听不懂。">
+  <div class="zh">我听不懂。</div>
+  <div class="py">Wǒ tīng bù dǒng.</div>
+  <div class="vi">Tôi nghe không hiểu.</div>
+  <div class="row">
+    <button class="speak" data-say="我听不懂。">🔊 Nghe</button>
+    <button class="showbig" data-zh="我听不懂。" data-py="Wǒ tīng bù dǒng.">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="cuu-nguy-4"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="请写下来。">
+  <div class="zh">请写下来。</div>
+  <div class="py">Qǐng xiě xiàlai.</div>
+  <div class="vi">Xin viết ra giúp tôi.</div>
+  <div class="row">
+    <button class="speak" data-say="请写下来。">🔊 Nghe</button>
+    <button class="showbig" data-zh="请写下来。" data-py="Qǐng xiě xiàlai.">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="cuu-nguy-5"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="这是什么意思？">
+  <div class="zh">这是什么意思？</div>
+  <div class="py">Zhè shì shénme yìsi?</div>
+  <div class="vi">Cái này nghĩa là gì?</div>
+  <div class="row">
+    <button class="speak" data-say="这是什么意思？">🔊 Nghe</button>
+    <button class="showbig" data-zh="这是什么意思？" data-py="Zhè shì shénme yìsi?">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="cuu-nguy-6"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="等一下。">
+  <div class="zh">等一下。</div>
+  <div class="py">Děng yíxià.</div>
+  <div class="vi">Đợi một chút.</div>
+  <div class="row">
+    <button class="speak" data-say="等一下。">🔊 Nghe</button>
+    <button class="showbig" data-zh="等一下。" data-py="Děng yíxià.">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="cuu-nguy-7"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="我可以用手机翻译吗？">
+  <div class="zh">我可以用手机翻译吗？</div>
+  <div class="py">Wǒ kěyǐ yòng shǒujī fānyì ma?</div>
+  <div class="vi">Tôi dùng điện thoại để dịch được không?</div>
+  <div class="row">
+    <button class="speak" data-say="我可以用手机翻译吗？">🔊 Nghe</button>
+    <button class="showbig" data-zh="我可以用手机翻译吗？" data-py="Wǒ kěyǐ yòng shǒujī fānyì ma?">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="cuu-nguy-8"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="请帮我。">
+  <div class="zh">请帮我。</div>
+  <div class="py">Qǐng bāng wǒ.</div>
+  <div class="vi">Xin giúp tôi với.</div>
+  <div class="row">
+    <button class="speak" data-say="请帮我。">🔊 Nghe</button>
+    <button class="showbig" data-zh="请帮我。" data-py="Qǐng bāng wǒ.">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="cuu-nguy-9"> Đã thuộc</label>
+  </div>
+</div></div></div>
+<div class="tab" id="tab-san-bay"><div class="grid"><div class="card" data-zh="我的护照在这里。">
+  <div class="zh">我的护照在这里。</div>
+  <div class="py">Wǒ de hùzhào zài zhèlǐ.</div>
+  <div class="vi">Hộ chiếu của tôi đây.</div>
+  <div class="row">
+    <button class="speak" data-say="我的护照在这里。">🔊 Nghe</button>
+    <button class="showbig" data-zh="我的护照在这里。" data-py="Wǒ de hùzhào zài zhèlǐ.">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="san-bay-0"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="我是来旅游的。">
+  <div class="zh">我是来旅游的。</div>
+  <div class="py">Wǒ shì lái lǚyóu de.</div>
+  <div class="vi">Tôi đến đây du lịch.</div>
+  <div class="row">
+    <button class="speak" data-say="我是来旅游的。">🔊 Nghe</button>
+    <button class="showbig" data-zh="我是来旅游的。" data-py="Wǒ shì lái lǚyóu de.">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="san-bay-1"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="我住这个酒店。">
+  <div class="zh">我住这个酒店。</div>
+  <div class="py">Wǒ zhù zhège jiǔdiàn.</div>
+  <div class="vi">Tôi ở khách sạn này. (kèm đưa điện thoại/ giấy đặt phòng)</div>
+  <div class="row">
+    <button class="speak" data-say="我住这个酒店。">🔊 Nghe</button>
+    <button class="showbig" data-zh="我住这个酒店。" data-py="Wǒ zhù zhège jiǔdiàn.">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="san-bay-2"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="我的行李不见了。">
+  <div class="zh">我的行李不见了。</div>
+  <div class="py">Wǒ de xíngli bù jiàn le.</div>
+  <div class="vi">Hành lý của tôi không thấy / bị mất.</div>
+  <div class="row">
+    <button class="speak" data-say="我的行李不见了。">🔊 Nghe</button>
+    <button class="showbig" data-zh="我的行李不见了。" data-py="Wǒ de xíngli bù jiàn le.">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="san-bay-3"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="托运行李在哪里？">
+  <div class="zh">托运行李在哪里？</div>
+  <div class="py">Tuōyùn xíngli zài nǎlǐ?</div>
+  <div class="vi">Hành lý ký gửi lấy ở đâu?</div>
+  <div class="row">
+    <button class="speak" data-say="托运行李在哪里？">🔊 Nghe</button>
+    <button class="showbig" data-zh="托运行李在哪里？" data-py="Tuōyùn xíngli zài nǎlǐ?">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="san-bay-4"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="出口在哪里？">
+  <div class="zh">出口在哪里？</div>
+  <div class="py">Chūkǒu zài nǎlǐ?</div>
+  <div class="vi">Lối ra ở đâu?</div>
+  <div class="row">
+    <button class="speak" data-say="出口在哪里？">🔊 Nghe</button>
+    <button class="showbig" data-zh="出口在哪里？" data-py="Chūkǒu zài nǎlǐ?">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="san-bay-5"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="我要去这个地址。">
+  <div class="zh">我要去这个地址。</div>
+  <div class="py">Wǒ yào qù zhège dìzhǐ.</div>
+  <div class="vi">Tôi muốn đi đến địa chỉ này.</div>
+  <div class="row">
+    <button class="speak" data-say="我要去这个地址。">🔊 Nghe</button>
+    <button class="showbig" data-zh="我要去这个地址。" data-py="Wǒ yào qù zhège dìzhǐ.">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="san-bay-6"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="洗手间在哪里？">
+  <div class="zh">洗手间在哪里？</div>
+  <div class="py">Xǐshǒujiān zài nǎlǐ?</div>
+  <div class="vi">Nhà vệ sinh ở đâu?</div>
+  <div class="row">
+    <button class="speak" data-say="洗手间在哪里？">🔊 Nghe</button>
+    <button class="showbig" data-zh="洗手间在哪里？" data-py="Xǐshǒujiān zài nǎlǐ?">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="san-bay-7"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="我的航班晚点了。">
+  <div class="zh">我的航班晚点了。</div>
+  <div class="py">Wǒ de hángbān wǎndiǎn le.</div>
+  <div class="vi">Chuyến bay của tôi bị trễ.</div>
+  <div class="row">
+    <button class="speak" data-say="我的航班晚点了。">🔊 Nghe</button>
+    <button class="showbig" data-zh="我的航班晚点了。" data-py="Wǒ de hángbān wǎndiǎn le.">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="san-bay-8"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="请问，换钱的地方在哪里？">
+  <div class="zh">请问，换钱的地方在哪里？</div>
+  <div class="py">Qǐngwèn, huàn qián de dìfang zài nǎlǐ?</div>
+  <div class="vi">Xin hỏi, chỗ đổi tiền ở đâu?</div>
+  <div class="row">
+    <button class="speak" data-say="请问，换钱的地方在哪里？">🔊 Nghe</button>
+    <button class="showbig" data-zh="请问，换钱的地方在哪里？" data-py="Qǐngwèn, huàn qián de dìfang zài nǎlǐ?">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="san-bay-9"> Đã thuộc</label>
+  </div>
+</div></div></div>
+<div class="tab" id="tab-khach-san"><div class="grid"><div class="card" data-zh="我订了房间。">
+  <div class="zh">我订了房间。</div>
+  <div class="py">Wǒ dìng le fángjiān.</div>
+  <div class="vi">Tôi đã đặt phòng.</div>
+  <div class="row">
+    <button class="speak" data-say="我订了房间。">🔊 Nghe</button>
+    <button class="showbig" data-zh="我订了房间。" data-py="Wǒ dìng le fángjiān.">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="khach-san-0"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="这是我的预订信息。">
+  <div class="zh">这是我的预订信息。</div>
+  <div class="py">Zhè shì wǒ de yùdìng xìnxī.</div>
+  <div class="vi">Đây là thông tin đặt phòng của tôi.</div>
+  <div class="row">
+    <button class="speak" data-say="这是我的预订信息。">🔊 Nghe</button>
+    <button class="showbig" data-zh="这是我的预订信息。" data-py="Zhè shì wǒ de yùdìng xìnxī.">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="khach-san-1"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="我要一个大床房。">
+  <div class="zh">我要一个大床房。</div>
+  <div class="py">Wǒ yào yí ge dàchuáng fáng.</div>
+  <div class="vi">Tôi muốn một phòng giường lớn.</div>
+  <div class="row">
+    <button class="speak" data-say="我要一个大床房。">🔊 Nghe</button>
+    <button class="showbig" data-zh="我要一个大床房。" data-py="Wǒ yào yí ge dàchuáng fáng.">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="khach-san-2"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="房间里有热水吗？">
+  <div class="zh">房间里有热水吗？</div>
+  <div class="py">Fángjiān lǐ yǒu rèshuǐ ma?</div>
+  <div class="vi">Trong phòng có nước nóng không?</div>
+  <div class="row">
+    <button class="speak" data-say="房间里有热水吗？">🔊 Nghe</button>
+    <button class="showbig" data-zh="房间里有热水吗？" data-py="Fángjiān lǐ yǒu rèshuǐ ma?">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="khach-san-3"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="空调不凉。">
+  <div class="zh">空调不凉。</div>
+  <div class="py">Kōngtiáo bù liáng.</div>
+  <div class="vi">Điều hòa không mát.</div>
+  <div class="row">
+    <button class="speak" data-say="空调不凉。">🔊 Nghe</button>
+    <button class="showbig" data-zh="空调不凉。" data-py="Kōngtiáo bù liáng.">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="khach-san-4"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="请给我一条毛巾。">
+  <div class="zh">请给我一条毛巾。</div>
+  <div class="py">Qǐng gěi wǒ yì tiáo máojīn.</div>
+  <div class="vi">Cho tôi thêm một chiếc khăn tắm.</div>
+  <div class="row">
+    <button class="speak" data-say="请给我一条毛巾。">🔊 Nghe</button>
+    <button class="showbig" data-zh="请给我一条毛巾。" data-py="Qǐng gěi wǒ yì tiáo máojīn.">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="khach-san-5"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="早餐几点开始？">
+  <div class="zh">早餐几点开始？</div>
+  <div class="py">Zǎocān jǐ diǎn kāishǐ?</div>
+  <div class="vi">Bữa sáng bắt đầu lúc mấy giờ?</div>
+  <div class="row">
+    <button class="speak" data-say="早餐几点开始？">🔊 Nghe</button>
+    <button class="showbig" data-zh="早餐几点开始？" data-py="Zǎocān jǐ diǎn kāishǐ?">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="khach-san-6"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="我可以晚点退房吗？">
+  <div class="zh">我可以晚点退房吗？</div>
+  <div class="py">Wǒ kěyǐ wǎndiǎn tuì fáng ma?</div>
+  <div class="vi">Tôi trả phòng muộn hơn một chút được không?</div>
+  <div class="row">
+    <button class="speak" data-say="我可以晚点退房吗？">🔊 Nghe</button>
+    <button class="showbig" data-zh="我可以晚点退房吗？" data-py="Wǒ kěyǐ wǎndiǎn tuì fáng ma?">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="khach-san-7"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="请帮我叫出租车。">
+  <div class="zh">请帮我叫出租车。</div>
+  <div class="py">Qǐng bāng wǒ jiào chūzūchē.</div>
+  <div class="vi">Giúp tôi gọi một chiếc taxi.</div>
+  <div class="row">
+    <button class="speak" data-say="请帮我叫出租车。">🔊 Nghe</button>
+    <button class="showbig" data-zh="请帮我叫出租车。" data-py="Qǐng bāng wǒ jiào chūzūchē.">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="khach-san-8"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="退房。">
+  <div class="zh">退房。</div>
+  <div class="py">Tuì fáng.</div>
+  <div class="vi">Tôi muốn trả phòng.</div>
+  <div class="row">
+    <button class="speak" data-say="退房。">🔊 Nghe</button>
+    <button class="showbig" data-zh="退房。" data-py="Tuì fáng.">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="khach-san-9"> Đã thuộc</label>
+  </div>
+</div></div></div>
+<div class="tab" id="tab-di-lai"><div class="grid"><div class="card" data-zh="请带我去这个地址。">
   <div class="zh">请带我去这个地址。</div>
   <div class="py">Qǐng dài wǒ qù zhège dìzhǐ.</div>
   <div class="vi">Xin đưa tôi đến địa chỉ này. (kèm đưa địa chỉ tiếng Trung trên điện thoại)</div>
@@ -933,7 +1024,8 @@ input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;bord
     <button class="showbig" data-zh="我迷路了。" data-py="Wǒ mílù le.">🖥️ Đưa người ta xem</button>
     <label class="learned"><input type="checkbox" class="chk" data-id="di-lai-11"> Đã thuộc</label>
   </div>
-</div></div></section><section id="tham-quan"><h2>📸 9. Tham quan & mua vé <span class="cnt">(8 câu)</span></h2><div class="grid"><div class="card" data-zh="两张票。">
+</div></div></div>
+<div class="tab" id="tab-tham-quan"><div class="grid"><div class="card" data-zh="两张票。">
   <div class="zh">两张票。</div>
   <div class="py">Liǎng zhāng piào.</div>
   <div class="vi">Cho hai vé.</div>
@@ -1005,7 +1097,8 @@ input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;bord
     <button class="showbig" data-zh="这里很漂亮。" data-py="Zhèlǐ hěn piàoliang.">🖥️ Đưa người ta xem</button>
     <label class="learned"><input type="checkbox" class="chk" data-id="tham-quan-7"> Đã thuộc</label>
   </div>
-</div></div></section><section id="suc-khoe"><h2>🚑 10. Sức khỏe & khẩn cấp <span class="cnt">(10 câu)</span></h2><div class="grid"><div class="card" data-zh="我不舒服。">
+</div></div></div>
+<div class="tab" id="tab-suc-khoe"><div class="grid"><div class="card" data-zh="我不舒服。">
   <div class="zh">我不舒服。</div>
   <div class="py">Wǒ bù shūfu.</div>
   <div class="vi">Tôi thấy không khỏe.</div>
@@ -1095,202 +1188,17 @@ input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;bord
     <button class="showbig" data-zh="我需要去看医生。" data-py="Wǒ xūyào qù kàn yīshēng.">🖥️ Đưa người ta xem</button>
     <label class="learned"><input type="checkbox" class="chk" data-id="suc-khoe-9"> Đã thuộc</label>
   </div>
-</div></div></section>
-
-
-
-
-</div>
-<div class="tab" id="tab-mua-hang"><h2 style="margin-top:8px">🧮 Ô trả giá — đưa điện thoại cho người bán nhập giá</h2>
-<div class="pad" id="pad">
-<p class="invite"><span class="zh2">请在这里输入价格，谢谢！</span><br><span style="font-size:16px;color:#8a7a63">(Qǐng zài zhèlǐ shūrù jiàgé, xièxie! — Xin nhập giá vào đây, cảm ơn!)</span></p>
-<div class="padbtns"><button class="primary" id="inviteBtn" style="font-size:19px;padding:13px 22px">🖥️ 1. Đưa người bán xem câu mời nhập giá</button></div>
-<div id="display">¥ 0</div>
-<div id="displayVnd">≈ 0 đồng</div>
-<div class="keys">
-<button data-k="1">1</button><button data-k="2">2</button><button data-k="3">3</button>
-<button data-k="4">4</button><button data-k="5">5</button><button data-k="6">6</button>
-<button data-k="7">7</button><button data-k="8">8</button><button data-k="9">9</button>
-<button data-k="C" style="color:#c0272d">Xóa</button><button data-k="0">0</button><button data-k="B">⌫</button>
-</div>
-<div class="padbtns">
-<button class="green" id="btnSeller" style="font-size:18px">✔ 2. Đây là giá NGƯỜI BÁN ra</button>
-<button class="primary" id="btnMine" style="font-size:18px">🙋 3. Đây là giá TÔI TRẢ</button>
-</div>
-<div id="units" style="text-align:center;margin:10px 0"><b>Giá này tính theo:</b><br>
-<button data-unit="" data-label="" class="unitchip on">Cả món (giá tổng)</button>
-<button data-unit="一斤" data-label="mỗi 500g (1 jin)" class="unitchip">Mỗi 斤 — 500g</button>
-<button data-unit="一公斤" data-label="mỗi 1 kg" class="unitchip">Mỗi 公斤 — 1kg</button>
-<button data-unit="一个" data-label="mỗi cái" class="unitchip">Mỗi cái 个</button>
-<button data-unit="一件" data-label="mỗi món" class="unitchip">Mỗi món 件</button>
-<button data-unit="一瓶" data-label="mỗi chai" class="unitchip">Mỗi chai 瓶</button>
-<button data-unit="一盒" data-label="mỗi hộp" class="unitchip">Mỗi hộp 盒</button>
-<div id="unitNote" style="font-weight:700;color:#17518f;margin-top:6px"></div></div>
-<div id="discounts"><b>Gợi ý mức trả từ giá người bán:</b><br></div>
-<div id="offerBox">
-<div>Đưa câu này cho người bán xem / nghe:</div>
-<div id="offerZh"></div><div id="offerPy"></div><div id="offerVnd"></div>
-<div class="padbtns">
-<button class="speak" id="offerSpeak">🔊 Nghe câu trả giá</button>
-<button id="offerShow">🖥️ Đưa người bán xem (chữ to)</button>
-<button class="green" id="dealBtn">🤝 Chốt: “Được, tôi mua!”</button>
-<button id="stillExpBtn">😅 “Vẫn đắt quá”</button>
-</div></div>
-<p style="text-align:center" class="small">Tỉ giá: 1 ¥ = <input type="number" id="rateShop" value="3650" style="width:100px"> đồng (tự sửa theo tỉ giá chị đổi thực tế — trang tự nhớ)</p>
-</div>
-
-<div id="log"><b>📒 Diễn biến thương lượng</b> <span class="small">(lưu lại để chị theo dõi mình đang ở giá nào, trang tự nhớ)</span>
-<ul id="logList"></ul>
-<button id="clearLog">Xóa, bắt đầu món mới</button></div>
-
-<div class="note">💰 <b>Đổi nhanh từ tiền Việt:</b> chị định bụng “món này tối đa 300.000 đồng” thì là khoảng <input type="number" id="vndIn" placeholder="Nhập số đồng"> đồng ≈ <b id="vndToCny">¥ 0</b> — nhập con số tệ đó ở ô trên rồi bấm <b>“Đây là giá TÔI TRẢ”</b> là xong.</div>
-
-<section id="xem-do"><h2>👀 1. Vào xem & hỏi về món đồ <span class="cnt">(10 câu)</span></h2><div class="grid"><div class="card"><div class="zh">我只看看。</div><div class="py">Wǒ zhǐ kànkan.</div><div class="vi">Tôi chỉ xem thôi.</div>
-<div class="row"><button class="speak" data-say="我只看看。">🔊 Nghe</button><button class="showbig" data-zh="我只看看。" data-py="Wǒ zhǐ kànkan.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">这个多少钱？</div><div class="py">Zhège duōshao qián?</div><div class="vi">Cái này bao nhiêu tiền?</div>
-<div class="row"><button class="speak" data-say="这个多少钱？">🔊 Nghe</button><button class="showbig" data-zh="这个多少钱？" data-py="Zhège duōshao qián?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">有大一点的吗？</div><div class="py">Yǒu dà yìdiǎn de ma?</div><div class="vi">Có cái lớn hơn một chút không?</div>
-<div class="row"><button class="speak" data-say="有大一点的吗？">🔊 Nghe</button><button class="showbig" data-zh="有大一点的吗？" data-py="Yǒu dà yìdiǎn de ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">有小一点的吗？</div><div class="py">Yǒu xiǎo yìdiǎn de ma?</div><div class="vi">Có cái nhỏ hơn một chút không?</div>
-<div class="row"><button class="speak" data-say="有小一点的吗？">🔊 Nghe</button><button class="showbig" data-zh="有小一点的吗？" data-py="Yǒu xiǎo yìdiǎn de ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">有别的颜色吗？</div><div class="py">Yǒu bié de yánsè ma?</div><div class="vi">Có màu khác không?</div>
-<div class="row"><button class="speak" data-say="有别的颜色吗？">🔊 Nghe</button><button class="showbig" data-zh="有别的颜色吗？" data-py="Yǒu bié de yánsè ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">有别的款式吗？</div><div class="py">Yǒu bié de kuǎnshì ma?</div><div class="vi">Có kiểu khác không?</div>
-<div class="row"><button class="speak" data-say="有别的款式吗？">🔊 Nghe</button><button class="showbig" data-zh="有别的款式吗？" data-py="Yǒu bié de kuǎnshì ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">这是什么做的？</div><div class="py">Zhè shì shénme zuò de?</div><div class="vi">Cái này làm bằng chất liệu gì?</div>
-<div class="row"><button class="speak" data-say="这是什么做的？">🔊 Nghe</button><button class="showbig" data-zh="这是什么做的？" data-py="Zhè shì shénme zuò de?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">可以试一下吗？</div><div class="py">Kěyǐ shì yíxià ma?</div><div class="vi">Tôi thử một chút được không?</div>
-<div class="row"><button class="speak" data-say="可以试一下吗？">🔊 Nghe</button><button class="showbig" data-zh="可以试一下吗？" data-py="Kěyǐ shì yíxià ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">有镜子吗？</div><div class="py">Yǒu jìngzi ma?</div><div class="vi">Có gương không?</div>
-<div class="row"><button class="speak" data-say="有镜子吗？">🔊 Nghe</button><button class="showbig" data-zh="有镜子吗？" data-py="Yǒu jìngzi ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我穿多大码？</div><div class="py">Wǒ chuān duō dà mǎ?</div><div class="vi">Tôi nên mặc size bao nhiêu? (nhờ người bán tư vấn)</div>
-<div class="row"><button class="speak" data-say="我穿多大码？">🔊 Nghe</button><button class="showbig" data-zh="我穿多大码？" data-py="Wǒ chuān duō dà mǎ?">🖥️ Đưa người bán xem</button></div></div></div></section><section id="tra-gia"><h2>🤝 2. Trả giá <span class="cnt">(12 câu)</span></h2><div class="grid"><div class="card"><div class="zh">太贵了。</div><div class="py">Tài guì le.</div><div class="vi">Đắt quá.</div>
-<div class="row"><button class="speak" data-say="太贵了。">🔊 Nghe</button><button class="showbig" data-zh="太贵了。" data-py="Tài guì le.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">便宜一点吧。</div><div class="py">Piányi yìdiǎn ba.</div><div class="vi">Rẻ hơn một chút đi.</div>
-<div class="row"><button class="speak" data-say="便宜一点吧。">🔊 Nghe</button><button class="showbig" data-zh="便宜一点吧。" data-py="Piányi yìdiǎn ba.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">最低多少钱？</div><div class="py">Zuìdī duōshao qián?</div><div class="vi">Giá thấp nhất là bao nhiêu?</div>
-<div class="row"><button class="speak" data-say="最低多少钱？">🔊 Nghe</button><button class="showbig" data-zh="最低多少钱？" data-py="Zuìdī duōshao qián?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">还能再便宜吗？</div><div class="py">Hái néng zài piányi ma?</div><div class="vi">Còn rẻ hơn nữa được không?</div>
-<div class="row"><button class="speak" data-say="还能再便宜吗？">🔊 Nghe</button><button class="showbig" data-zh="还能再便宜吗？" data-py="Hái néng zài piányi ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">你说个实在价。</div><div class="py">Nǐ shuō ge shízài jià.</div><div class="vi">Anh/chị nói một cái giá thật đi.</div>
-<div class="row"><button class="speak" data-say="你说个实在价。">🔊 Nghe</button><button class="showbig" data-zh="你说个实在价。" data-py="Nǐ shuō ge shízài jià.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我出……元。</div><div class="py">Wǒ chū … yuán.</div><div class="vi">Tôi trả … tệ. (dùng Ô trả giá ở đầu trang để điền số)</div>
-<div class="row"><button class="speak" data-say="我出……元。">🔊 Nghe</button><button class="showbig" data-zh="我出……元。" data-py="Wǒ chū … yuán.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">还是太贵了。</div><div class="py">Hái shì tài guì le.</div><div class="vi">Vẫn còn đắt quá.</div>
-<div class="row"><button class="speak" data-say="还是太贵了。">🔊 Nghe</button><button class="showbig" data-zh="还是太贵了。" data-py="Hái shì tài guì le.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">两件一起，便宜一点吧。</div><div class="py">Liǎng jiàn yìqǐ, piányi yìdiǎn ba.</div><div class="vi">Tôi mua hai cái cùng lúc, rẻ hơn một chút đi.</div>
-<div class="row"><button class="speak" data-say="两件一起，便宜一点吧。">🔊 Nghe</button><button class="showbig" data-zh="两件一起，便宜一点吧。" data-py="Liǎng jiàn yìqǐ, piányi yìdiǎn ba.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">买三件呢？</div><div class="py">Mǎi sān jiàn ne?</div><div class="vi">Nếu tôi mua ba cái thì giá thế nào?</div>
-<div class="row"><button class="speak" data-say="买三件呢？">🔊 Nghe</button><button class="showbig" data-zh="买三件呢？" data-py="Mǎi sān jiàn ne?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我是真心想买。</div><div class="py">Wǒ shì zhēnxīn xiǎng mǎi.</div><div class="vi">Tôi thật lòng muốn mua đấy.</div>
-<div class="row"><button class="speak" data-say="我是真心想买。">🔊 Nghe</button><button class="showbig" data-zh="我是真心想买。" data-py="Wǒ shì zhēnxīn xiǎng mǎi.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我再看看吧。</div><div class="py">Wǒ zài kànkan ba.</div><div class="vi">Để tôi xem thêm đã.</div>
-<div class="row"><button class="speak" data-say="我再看看吧。">🔊 Nghe</button><button class="showbig" data-zh="我再看看吧。" data-py="Wǒ zài kànkan ba.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我去别家看看。</div><div class="py">Wǒ qù bié jiā kànkan.</div><div class="vi">Tôi sang hàng khác xem sao. (chiêu bỏ đi — người bán hay gọi lại và hạ giá)</div>
-<div class="row"><button class="speak" data-say="我去别家看看。">🔊 Nghe</button><button class="showbig" data-zh="我去别家看看。" data-py="Wǒ qù bié jiā kànkan.">🖥️ Đưa người bán xem</button></div></div></div></section><section id="thanh-toan"><h2>💰 3. Chốt mua & thanh toán <span class="cnt">(11 câu)</span></h2><div class="grid"><div class="card"><div class="zh">好，我买了。</div><div class="py">Hǎo, wǒ mǎi le.</div><div class="vi">Được, tôi mua cái này.</div>
-<div class="row"><button class="speak" data-say="好，我买了。">🔊 Nghe</button><button class="showbig" data-zh="好，我买了。" data-py="Hǎo, wǒ mǎi le.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">成交。</div><div class="py">Chéngjiāo.</div><div class="vi">Chốt giá nhé! (đồng ý giá)</div>
-<div class="row"><button class="speak" data-say="成交。">🔊 Nghe</button><button class="showbig" data-zh="成交。" data-py="Chéngjiāo.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我不买了，谢谢。</div><div class="py">Wǒ bù mǎi le, xièxie.</div><div class="vi">Tôi không mua nữa, cảm ơn.</div>
-<div class="row"><button class="speak" data-say="我不买了，谢谢。">🔊 Nghe</button><button class="showbig" data-zh="我不买了，谢谢。" data-py="Wǒ bù mǎi le, xièxie.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">可以用支付宝吗？</div><div class="py">Kěyǐ yòng Zhīfùbǎo ma?</div><div class="vi">Trả bằng Alipay được không?</div>
-<div class="row"><button class="speak" data-say="可以用支付宝吗？">🔊 Nghe</button><button class="showbig" data-zh="可以用支付宝吗？" data-py="Kěyǐ yòng Zhīfùbǎo ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">可以用微信支付吗？</div><div class="py">Kěyǐ yòng Wēixìn zhīfù ma?</div><div class="vi">Trả bằng WeChat Pay được không?</div>
-<div class="row"><button class="speak" data-say="可以用微信支付吗？">🔊 Nghe</button><button class="showbig" data-zh="可以用微信支付吗？" data-py="Kěyǐ yòng Wēixìn zhīfù ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我用越南的银行软件付款。</div><div class="py">Wǒ yòng Yuènán de yínháng ruǎnjiàn fùkuǎn.</div><div class="vi">Tôi thanh toán bằng ứng dụng ngân hàng Việt Nam. (quét mã Alipay+ bằng VCB Digibank/ZaloPay)</div>
-<div class="row"><button class="speak" data-say="我用越南的银行软件付款。">🔊 Nghe</button><button class="showbig" data-zh="我用越南的银行软件付款。" data-py="Wǒ yòng Yuènán de yínháng ruǎnjiàn fùkuǎn.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">可以刷卡吗？</div><div class="py">Kěyǐ shuākǎ ma?</div><div class="vi">Quẹt thẻ được không?</div>
-<div class="row"><button class="speak" data-say="可以刷卡吗？">🔊 Nghe</button><button class="showbig" data-zh="可以刷卡吗？" data-py="Kěyǐ shuākǎ ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我付现金。</div><div class="py">Wǒ fù xiànjīn.</div><div class="vi">Tôi trả tiền mặt.</div>
-<div class="row"><button class="speak" data-say="我付现金。">🔊 Nghe</button><button class="showbig" data-zh="我付现金。" data-py="Wǒ fù xiànjīn.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">请给我一个袋子。</div><div class="py">Qǐng gěi wǒ yí ge dàizi.</div><div class="vi">Cho tôi một cái túi.</div>
-<div class="row"><button class="speak" data-say="请给我一个袋子。">🔊 Nghe</button><button class="showbig" data-zh="请给我一个袋子。" data-py="Qǐng gěi wǒ yí ge dàizi.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">请给我发票。</div><div class="py">Qǐng gěi wǒ fāpiào.</div><div class="vi">Cho tôi xin hóa đơn.</div>
-<div class="row"><button class="speak" data-say="请给我发票。">🔊 Nghe</button><button class="showbig" data-zh="请给我发票。" data-py="Qǐng gěi wǒ fāpiào.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">能退税吗？</div><div class="py">Néng tuìshuì ma?</div><div class="vi">Có hoàn thuế được không?</div>
-<div class="row"><button class="speak" data-say="能退税吗？">🔊 Nghe</button><button class="showbig" data-zh="能退税吗？" data-py="Néng tuìshuì ma?">🖥️ Đưa người bán xem</button></div></div></div></section><section id="nguoi-ban"><h2>👂 4. Người bán hay nói — nghe để hiểu <span class="cnt">(10 câu)</span></h2><div class="grid"><div class="card"><div class="zh">欢迎光临！</div><div class="py">Huānyíng guānglín!</div><div class="vi">Chào mừng quý khách! (vào cửa hàng nào cũng nghe câu này)</div>
-<div class="row"><button class="speak" data-say="欢迎光临！">🔊 Nghe</button><button class="showbig" data-zh="欢迎光临！" data-py="Huānyíng guānglín!">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">随便看。</div><div class="py">Suíbiàn kàn.</div><div class="vi">Cứ xem tự nhiên đi.</div>
-<div class="row"><button class="speak" data-say="随便看。">🔊 Nghe</button><button class="showbig" data-zh="随便看。" data-py="Suíbiàn kàn.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">这个质量很好。</div><div class="py">Zhège zhìliàng hěn hǎo.</div><div class="vi">Cái này chất lượng tốt lắm. (câu giới thiệu quen thuộc)</div>
-<div class="row"><button class="speak" data-say="这个质量很好。">🔊 Nghe</button><button class="showbig" data-zh="这个质量很好。" data-py="Zhège zhìliàng hěn hǎo.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">今天给你优惠。</div><div class="py">Jīntiān gěi nǐ yōuhuì.</div><div class="vi">Hôm nay ưu đãi riêng cho chị.</div>
-<div class="row"><button class="speak" data-say="今天给你优惠。">🔊 Nghe</button><button class="showbig" data-zh="今天给你优惠。" data-py="Jīntiān gěi nǐ yōuhuì.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">最低价了。</div><div class="py">Zuìdī jià le.</div><div class="vi">Giá thấp nhất rồi đấy.</div>
-<div class="row"><button class="speak" data-say="最低价了。">🔊 Nghe</button><button class="showbig" data-zh="最低价了。" data-py="Zuìdī jià le.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">不能再便宜了。</div><div class="py">Bù néng zài piányi le.</div><div class="vi">Không rẻ hơn được nữa đâu.</div>
-<div class="row"><button class="speak" data-say="不能再便宜了。">🔊 Nghe</button><button class="showbig" data-zh="不能再便宜了。" data-py="Bù néng zài piányi le.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">你出多少钱？</div><div class="py">Nǐ chū duōshao qián?</div><div class="vi">Thế chị trả bao nhiêu? (họ hỏi ngược lại — mở Ô trả giá ở đầu trang, nhập giá rồi đưa họ xem)</div>
-<div class="row"><button class="speak" data-say="你出多少钱？">🔊 Nghe</button><button class="showbig" data-zh="你出多少钱？" data-py="Nǐ chū duōshao qián?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">不卖。</div><div class="py">Bú mài.</div><div class="vi">Không bán. (giá chị trả thấp quá, họ không bán)</div>
-<div class="row"><button class="speak" data-say="不卖。">🔊 Nghe</button><button class="showbig" data-zh="不卖。" data-py="Bú mài.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">成交！</div><div class="py">Chéngjiāo!</div><div class="vi">Chốt! (họ đồng ý giá chị trả — mua thành công 🎉)</div>
-<div class="row"><button class="speak" data-say="成交！">🔊 Nghe</button><button class="showbig" data-zh="成交！" data-py="Chéngjiāo!">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">慢走。</div><div class="py">Màn zǒu.</div><div class="vi">Đi cẩn thận nhé. (lời chào khi khách ra về)</div>
-<div class="row"><button class="speak" data-say="慢走。">🔊 Nghe</button><button class="showbig" data-zh="慢走。" data-py="Màn zǒu.">🖥️ Đưa người bán xem</button></div></div></div></section>
-
-<section><h2>🎨 Màu sắc — bấm để nghe và chỉ cho người bán</h2>
-<div><button class="colorchip speak" data-say="红色"><span class="dot" style="background:#d43a31"></span>红色 · hóngsè · Đỏ</button><button class="colorchip speak" data-say="白色"><span class="dot" style="background:#f5f5f5"></span>白色 · báisè · Trắng</button><button class="colorchip speak" data-say="黑色"><span class="dot" style="background:#222"></span>黑色 · hēisè · Đen</button><button class="colorchip speak" data-say="蓝色"><span class="dot" style="background:#2b6cb0"></span>蓝色 · lánsè · Xanh dương</button><button class="colorchip speak" data-say="绿色"><span class="dot" style="background:#3d9970"></span>绿色 · lǜsè · Xanh lá</button><button class="colorchip speak" data-say="黄色"><span class="dot" style="background:#f2c230"></span>黄色 · huángsè · Vàng</button><button class="colorchip speak" data-say="粉色"><span class="dot" style="background:#f2a7c3"></span>粉色 · fěnsè · Hồng</button><button class="colorchip speak" data-say="紫色"><span class="dot" style="background:#7d4fa6"></span>紫色 · zǐsè · Tím</button><button class="colorchip speak" data-say="灰色"><span class="dot" style="background:#9a9a9a"></span>灰色 · huīsè · Xám</button><button class="colorchip speak" data-say="金色"><span class="dot" style="background:#c9a227"></span>金色 · jīnsè · Vàng kim</button></div>
-<p class="small">Muốn hỏi màu khác: nói <b>有别的颜色吗？</b>(Có màu khác không?) rồi chỉ vào màu chị muốn ở hàng trên.</p></section>
-
-<section><h2>⚖️ Đơn vị tính giá — hỏi giá theo cân, cái, chai…</h2>
-<div class="warn" style="background:#fff5f5;border:1.5px solid #e5aaaa;border-radius:12px;padding:12px 16px">⚠️ <b>Điều dễ bị hớ nhất khi mua ở chợ Trung Quốc:</b> giá thường tính theo <b>斤 (jīn) = 500 gram</b> chứ không phải 1 kg. Biển ghi “20 tệ” rất có thể là 20 tệ/500g — mua 1 kg là 40 tệ. Trước khi chốt, luôn hỏi rõ đơn vị bằng các câu dưới đây, và trong Ô trả giá ở đầu trang nhớ chọn đúng nút đơn vị （斤 / kg / cái…) để trang tính đúng tiền và câu trả giá có kèm đơn vị.</div>
-<table><tr><th>Đơn vị</th><th>Đọc</th><th>Bằng bao nhiêu</th><th>Dùng cho</th></tr>
-<tr><td><b>斤</b></td><td>jīn</td><td><b>500 g</b> (nửa cân)</td><td>Đơn vị chợ phổ biến nhất: trái cây, thịt, hải sản, đồ khô</td></tr>
-<tr><td><b>公斤 / 千克</b></td><td>gōngjīn / qiānkè</td><td>1 kg = 2 斤</td><td>Siêu thị, cửa hàng lớn</td></tr>
-<tr><td><b>两</b></td><td>liǎng</td><td>50 g (10 两 = 1 斤）</td><td>Trà, gia vị, đồ khô bán lượng nhỏ</td></tr>
-<tr><td><b>克</b></td><td>kè</td><td>1 gram</td><td>Hàng đóng gói sẵn ghi trên bao bì</td></tr>
-<tr><td><b>个</b></td><td>gè</td><td>1 cái/chiếc/quả</td><td>Đồ vật nói chung, trái cây đếm quả</td></tr>
-<tr><td><b>件</b></td><td>jiàn</td><td>1 món</td><td>Quần áo, hành lý, sự việc</td></tr>
-<tr><td><b>瓶</b></td><td>píng</td><td>1 chai</td><td>Nước, bia, mỹ phẩm chai</td></tr>
-<tr><td><b>盒</b></td><td>hé</td><td>1 hộp</td><td>Bánh kẹo, quà hộp</td></tr>
-<tr><td><b>袋</b></td><td>dài</td><td>1 túi/gói</td><td>Đồ đóng túi</td></tr>
-<tr><td><b>双</b></td><td>shuāng</td><td>1 đôi</td><td>Giày, đũa, tất, găng tay</td></tr></table>
-<p>Người bán trả lời cũng theo mẫu này, nghe để hiểu: <b>“二十块一斤”</b> (èrshí kuài yí jīn) = 20 tệ một 斤 (500g); <b>“十五块一个”</b> = 15 tệ một cái.</p>
-<div class="grid"><div class="card"><div class="zh">这个多少钱一斤？</div><div class="py">Zhège duōshao qián yí jīn?</div><div class="vi">Cái này bao nhiêu tiền nửa cân (500g)? — câu hỏi giá quan trọng nhất ở chợ</div>
-<div class="row"><button class="speak" data-say="这个多少钱一斤？">🔊 Nghe</button><button class="showbig" data-zh="这个多少钱一斤？" data-py="Zhège duōshao qián yí jīn?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">多少钱一公斤？</div><div class="py">Duōshao qián yì gōngjīn?</div><div class="vi">Bao nhiêu tiền một ký (1 kg)?</div>
-<div class="row"><button class="speak" data-say="多少钱一公斤？">🔊 Nghe</button><button class="showbig" data-zh="多少钱一公斤？" data-py="Duōshao qián yì gōngjīn?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">多少钱一个？</div><div class="py">Duōshao qián yí gè?</div><div class="vi">Bao nhiêu tiền một cái?</div>
-<div class="row"><button class="speak" data-say="多少钱一个？">🔊 Nghe</button><button class="showbig" data-zh="多少钱一个？" data-py="Duōshao qián yí gè?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">多少钱一件？</div><div class="py">Duōshao qián yí jiàn?</div><div class="vi">Bao nhiêu tiền một món (áo, hàng)?</div>
-<div class="row"><button class="speak" data-say="多少钱一件？">🔊 Nghe</button><button class="showbig" data-zh="多少钱一件？" data-py="Duōshao qián yí jiàn?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">多少钱一瓶？</div><div class="py">Duōshao qián yí píng?</div><div class="vi">Bao nhiêu tiền một chai?</div>
-<div class="row"><button class="speak" data-say="多少钱一瓶？">🔊 Nghe</button><button class="showbig" data-zh="多少钱一瓶？" data-py="Duōshao qián yí píng?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">多少钱一盒？</div><div class="py">Duōshao qián yí hé?</div><div class="vi">Bao nhiêu tiền một hộp?</div>
-<div class="row"><button class="speak" data-say="多少钱一盒？">🔊 Nghe</button><button class="showbig" data-zh="多少钱一盒？" data-py="Duōshao qián yí hé?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">多少钱一双？</div><div class="py">Duōshao qián yì shuāng?</div><div class="vi">Bao nhiêu tiền một đôi (giày, đũa, tất)?</div>
-<div class="row"><button class="speak" data-say="多少钱一双？">🔊 Nghe</button><button class="showbig" data-zh="多少钱一双？" data-py="Duōshao qián yì shuāng?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">来一斤。</div><div class="py">Lái yí jīn.</div><div class="vi">Cho tôi nửa cân (500g).</div>
-<div class="row"><button class="speak" data-say="来一斤。">🔊 Nghe</button><button class="showbig" data-zh="来一斤。" data-py="Lái yí jīn.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">来半斤。</div><div class="py">Lái bàn jīn.</div><div class="vi">Cho tôi một phần tư cân (250g).</div>
-<div class="row"><button class="speak" data-say="来半斤。">🔊 Nghe</button><button class="showbig" data-zh="来半斤。" data-py="Lái bàn jīn.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">来两斤。</div><div class="py">Lái liǎng jīn.</div><div class="vi">Cho tôi một ký (2 jin = 1 kg).</div>
-<div class="row"><button class="speak" data-say="来两斤。">🔊 Nghe</button><button class="showbig" data-zh="来两斤。" data-py="Lái liǎng jīn.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">太多了，只要半斤。</div><div class="py">Tài duō le, zhǐ yào bàn jīn.</div><div class="vi">Nhiều quá, tôi chỉ lấy 250g thôi.</div>
-<div class="row"><button class="speak" data-say="太多了，只要半斤。">🔊 Nghe</button><button class="showbig" data-zh="太多了，只要半斤。" data-py="Tài duō le, zhǐ yào bàn jīn.">🖥️ Đưa người bán xem</button></div></div></div></section>
-<section><h2>📏 Bảng size — size Trung Quốc thường nhỏ hơn của Việt Nam</h2>
-<h3>Giày dép (theo chiều dài bàn chân)</h3>
-<table><tr><th>Size châu Âu / Việt Nam</th><th>Chiều dài chân</th><th>Người bán ghi</th></tr>
-<tr><td>36</td><td>23 cm</td><td>230 / 码 36</td></tr>
-<tr><td>37</td><td>23,5 cm</td><td>235 / 码 37</td></tr>
-<tr><td>38</td><td>24 cm</td><td>240 / 码 38</td></tr>
-<tr><td>39</td><td>24,5 cm</td><td>245 / 码 39</td></tr>
-<tr><td>40</td><td>25 cm</td><td>250 / 码 40</td></tr>
-<tr><td>41</td><td>25,5 cm</td><td>255 / 码 41</td></tr>
-<tr><td>42</td><td>26 cm</td><td>260 / 码 42</td></tr></table>
-<h3>Quần áo</h3>
-<ul>
-<li>Trên mác quần áo Trung Quốc thường ghi dạng <b>165/88A</b>: số đầu là chiều cao (cm) vừa với người mặc, số sau là vòng ngực (cm), chữ A là dáng người thường.</li>
-<li>Kinh nghiệm chung: đồ Trung Quốc (nhất là hàng chợ, hàng nội địa) <b>nhỏ hơn đồ Việt khoảng 1–2 size</b> — chị mặc M ở nhà thì ở đây thường phải lấy L, thậm chí XL. <b>Luôn thử trực tiếp</b> (câu “可以试一下吗？”) và đừng tin mỗi chữ size.</li>
-<li>Sợ chật thì đưa người bán xem câu: <b>我穿多大码？</b> (Tôi nên mặc size bao nhiêu?) — họ nhìn người là chọn khá chuẩn.</li>
-</ul></section>
-
-<section><h2>🧭 Mẹo mặc cả &amp; mua sắm an toàn</h2>
-<div class="note"><ul style="margin:0;padding-left:20px">
-<li><b>Nơi mặc cả được:</b> chợ, quầy hàng lưu niệm, phố đi bộ, cửa hàng nhỏ không niêm yết giá. Ở những nơi này giá nói ra thường cao hơn giá bán thật nhiều: bắt đầu trả ở khoảng <b>40–50% giá họ nói</b>, rồi nâng dần từng bước nhỏ, điểm chốt thường ở khoảng 60–70%.</li>
-<li><b>Nơi KHÔNG mặc cả:</b> siêu thị, trung tâm thương mại, cửa hàng có giá niêm yết, nhà ga/sân bay, nhà thuốc — giá in trên tem là giá bán, trả giá chỉ mất thời gian.</li>
-<li><b>Quy trình mặc cả bằng ô số ở đầu trang:</b> người bán nhập giá → chị xem số tiền Việt → bấm mức gợi ý giảm 40–50% → đưa câu trả giá cho họ xem → họ nhập giá mới → chị nâng nhẹ một chút. Hai bên “nói chuyện” hoàn toàn bằng số, không cần tiếng Trung giỏi.</li>
-<li><b>Chiêu bỏ đi:</b> nếu giá chưa ưng, cảm ơn (谢谢), nói “我去别家看看” rồi đi thật chậm — ở chợ, người bán gọi lại và hạ thêm là chuyện rất thường. Họ không gọi thì quay lại mua vẫn chưa muộn.</li>
-<li>Đã gật đầu chốt giá (成交) thì nên mua — lật lọng sau khi chốt bị coi là rất thiếu lịch sự.</li>
-<li>Mua đồ điện tử, đồ giá trị: kiểm tra hàng ngay tại quầy, xin hóa đơn (发票), chụp lại; đồ lưu niệm dễ vỡ nhớ dặn gói kỹ và xách tay.</li>
-<li>Trả bằng app ngân hàng Việt Nam (VCB Digibank/ZaloPay quét Alipay+) hoặc Alipay như hướng dẫn ở <a href="#" data-goto="thong-tin">hạng mục Thông tin hữu ích</a>; trả tiền mặt thì đếm lại tiền thối ngay tại quầy.</li>
-</ul></div>
-<div class="warn"><b>⚠️ Tránh:</b> người lạ rủ đi xem “hàng đặc biệt giá rẻ” ở nơi khác, cân/đong không rõ ràng ở hàng ăn vặt bán theo cân (Trung Quốc tính giá theo <b>500 gram = 一斤 (yí jīn)</b> — biển giá “10 tệ” thường là 10 tệ/nửa cân, không phải 1 kg!), và mã QR dán chồng lên mã gốc của cửa hàng.</div>
-</section>
-
-</div>
-<div class="tab" id="tab-ve-sinh"><h2>🚻 Câu hỏi & nhờ giúp — nhà vệ sinh <span class="cnt">(18 câu)</span></h2>
-<div class="grid"><div class="card"><div class="zh">洗手间在哪里？</div><div class="py">Xǐshǒujiān zài nǎlǐ?</div><div class="vi">Nhà vệ sinh ở đâu? — câu chính, dùng ở mọi nơi</div>
-<div class="row"><button class="speak" data-say="洗手间在哪里？">🔊 Nghe</button><button class="showbig" data-zh="洗手间在哪里？" data-py="Xǐshǒujiān zài nǎlǐ?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我想上厕所。</div><div class="py">Wǒ xiǎng shàng cèsuǒ.</div><div class="vi">Tôi muốn đi vệ sinh.</div>
-<div class="row"><button class="speak" data-say="我想上厕所。">🔊 Nghe</button><button class="showbig" data-zh="我想上厕所。" data-py="Wǒ xiǎng shàng cèsuǒ.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">附近有洗手间吗？</div><div class="py">Fùjìn yǒu xǐshǒujiān ma?</div><div class="vi">Gần đây có nhà vệ sinh không?</div>
-<div class="row"><button class="speak" data-say="附近有洗手间吗？">🔊 Nghe</button><button class="showbig" data-zh="附近有洗手间吗？" data-py="Fùjìn yǒu xǐshǒujiān ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">女洗手间在哪里？</div><div class="py">Nǚ xǐshǒujiān zài nǎlǐ?</div><div class="vi">Nhà vệ sinh nữ ở đâu?</div>
-<div class="row"><button class="speak" data-say="女洗手间在哪里？">🔊 Nghe</button><button class="showbig" data-zh="女洗手间在哪里？" data-py="Nǚ xǐshǒujiān zài nǎlǐ?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">男洗手间在哪里？</div><div class="py">Nán xǐshǒujiān zài nǎlǐ?</div><div class="vi">Nhà vệ sinh nam ở đâu?</div>
-<div class="row"><button class="speak" data-say="男洗手间在哪里？">🔊 Nghe</button><button class="showbig" data-zh="男洗手间在哪里？" data-py="Nán xǐshǒujiān zài nǎlǐ?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">请问，洗手间怎么走？</div><div class="py">Qǐngwèn, xǐshǒujiān zěnme zǒu?</div><div class="vi">Xin hỏi, đi tới nhà vệ sinh thì đi đường nào?</div>
-<div class="row"><button class="speak" data-say="请问，洗手间怎么走？">🔊 Nghe</button><button class="showbig" data-zh="请问，洗手间怎么走？" data-py="Qǐngwèn, xǐshǒujiān zěnme zǒu?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">可以借用一下洗手间吗？</div><div class="py">Kěyǐ jièyòng yíxià xǐshǒujiān ma?</div><div class="vi">Cho tôi dùng nhờ nhà vệ sinh một chút được không? (ở quán ăn/cửa hàng nhỏ)</div>
-<div class="row"><button class="speak" data-say="可以借用一下洗手间吗？">🔊 Nghe</button><button class="showbig" data-zh="可以借用一下洗手间吗？" data-py="Kěyǐ jièyòng yíxià xǐshǒujiān ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">是蹲厕还是坐厕？</div><div class="py">Shì dūncè hái shì zuòcè?</div><div class="vi">Là kiểu ngồi xổm hay bồn ngồi vậy? (hỏi trước nếu chị không quen ngồi xổm)</div>
-<div class="row"><button class="speak" data-say="是蹲厕还是坐厕？">🔊 Nghe</button><button class="showbig" data-zh="是蹲厕还是坐厕？" data-py="Shì dūncè hái shì zuòcè?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">有纸吗？</div><div class="py">Yǒu zhǐ ma?</div><div class="vi">Có giấy (vệ sinh) không?</div>
-<div class="row"><button class="speak" data-say="有纸吗？">🔊 Nghe</button><button class="showbig" data-zh="有纸吗？" data-py="Yǒu zhǐ ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">没有纸了。</div><div class="py">Méiyǒu zhǐ le.</div><div class="vi">Hết giấy rồi. (nói để nhờ lấy thêm)</div>
-<div class="row"><button class="speak" data-say="没有纸了。">🔊 Nghe</button><button class="showbig" data-zh="没有纸了。" data-py="Méiyǒu zhǐ le.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">请给我一点纸。</div><div class="py">Qǐng gěi wǒ yìdiǎn zhǐ.</div><div class="vi">Cho tôi một ít giấy.</div>
-<div class="row"><button class="speak" data-say="请给我一点纸。">🔊 Nghe</button><button class="showbig" data-zh="请给我一点纸。" data-py="Qǐng gěi wǒ yìdiǎn zhǐ.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">怎么冲水？</div><div class="py">Zěnme chōngshuǐ?</div><div class="vi">Xả nước như thế nào? (không thấy nút/gạt xả)</div>
-<div class="row"><button class="speak" data-say="怎么冲水？">🔊 Nghe</button><button class="showbig" data-zh="怎么冲水？" data-py="Zěnme chōngshuǐ?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">门打不开。</div><div class="py">Mén dǎ bù kāi.</div><div class="vi">Cửa không mở được.</div>
-<div class="row"><button class="speak" data-say="门打不开。">🔊 Nghe</button><button class="showbig" data-zh="门打不开。" data-py="Mén dǎ bù kāi.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">有人！</div><div class="py">Yǒu rén!</div><div class="vi">Có người! (đáp lại khi đang ở trong mà có người gõ cửa/đẩy cửa)</div>
-<div class="row"><button class="speak" data-say="有人！">🔊 Nghe</button><button class="showbig" data-zh="有人！" data-py="Yǒu rén!">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">请等一下。</div><div class="py">Qǐng děng yíxià.</div><div class="vi">Xin đợi một chút. (đang ở trong, nói vọng ra)</div>
-<div class="row"><button class="speak" data-say="请等一下。">🔊 Nghe</button><button class="showbig" data-zh="请等一下。" data-py="Qǐng děng yíxià.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我想洗手。</div><div class="py">Wǒ xiǎng xǐshǒu.</div><div class="vi">Tôi muốn rửa tay.</div>
-<div class="row"><button class="speak" data-say="我想洗手。">🔊 Nghe</button><button class="showbig" data-zh="我想洗手。" data-py="Wǒ xiǎng xǐshǒu.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">洗手在哪里？</div><div class="py">Xǐshǒu zài nǎlǐ?</div><div class="vi">Chỗ rửa tay ở đâu?</div>
-<div class="row"><button class="speak" data-say="洗手在哪里？">🔊 Nghe</button><button class="showbig" data-zh="洗手在哪里？" data-py="Xǐshǒu zài nǎlǐ?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我不会用这个。</div><div class="py">Wǒ bú huì yòng zhège.</div><div class="vi">Tôi không biết dùng cái này. (bồn cầu thông minh, vòi lạ…)</div>
-<div class="row"><button class="speak" data-say="我不会用这个。">🔊 Nghe</button><button class="showbig" data-zh="我不会用这个。" data-py="Wǒ bú huì yòng zhège.">🖥️ Đưa người bán xem</button></div></div></div>
-<h2>🪧 Biển hiệu phải nhận mặt chữ</h2>
-<div class="signgrid"><div class="signcard"><div class="signzh">男</div><div>Nam</div></div><div class="signcard"><div class="signzh">女</div><div>Nữ</div></div><div class="signcard"><div class="signzh">洗手间</div><div>Nhà vệ sinh</div></div><div class="signcard"><div class="signzh">卫生间</div><div>Nhà vệ sinh (cách ghi khác)</div></div><div class="signcard"><div class="signzh">公厕 / 公共厕所</div><div>WC công cộng</div></div><div class="signcard"><div class="signzh">母婴室</div><div>Phòng mẹ & bé (có chỗ thay tã, cho con bú)</div></div><div class="signcard"><div class="signzh">无障碍卫生间</div><div>WC cho người khuyết tật / xe lăn</div></div><div class="signcard"><div class="signzh">小心地滑</div><div>Cẩn thận, sàn trơn</div></div><div class="signcard"><div class="signzh">请冲水</div><div>Xin xả nước sau khi dùng</div></div><div class="signcard"><div class="signzh">节约用水</div><div>Tiết kiệm nước</div></div><div class="signcard"><div class="signzh">禁止吸烟</div><div>Cấm hút thuốc</div></div><div class="signcard"><div class="signzh">洗手液</div><div>Xà phòng rửa tay</div></div></div>
-<h2>🧻 Lưu ý thực tế ở Trung Quốc</h2>
-<div class="note"><ul style="margin:0;padding-left:20px">
-<li><b>Luôn mang khăn giấy trong túi:</b> nhiều WC công cộng (nhất là ngoài trung tâm thương mại) không có giấy, hoặc máy bán giấy phải quét mã.</li>
-<li><b>Ngồi xổm （蹲厕） vẫn rất phổ biến</b> ở nhà ga, điểm tham quan, quán nhỏ; bồn ngồi （坐厕） có nhiều ở khách sạn, sân bay, trung tâm thương mại. WC cho người khuyết tật (biển xe lăn) thường là bồn ngồi và rộng rãi.</li>
-<li>Giấy đã dùng ở nhiều nơi được dặn <b>bỏ vào sọt rác bên cạnh</b>, không bỏ vào bồn cầu (đường ống nhỏ dễ tắc) — nhìn sọt rác và biển 请勿将纸巾扔进马桶 là dấu hiệu.</li>
-<li>Tìm WC nhanh nhất: vào <b>trung tâm thương mại, cửa hàng tiện lợi lớn, quán cà phê/trà sữa, khách sạn</b> — thường sạch và miễn phí. Ở ga tàu/sân bay đi theo biển có hình người và chữ 洗手间.</li>
-<li>Bồn cầu thông minh ở khách sạn: nút xả thường ở <b>trên tường hoặc bên hông bồn</b>, có hình giọt nước/sóng nước; không thấy thì dùng câu “怎么冲水？” đưa nhân viên xem.</li>
-</ul></div></div>
+</div></div></div>
 <div class="tab" id="tab-hoc-so"><p class="note">Ghép số: [số] + 十 (chục) / 百 (trăm) / 千 (nghìn) / 万 (vạn = 10.000). Bấm ô số để nghe.</p>
 <h2>🔢 Bảng số — bấm để nghe</h2>
-<div class="numgrid"><button class="numcard speak" data-say="零"><span class="nval">0</span><span class="nzh">零</span><span class="npy">líng</span></button><button class="numcard speak" data-say="一"><span class="nval">1</span><span class="nzh">一</span><span class="npy">yī</span></button><button class="numcard speak" data-say="二"><span class="nval">2</span><span class="nzh">二</span><span class="npy">èr</span></button><button class="numcard speak" data-say="三"><span class="nval">3</span><span class="nzh">三</span><span class="npy">sān</span></button><button class="numcard speak" data-say="四"><span class="nval">4</span><span class="nzh">四</span><span class="npy">sì</span></button><button class="numcard speak" data-say="五"><span class="nval">5</span><span class="nzh">五</span><span class="npy">wǔ</span></button><button class="numcard speak" data-say="六"><span class="nval">6</span><span class="nzh">六</span><span class="npy">liù</span></button><button class="numcard speak" data-say="七"><span class="nval">7</span><span class="nzh">七</span><span class="npy">qī</span></button><button class="numcard speak" data-say="八"><span class="nval">8</span><span class="nzh">八</span><span class="npy">bā</span></button><button class="numcard speak" data-say="九"><span class="nval">9</span><span class="nzh">九</span><span class="npy">jiǔ</span></button><button class="numcard speak" data-say="十"><span class="nval">10</span><span class="nzh">十</span><span class="npy">shí</span></button><button class="numcard speak" data-say="十一"><span class="nval">11</span><span class="nzh">十一</span><span class="npy">shíyī</span></button><button class="numcard speak" data-say="十五"><span class="nval">15</span><span class="nzh">十五</span><span class="npy">shíwǔ</span></button><button class="numcard speak" data-say="二十"><span class="nval">20</span><span class="nzh">二十</span><span class="npy">èrshí</span></button><button class="numcard speak" data-say="二十一"><span class="nval">21</span><span class="nzh">二十一</span><span class="npy">èrshíyī</span></button><button class="numcard speak" data-say="三十"><span class="nval">30</span><span class="nzh">三十</span><span class="npy">sānshí</span></button><button class="numcard speak" data-say="五十"><span class="nval">50</span><span class="nzh">五十</span><span class="npy">wǔshí</span></button><button class="numcard speak" data-say="九十九"><span class="nval">99</span><span class="nzh">九十九</span><span class="npy">jiǔshíjiǔ</span></button><button class="numcard speak" data-say="一百"><span class="nval">100</span><span class="nzh">一百</span><span class="npy">yì bǎi</span></button><button class="numcard speak" data-say="一百零一"><span class="nval">101</span><span class="nzh">一百零一</span><span class="npy">yì bǎi líng yī</span></button><button class="numcard speak" data-say="一百二十"><span class="nval">120</span><span class="nzh">一百二十</span><span class="npy">yì bǎi èrshí</span></button><button class="numcard speak" data-say="两百"><span class="nval">200</span><span class="nzh">两百</span><span class="npy">liǎng bǎi</span></button><button class="numcard speak" data-say="五百"><span class="nval">500</span><span class="nzh">五百</span><span class="npy">wǔ bǎi</span></button><button class="numcard speak" data-say="一千"><span class="nval">1000</span><span class="nzh">一千</span><span class="npy">yì qiān</span></button><button class="numcard speak" data-say="两千零二十六"><span class="nval">2026</span><span class="nzh">两千零二十六</span><span class="npy">liǎng qiān líng èrshílìu</span></button><button class="numcard speak" data-say="一万"><span class="nval">10000</span><span class="nzh">一万</span><span class="npy">yí wàn</span></button><button class="numcard speak" data-say="两万"><span class="nval">20000</span><span class="nzh">两万</span><span class="npy">liǎng wàn</span></button><button class="numcard speak" data-say="十万"><span class="nval">100000</span><span class="nzh">十万</span><span class="npy">shí wàn</span></button></div>
+<div class="numgrid"><button class="numcard" data-say="零"><span class="nval">0</span><span class="nzh">零</span><span class="npy">líng</span></button><button class="numcard" data-say="一"><span class="nval">1</span><span class="nzh">一</span><span class="npy">yī</span></button><button class="numcard" data-say="二"><span class="nval">2</span><span class="nzh">二</span><span class="npy">èr</span></button><button class="numcard" data-say="三"><span class="nval">3</span><span class="nzh">三</span><span class="npy">sān</span></button><button class="numcard" data-say="四"><span class="nval">4</span><span class="nzh">四</span><span class="npy">sì</span></button><button class="numcard" data-say="五"><span class="nval">5</span><span class="nzh">五</span><span class="npy">wǔ</span></button><button class="numcard" data-say="六"><span class="nval">6</span><span class="nzh">六</span><span class="npy">liù</span></button><button class="numcard" data-say="七"><span class="nval">7</span><span class="nzh">七</span><span class="npy">qī</span></button><button class="numcard" data-say="八"><span class="nval">8</span><span class="nzh">八</span><span class="npy">bā</span></button><button class="numcard" data-say="九"><span class="nval">9</span><span class="nzh">九</span><span class="npy">jiǔ</span></button><button class="numcard" data-say="十"><span class="nval">10</span><span class="nzh">十</span><span class="npy">shí</span></button><button class="numcard" data-say="十一"><span class="nval">11</span><span class="nzh">十一</span><span class="npy">shíyī</span></button><button class="numcard" data-say="十五"><span class="nval">15</span><span class="nzh">十五</span><span class="npy">shíwǔ</span></button><button class="numcard" data-say="二十"><span class="nval">20</span><span class="nzh">二十</span><span class="npy">èrshí</span></button><button class="numcard" data-say="二十一"><span class="nval">21</span><span class="nzh">二十一</span><span class="npy">èrshíyī</span></button><button class="numcard" data-say="三十"><span class="nval">30</span><span class="nzh">三十</span><span class="npy">sānshí</span></button><button class="numcard" data-say="五十"><span class="nval">50</span><span class="nzh">五十</span><span class="npy">wǔshí</span></button><button class="numcard" data-say="九十九"><span class="nval">99</span><span class="nzh">九十九</span><span class="npy">jiǔshíjiǔ</span></button><button class="numcard" data-say="一百"><span class="nval">100</span><span class="nzh">一百</span><span class="npy">yì bǎi</span></button><button class="numcard" data-say="一百零一"><span class="nval">101</span><span class="nzh">一百零一</span><span class="npy">yì bǎi líng yī</span></button><button class="numcard" data-say="一百二十"><span class="nval">120</span><span class="nzh">一百二十</span><span class="npy">yì bǎi èrshí</span></button><button class="numcard" data-say="两百"><span class="nval">200</span><span class="nzh">两百</span><span class="npy">liǎng bǎi</span></button><button class="numcard" data-say="五百"><span class="nval">500</span><span class="nzh">五百</span><span class="npy">wǔ bǎi</span></button><button class="numcard" data-say="一千"><span class="nval">1000</span><span class="nzh">一千</span><span class="npy">yì qiān</span></button><button class="numcard" data-say="两千零二十六"><span class="nval">2026</span><span class="nzh">两千零二十六</span><span class="npy">liǎng qiān líng èrshílìu</span></button><button class="numcard" data-say="一万"><span class="nval">10000</span><span class="nzh">一万</span><span class="npy">yí wàn</span></button><button class="numcard" data-say="两万"><span class="nval">20000</span><span class="nzh">两万</span><span class="npy">liǎng wàn</span></button><button class="numcard" data-say="十万"><span class="nval">100000</span><span class="nzh">十万</span><span class="npy">shí wàn</span></button></div>
 <div class="note"><b>Hai chữ “hai” khác nhau:</b> đếm thứ tự/số điện thoại dùng <b>二 (èr)</b>; đếm số lượng kèm đơn vị dùng <b>两 (liǎng)</b>: hai người 两个人， hai vé 两张票， hai trăm 两百， hai vạn 两万， hai tệ 两元.<br>
 <b>Tiền nói miệng:</b> người Trung Quốc nói giá bằng <b>块 (kuài)</b> thay cho 元 (yuán): 3 tệ = 三块， 3 tệ rưỡi = 三块五 (3,5 — số lẻ sau là 角 hào: 1 块 = 10 角， 1 角 = 10 分）. Nghe người bán nói “…块” là đang nói giá tiền.</div>
 <h2>🎲 Luyện đọc giá tiền</h2>
 <div class="practice">
 <p>Bấm “Ra giá mới”, nhìn số tệ rồi <b>đọc to thành tiếng</b> theo kiểu 一百二十元， sau đó bấm “Hiện đáp án” để đối chiếu và nghe đọc mẫu.</p>
 <div id="prPrice" class="bigprice">¥ —</div>
-<div id="prAnswer" style="display:none"><div id="prZh" class="zh" style="font-size:27px"></div><div id="prPy" class="py"></div></div>
+<div id="prAnswer" style="display:none"><div id="prZh" class="zh" style="font-size:27px"></div><div id="prPy" class="py"></div><div id="prZh2" class="vi"></div></div>
 <div class="padbtns"><button class="primary" id="prNew">🎲 Ra giá mới</button><button id="prShow">👁️ Hiện đáp án</button><button class="speak" id="prSpeak">🔊 Nghe đọc giá</button></div>
 </div>
 <h2>👂 Trò chơi nghe số — máy đọc, chị đoán</h2>
@@ -1300,7 +1208,97 @@ input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;bord
 <div id="lqOpts" class="lqopts"></div>
 <div id="lqFb" style="font-weight:700;min-height:28px"></div>
 <div id="lqScore">Điểm: 0/0</div>
-</div></div>
+</div><h2>🗣️ Câu về số, giá cả & thời gian</h2><div class="grid"><div class="card" data-zh="一、二、三、四、五、六、七、八、九、十">
+  <div class="zh">一、二、三、四、五、六、七、八、九、十</div>
+  <div class="py">Yī, èr, sān, sì, wǔ, liù, qī, bā, jiǔ, shí</div>
+  <div class="vi">Một, hai, ba, bốn, năm, sáu, bảy, tám, chín, mười</div>
+  <div class="row">
+    <button class="speak" data-say="一、二、三、四、五、六、七、八、九、十">🔊 Nghe</button>
+    <button class="showbig" data-zh="一、二、三、四、五、六、七、八、九、十" data-py="Yī, èr, sān, sì, wǔ, liù, qī, bā, jiǔ, shí">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="so-gia-0"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="多少钱？">
+  <div class="zh">多少钱？</div>
+  <div class="py">Duōshao qián?</div>
+  <div class="vi">Bao nhiêu tiền?</div>
+  <div class="row">
+    <button class="speak" data-say="多少钱？">🔊 Nghe</button>
+    <button class="showbig" data-zh="多少钱？" data-py="Duōshao qián?">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="so-gia-1"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="太贵了。">
+  <div class="zh">太贵了。</div>
+  <div class="py">Tài guì le.</div>
+  <div class="vi">Đắt quá.</div>
+  <div class="row">
+    <button class="speak" data-say="太贵了。">🔊 Nghe</button>
+    <button class="showbig" data-zh="太贵了。" data-py="Tài guì le.">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="so-gia-2"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="便宜一点吧。">
+  <div class="zh">便宜一点吧。</div>
+  <div class="py">Piányi yìdiǎn ba.</div>
+  <div class="vi">Rẻ hơn một chút đi.</div>
+  <div class="row">
+    <button class="speak" data-say="便宜一点吧。">🔊 Nghe</button>
+    <button class="showbig" data-zh="便宜一点吧。" data-py="Piányi yìdiǎn ba.">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="so-gia-3"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="现在几点？">
+  <div class="zh">现在几点？</div>
+  <div class="py">Xiànzài jǐ diǎn?</div>
+  <div class="vi">Bây giờ là mấy giờ?</div>
+  <div class="row">
+    <button class="speak" data-say="现在几点？">🔊 Nghe</button>
+    <button class="showbig" data-zh="现在几点？" data-py="Xiànzài jǐ diǎn?">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="so-gia-4"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="今天">
+  <div class="zh">今天</div>
+  <div class="py">Jīntiān</div>
+  <div class="vi">Hôm nay</div>
+  <div class="row">
+    <button class="speak" data-say="今天">🔊 Nghe</button>
+    <button class="showbig" data-zh="今天" data-py="Jīntiān">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="so-gia-5"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="明天">
+  <div class="zh">明天</div>
+  <div class="py">Míngtiān</div>
+  <div class="vi">Ngày mai</div>
+  <div class="row">
+    <button class="speak" data-say="明天">🔊 Nghe</button>
+    <button class="showbig" data-zh="明天" data-py="Míngtiān">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="so-gia-6"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="昨天">
+  <div class="zh">昨天</div>
+  <div class="py">Zuótiān</div>
+  <div class="vi">Hôm qua</div>
+  <div class="row">
+    <button class="speak" data-say="昨天">🔊 Nghe</button>
+    <button class="showbig" data-zh="昨天" data-py="Zuótiān">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="so-gia-7"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="一个人">
+  <div class="zh">一个人</div>
+  <div class="py">Yí ge rén</div>
+  <div class="vi">Một người</div>
+  <div class="row">
+    <button class="speak" data-say="一个人">🔊 Nghe</button>
+    <button class="showbig" data-zh="一个人" data-py="Yí ge rén">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="so-gia-8"> Đã thuộc</label>
+  </div>
+</div><div class="card" data-zh="两个人">
+  <div class="zh">两个人</div>
+  <div class="py">Liǎng ge rén</div>
+  <div class="vi">Hai người</div>
+  <div class="row">
+    <button class="speak" data-say="两个人">🔊 Nghe</button>
+    <button class="showbig" data-zh="两个人" data-py="Liǎng ge rén">🖥️ Đưa người ta xem</button>
+    <label class="learned"><input type="checkbox" class="chk" data-id="so-gia-9"> Đã thuộc</label>
+  </div>
+</div></div></div>
 <div class="tab" id="tab-thong-tin"><h2>🚨 1. Số điện thoại khẩn cấp — thuộc lòng hoặc chụp màn hình</h2>
 <div class="card warn">
 <table>
@@ -1523,11 +1521,9 @@ Sức khỏe / 健康说明: <b id="p-health"></b></p>
 <div id="emgPrintHolder" style="display:none"></div>
 <script>
 // ===== Điều hướng hạng mục (bảng chọn ẩn) =====
-const CATS={"thong-dung": "🗣️ Câu thông dụng — 102 câu + 8 câu cứu nguy", "mua-hang": "🛍️ Mua hàng & trả giá — ô nhập giá cho người bán", "ve-sinh": "🚻 Nhà vệ sinh — hỏi WC & biển hiệu", "hoc-so": "🔢 Học số — đếm số, đọc giá tiền, nghe số", "thong-tin": "🧭 Thông tin hữu ích — visa, tiền, khẩn cấp, checklist", "kiem-tra": "📝 Bài kiểm tra — 30 câu tự chấm điểm"};
 function goTab(id){ document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
  const el=document.getElementById('tab-'+id); if(el) el.classList.add('active');
  document.querySelectorAll('#panel button').forEach(b=>b.classList.toggle('on', b.dataset.goto===id));
- document.getElementById('curCat').textContent=CATS[id]||id;
  document.getElementById('panel').classList.remove('open');
  try{ localStorage.setItem('mshue-tab',id); }catch(_){}
  window.scrollTo({top:0}); }
@@ -1549,18 +1545,15 @@ document.getElementById('speed').oninput=e=>document.getElementById('speedVal').
 function showBig(zh,py){ document.getElementById('bigZh').textContent=zh; document.getElementById('bigPy').textContent=py||'';
  document.getElementById('bigModal').style.display='flex'; document.getElementById('bigSpeak').onclick=()=>speak(zh); }
 document.getElementById('bigClose').onclick=()=>document.getElementById('bigModal').style.display='none';
-document.addEventListener('click',e=>{ const s=e.target.closest('.speak'); if(s&&s.dataset.say){ speak(s.dataset.say); return; }
+document.addEventListener('click',e=>{ const s=e.target.closest('[data-say]'); if(s){ speak(s.dataset.say); return; }
  const b=e.target.closest('.showbig'); if(b){ showBig(b.dataset.zh,b.dataset.py); return; }
- const qa=e.target.closest('.qaudio'); if(qa){ speak(qa.dataset.say); } });
-// ===== Câu thông dụng: tìm kiếm, ẩn pinyin, đã thuộc =====
+ });
+// ===== Câu thông dụng: đã thuộc =====
 const LS_LEARN='mshue-learned-v1';
-document.getElementById('togglePy').onclick=e=>{ document.body.classList.toggle('hidepy'); e.target.textContent=document.body.classList.contains('hidepy')?'Hiện pinyin':'Ẩn pinyin'; };
-document.getElementById('search').oninput=e=>{ const q=e.target.value.trim().toLowerCase();
- document.querySelectorAll('#tab-thong-dung .card').forEach(c=>{ c.style.display=(!q||c.textContent.toLowerCase().includes(q))?'':'none'; }); };
 let learned={}; try{ learned=JSON.parse(localStorage.getItem(LS_LEARN)||'{}'); }catch(_){ learned={}; }
-function refreshProg(){ const n=document.querySelectorAll('#tab-thong-dung .chk:checked').length;
- document.getElementById('prog').textContent='Đã thuộc: '+n+'/102'; }
-document.querySelectorAll('#tab-thong-dung .chk').forEach(ch=>{ if(learned[ch.dataset.id]){ ch.checked=true; ch.closest('.card').classList.add('done'); }
+function refreshProg(){ const all=document.querySelectorAll('input.chk'); const n=document.querySelectorAll('input.chk:checked').length;
+ document.getElementById('prog').textContent='Đã thuộc: '+n+'/'+all.length+' câu'; }
+document.querySelectorAll('input.chk').forEach(ch=>{ if(learned[ch.dataset.id]){ ch.checked=true; ch.closest('.card').classList.add('done'); }
  ch.onchange=()=>{ learned[ch.dataset.id]=ch.checked; if(!ch.checked) delete learned[ch.dataset.id];
   try{ localStorage.setItem(LS_LEARN,JSON.stringify(learned)); }catch(_){}
   ch.closest('.card').classList.toggle('done',ch.checked); refreshProg(); }; });
@@ -1605,7 +1598,7 @@ function numHanzi(n){ if(n===2)return '两'; if(n<10000)return underWan(n);
 function numPinyin(n){ const hz=numHanzi(n); const chars=hz.split(''); const syl=chars.map(c=>PYMAP[c]||c);
  for(let i=0;i<chars.length-1;i++){ if(chars[i]==='一'){ syl[i]=/[àèìòù]/.test(syl[i+1])?'yí':'yì'; } }
  return syl.join(' '); }
-const UNIT_PY={'一斤':'yí jīn','一公斤':'yì gōngjīn','一个':'yí gè','一件':'yí jiàn','一瓶':'yí píng','一盒':'yí hé'};
+const UNIT_PY={'一斤':'yí jīn','一公斤':'yì gōngjīn','一个':'yí gè','一件':'yí jiàn','一瓶':'yí píng','一盒':'yí hé','一袋':'yí dài','一包':'yí bāo'};
 function offerSentence(n,unit){ const base=(n===2)?{zh:'我出两元',py:'Wǒ chū liǎng yuán'}:{zh:'我出'+numHanzi(n)+'元',py:'Wǒ chū '+numPinyin(n)+' yuán'};
  if(unit) return {zh:base.zh+unit+'，可以吗？', py:base.py+' '+UNIT_PY[unit]+', kěyǐ ma?'};
  return {zh:base.zh+'，可以吗？', py:base.py+', kěyǐ ma?'}; }
@@ -1622,7 +1615,7 @@ function unitNoteUpdate(v){ const un=document.getElementById('unitNote'); if(!v)
  else if(unit) un.textContent='Giá tính '+unitLabel+' — nhớ nhân với số lượng chị lấy';
  else un.textContent=''; }
 function renderDisplay(){ const v=parseFloat(entry)||0;
- document.getElementById('display').textContent='¥ '+(entry===''?'0':entry);
+ document.getElementById('display').textContent='¥ '+(entry===''?'0':entry)+(entry!==''&&unit?' '+unit:'');
  document.getElementById('displayVnd').textContent='≈ '+fmtVnd(v)+(unit?(' · '+unitLabel):''); unitNoteUpdate(v); }
 document.querySelectorAll('#tab-mua-hang .keys button').forEach(b=>{ b.onclick=()=>{ const k=b.dataset.k;
  if(k==='C')entry=''; else if(k==='B')entry=entry.slice(0,-1); else if(entry.replace('.','').length<7)entry+=k; renderDisplay(); }; });
@@ -1630,21 +1623,20 @@ document.querySelectorAll('#units .unitchip').forEach(b=>{ b.onclick=()=>{ unit=
  document.querySelectorAll('#units .unitchip').forEach(x=>x.classList.toggle('on',x===b)); renderDisplay(); }; });
 rateEl.oninput=()=>{ try{ localStorage.setItem('mshue-rate',rateEl.value); }catch(_){} renderDisplay(); renderLog(); };
 function renderLog(){ const ul=document.getElementById('logList');
- ul.innerHTML=bargLog.map(e=>'<li>'+(e.role==='seller'?'🛒 Người bán ra giá':'🙋 Chị trả giá')+': <b>¥ '+e.price+'</b>'+(e.unit?(' '+e.unit):'')+' (≈ '+fmtVnd(e.price)+')</li>').join('')||'<li style="color:#8a7a63">Chưa có lần ra giá nào.</li>'; }
-function pushLog(role,price){ bargLog.push({role:role,price:price,unit:unitLabel}); try{ localStorage.setItem('mshue-bargain-log',JSON.stringify(bargLog)); }catch(_){} renderLog(); }
+ ul.innerHTML=bargLog.map(e=>'<li>'+(e.role==='seller'?'🛒 Người bán ra giá':'🙋 Chị trả giá')+': <b>¥ '+e.price+(e.unit?' '+e.unit:'')+'</b>'+(e.unitLabel?(' ('+e.unitLabel+')'):'')+' ≈ '+fmtVnd(e.price)+'</li>').join('')||'<li style="color:#8a7a63">Chưa có lần ra giá nào.</li>'; }
+function pushLog(role,price){ bargLog.push({role:role,price:price,unit:unit,unitLabel:unitLabel}); try{ localStorage.setItem('mshue-bargain-log',JSON.stringify(bargLog)); }catch(_){} renderLog(); }
 document.getElementById('clearLog').onclick=()=>{ bargLog=[]; try{ localStorage.removeItem('mshue-bargain-log'); }catch(_){} renderLog(); };
-document.getElementById('inviteBtn').onclick=()=>showBig('请在这里输入价格，谢谢！','Qǐng zài zhèlǐ shūrù jiàgé, xièxie!');
 function roundNice(v){ return v>=100?Math.round(v/5)*5:Math.round(v); }
 function setOffer(n){ myOffer=n; const s=offerSentence(n,unit);
  document.getElementById('offerZh').textContent=s.zh; document.getElementById('offerPy').textContent=s.py;
- document.getElementById('offerVnd').textContent='= ¥ '+n+(unit?(' '+unitLabel):'')+' ≈ '+fmtVnd(n);
+ document.getElementById('offerVnd').textContent='= ¥ '+n+(unit?(' '+unit+' · '+unitLabel):'')+' ≈ '+fmtVnd(n);
  document.getElementById('offerBox').style.display='block';
  document.getElementById('offerBox').scrollIntoView({behavior:'smooth',block:'center'}); }
 document.getElementById('btnSeller').onclick=()=>{ const v=parseFloat(entry); if(!v){ alert('Chưa có số nào — đưa người bán bấm giá trước đã.'); return; }
  sellerPrice=v; pushLog('seller',v); entry=''; renderDisplay();
  const box=document.getElementById('discounts'); box.style.display='block';
  box.innerHTML='<b>Gợi ý mức trả từ giá người bán ¥ '+sellerPrice+(unit?(' '+unitLabel):'')+' (≈ '+fmtVnd(sellerPrice)+'):</b><br>'+
-  [20,30,40,50].map(p=>{ const o=roundNice(sellerPrice*(100-p)/100); return '<button data-offer="'+o+'">Giảm '+p+'% → ¥ '+o+' (≈ '+fmtVnd(o)+')</button>'; }).join('');
+  [20,30,40,50].map(p=>{ const o=roundNice(sellerPrice*(100-p)/100); return '<button data-offer="'+o+'">Giảm '+p+'% → ¥ '+o+(unit?' '+unit:'')+' (≈ '+fmtVnd(o)+')</button>'; }).join('');
  box.querySelectorAll('button').forEach(b=>{ b.onclick=()=>setOffer(+b.dataset.offer); }); };
 document.getElementById('btnMine').onclick=()=>{ const v=parseFloat(entry); if(!v){ alert('Hãy bấm số giá chị muốn trả trước.'); return; }
  pushLog('mine',v); entry=''; renderDisplay(); setOffer(Math.round(v)); };
@@ -1656,15 +1648,22 @@ document.getElementById('vndIn').oninput=e=>{ const v=parseFloat(e.target.value)
  document.getElementById('vndToCny').textContent='¥ '+(v?Math.round(v/rate()):0); };
 renderDisplay(); renderLog();
 // ===== Học số: luyện đọc giá + nghe số =====
-let prN=0;
-function prGen(){ prN=5+Math.floor(Math.random()*9995);
- document.getElementById('prPrice').textContent='¥ '+prN.toLocaleString('vi-VN');
+let prN=0, prZhCur='';
+function prGen(){ const r=Math.random(); let zh,py,spoken;
+ if(r<0.35){ const base=2+Math.floor(Math.random()*198); const dec=[5,8,9][Math.floor(Math.random()*3)];
+  prN=base+'.'+dec; zh=numHanzi(base)+'元'+DIG[dec]+'角'; py=numPinyin(base)+' yuán '+PYMAP[DIG[dec]]+' jiǎo';
+  spoken=numHanzi(base)+'块'+DIG[dec]; }
+ else { let n; const q=Math.random(); n=q<0.6?(3+Math.floor(Math.random()*97)):(q<0.9?(100+Math.floor(Math.random()*500)):(600+Math.floor(Math.random()*1400)));
+  prN=String(n); zh=numHanzi(n)+'元'; py=numPinyin(n)+' yuán'; spoken=numHanzi(n)+'块'; }
+ prZhCur=zh;
+ document.getElementById('prPrice').textContent='¥ '+prN;
  document.getElementById('prAnswer').style.display='none';
- document.getElementById('prZh').textContent=numHanzi(prN)+'元';
- document.getElementById('prPy').textContent=numPinyin(prN)+' yuán'; }
+ document.getElementById('prZh').textContent=zh;
+ document.getElementById('prPy').textContent=py;
+ document.getElementById('prZh2').textContent='Nói miệng: '+spoken+' (người bán hay nói 块 thay cho 元)'; }
 document.getElementById('prNew').onclick=prGen;
 document.getElementById('prShow').onclick=()=>{ if(!prN) prGen(); document.getElementById('prAnswer').style.display='block'; };
-document.getElementById('prSpeak').onclick=()=>{ if(!prN) prGen(); speak(numHanzi(prN)+'元'); };
+document.getElementById('prSpeak').onclick=()=>{ if(!prN) prGen(); speak(prZhCur); };
 let lqTarget=0, lqScore=0, lqTotal=0, lqDone=true;
 function lqGen(){ const priceFirst=Math.random()<0.6;
  lqTarget=priceFirst? (5+Math.floor(Math.random()*1996)) : (11+Math.floor(Math.random()*9989));
@@ -1700,7 +1699,7 @@ document.getElementById('lqSpeak').onclick=()=>{ if(lqTarget) speak(numHanzi(lqT
   try{ localStorage.removeItem(LS2); }catch(e){} F.forEach(function(k){ var el=document.getElementById('f-'+k); if(el) el.value=''; }); };
 })();
 // khôi phục hạng mục đã mở lần trước
-(function(){ let t='thong-dung'; try{ t=localStorage.getItem('mshue-tab')||'thong-dung'; }catch(_){}
+(function(){ let t='mua-hang'; try{ t=localStorage.getItem('mshue-tab')||'mua-hang'; }catch(_){}
  if(!document.getElementById('tab-'+t)) t='thong-dung'; goTab(t); })();
 </script>
 </body></html>
