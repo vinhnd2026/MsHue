@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Đi mua hàng & trả giá ở Trung Quốc — dành cho chị Huệ</title>
+<style>
+*{box-sizing:border-box} body{margin:0;font-family:-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:#fdf8f2;color:#26221e;font-size:18px;line-height:1.55}
+header{background:linear-gradient(135deg,#8f1d22,#c0272d);color:#fff;padding:26px 16px 20px;text-align:center}
+header h1{margin:0 0 6px;font-size:29px} header p{margin:4px auto;max-width:780px;opacity:.95}
+.wrap{max-width:1020px;margin:0 auto;padding:14px}
+h2{color:#8f1d22;margin:28px 0 10px;font-size:23px} .cnt{color:#8a7a63;font-size:16px}
+h3{color:#8f1d22;margin:18px 0 6px}
+.pad{background:#fff;border:3px solid #c0272d;border-radius:18px;padding:18px;box-shadow:0 2px 8px #0002}
+.pad .invite{font-size:23px;font-weight:800;text-align:center}
+.pad .invite .zh2{color:#c0272d;font-size:27px}
+#display{font-size:52px;font-weight:800;text-align:center;background:#fff7e8;border:2px solid #ecd9ae;border-radius:14px;padding:8px;min-height:84px;margin:12px 0 4px}
+#displayVnd{text-align:center;font-size:21px;color:#b3541e;font-weight:700;min-height:30px}
+.keys{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;max-width:430px;margin:12px auto}
+.keys button{font-size:27px;padding:15px 0;border-radius:13px;border:2px solid #d8c3a5;background:#fff;cursor:pointer;font-weight:700}
+.keys button:active{background:#fdecec}
+.padbtns{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin:10px 0}
+button{font-size:16.5px;padding:10px 14px;border-radius:10px;border:2px solid #d8c3a5;background:#fff;cursor:pointer}
+button.primary{background:#c0272d;color:#fff;border-color:#c0272d;font-weight:700}
+button.green{background:#2e7d32;color:#fff;border-color:#2e7d32;font-weight:700}
+button.speak{background:#c0272d;color:#fff;border-color:#c0272d;font-weight:600}
+#discounts{display:none;text-align:center;margin:10px 0}
+#discounts button{background:#fff7e8;font-weight:700;margin:3px}
+#offerBox{display:none;background:#eef7ea;border:2px solid #7fb069;border-radius:14px;padding:14px 16px;margin:12px 0;text-align:center}
+#offerZh{font-size:31px;font-weight:800} #offerPy{color:#b3541e;font-size:19px} #offerVnd{font-weight:700}
+#log{background:#fff;border:1.5px solid #eadfce;border-radius:12px;padding:10px 16px;margin:12px 0}
+#logList{margin:6px 0;padding-left:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:#fff;border:1.5px solid #eadfce;border-radius:14px;padding:14px 16px;box-shadow:0 1px 3px #0001}
+.zh{font-size:24px;font-weight:700} .py{color:#b3541e} .vi{color:#44403a}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.note{background:#fff7e8;border:1.5px solid #ecd9ae;border-radius:12px;padding:12px 16px;margin:14px 0}
+.warn{background:#fff5f5;border:1.5px solid #e5aaaa;border-radius:12px;padding:12px 16px;margin:14px 0}
+table{width:100%;border-collapse:collapse;background:#fff;margin:10px 0}
+th,td{border-bottom:1px solid #e8ddcb;padding:8px 10px;text-align:left} th{background:#fdf1e3;color:#8f1d22}
+.colorchip{display:inline-flex;align-items:center;gap:7px;margin:4px;font-size:16.5px;background:#fff}
+.dot{width:20px;height:20px;border-radius:50%;border:1.5px solid #bbb;display:inline-block}
+#bigModal{display:none;position:fixed;inset:0;background:#111;z-index:50;color:#fff;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:20px}
+#bigModal .bzh{font-size:9vw;font-weight:800;line-height:1.3} #bigModal .bpy{font-size:25px;color:#ffd9a0;margin-top:12px}
+#bigModal button{margin-top:26px;font-size:20px;padding:12px 26px}
+input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;border-radius:10px;width:150px}
+select{font-size:16px;padding:9px 12px;border-radius:10px;border:2px solid #d8c3a5;background:#fff}
+a{color:#8f1d22}
+</style></head><body>
+<header><h1>🛍️ Đi mua hàng &amp; trả giá ở Trung Quốc</h1>
+<p>File riêng dành cho chị Huệ khi đi chợ, vào cửa hàng — điểm chính là <b>Ô TRẢ GIÁ</b> ở ngay đầu trang: ở Trung Quốc, người ta mặc cả bằng cách <b>bấm số qua lại cho nhau xem</b>, không cần nói giỏi. Ô này thay chiếc máy tính đó, lại còn tự đổi ra tiền Việt và đọc giá lên bằng tiếng Trung.</p></header>
+<div class="wrap">
+
+<h2 style="margin-top:8px">🧮 Ô trả giá — đưa điện thoại cho người bán nhập giá</h2>
+<div class="pad" id="pad">
+<p class="invite">Cách dùng: bấm nút đỏ ở dưới để hiện câu mời bằng chữ Hán thật to, rồi đưa điện thoại cho người bán bấm giá.<br><span class="zh2">请在这里输入价格，谢谢！</span><br><span style="font-size:16px;color:#8a7a63">(Qǐng zài zhèlǐ shūrù jiàgé, xièxie! — Xin nhập giá vào đây, cảm ơn!)</span></p>
+<div class="padbtns"><button class="primary" id="inviteBtn" style="font-size:19px;padding:13px 22px">🖥️ 1. Đưa người bán xem câu mời nhập giá</button></div>
+<div id="display">¥ 0</div>
+<div id="displayVnd">≈ 0 đồng</div>
+<div class="keys">
+<button data-k="1">1</button><button data-k="2">2</button><button data-k="3">3</button>
+<button data-k="4">4</button><button data-k="5">5</button><button data-k="6">6</button>
+<button data-k="7">7</button><button data-k="8">8</button><button data-k="9">9</button>
+<button data-k="C" style="color:#c0272d">Xóa</button><button data-k="0">0</button><button data-k="B">⌫</button>
+</div>
+<div class="padbtns">
+<button class="green" id="btnSeller" style="font-size:18px">✔ 2. Đây là giá NGƯỜI BÁN ra</button>
+<button class="primary" id="btnMine" style="font-size:18px">🙋 3. Đây là giá TÔI TRẢ</button>
+</div>
+<div id="discounts"><b>Gợi ý mức trả từ giá người bán:</b><br></div>
+<div id="offerBox">
+<div>Đưa câu này cho người bán xem / nghe:</div>
+<div id="offerZh"></div><div id="offerPy"></div><div id="offerVnd"></div>
+<div class="padbtns">
+<button class="speak" id="offerSpeak">🔊 Nghe câu trả giá</button>
+<button id="offerShow">🖥️ Đưa người bán xem (chữ to)</button>
+<button class="green" id="dealBtn">🤝 Chốt: “Được, tôi mua!”</button>
+<button id="stillExpBtn">😅 “Vẫn đắt quá”</button>
+</div></div>
+<p style="text-align:center" class="small">Tỉ giá: 1 ¥ = <input type="number" id="rateIn" value="3650" style="width:100px"> đồng (tự sửa theo tỉ giá chị đổi thực tế — trang tự nhớ) · Giọng đọc: <select id="voiceSel"><option value="">Giọng mặc định</option></select> · Tốc độ <input type="range" id="speed" min="0.5" max="1.5" step="0.05" value="0.88" style="vertical-align:middle;width:110px"></p>
+</div>
+
+<div id="log"><b>📒 Diễn biến thương lượng</b> <span class="small">(lưu lại để chị theo dõi mình đang ở giá nào, trang tự nhớ)</span>
+<ul id="logList"></ul>
+<button id="clearLog">Xóa, bắt đầu món mới</button></div>
+
+<div class="note">💰 <b>Đổi nhanh từ tiền Việt:</b> chị định bụng “món này tối đa 300.000 đồng” thì là khoảng <input type="number" id="vndIn" placeholder="Nhập số đồng"> đồng ≈ <b id="vndToCny">¥ 0</b> — nhập con số tệ đó ở ô trên rồi bấm <b>“Đây là giá TÔI TRẢ”</b> là xong.</div>
+
+<section id="xem-do"><h2>👀 1. Vào xem & hỏi về món đồ <span class="cnt">(10 câu)</span></h2><div class="grid"><div class="card"><div class="zh">我只看看。</div><div class="py">Wǒ zhǐ kànkan.</div><div class="vi">Tôi chỉ xem thôi.</div>
+<div class="row"><button class="speak" data-say="我只看看。">🔊 Nghe</button><button class="showbig" data-zh="我只看看。" data-py="Wǒ zhǐ kànkan.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">这个多少钱？</div><div class="py">Zhège duōshao qián?</div><div class="vi">Cái này bao nhiêu tiền?</div>
+<div class="row"><button class="speak" data-say="这个多少钱？">🔊 Nghe</button><button class="showbig" data-zh="这个多少钱？" data-py="Zhège duōshao qián?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">有大一点的吗？</div><div class="py">Yǒu dà yìdiǎn de ma?</div><div class="vi">Có cái lớn hơn một chút không?</div>
+<div class="row"><button class="speak" data-say="有大一点的吗？">🔊 Nghe</button><button class="showbig" data-zh="有大一点的吗？" data-py="Yǒu dà yìdiǎn de ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">有小一点的吗？</div><div class="py">Yǒu xiǎo yìdiǎn de ma?</div><div class="vi">Có cái nhỏ hơn một chút không?</div>
+<div class="row"><button class="speak" data-say="有小一点的吗？">🔊 Nghe</button><button class="showbig" data-zh="有小一点的吗？" data-py="Yǒu xiǎo yìdiǎn de ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">有别的颜色吗？</div><div class="py">Yǒu bié de yánsè ma?</div><div class="vi">Có màu khác không?</div>
+<div class="row"><button class="speak" data-say="有别的颜色吗？">🔊 Nghe</button><button class="showbig" data-zh="有别的颜色吗？" data-py="Yǒu bié de yánsè ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">有别的款式吗？</div><div class="py">Yǒu bié de kuǎnshì ma?</div><div class="vi">Có kiểu khác không?</div>
+<div class="row"><button class="speak" data-say="有别的款式吗？">🔊 Nghe</button><button class="showbig" data-zh="有别的款式吗？" data-py="Yǒu bié de kuǎnshì ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">这是什么做的？</div><div class="py">Zhè shì shénme zuò de?</div><div class="vi">Cái này làm bằng chất liệu gì?</div>
+<div class="row"><button class="speak" data-say="这是什么做的？">🔊 Nghe</button><button class="showbig" data-zh="这是什么做的？" data-py="Zhè shì shénme zuò de?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">可以试一下吗？</div><div class="py">Kěyǐ shì yíxià ma?</div><div class="vi">Tôi thử một chút được không?</div>
+<div class="row"><button class="speak" data-say="可以试一下吗？">🔊 Nghe</button><button class="showbig" data-zh="可以试一下吗？" data-py="Kěyǐ shì yíxià ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">有镜子吗？</div><div class="py">Yǒu jìngzi ma?</div><div class="vi">Có gương không?</div>
+<div class="row"><button class="speak" data-say="有镜子吗？">🔊 Nghe</button><button class="showbig" data-zh="有镜子吗？" data-py="Yǒu jìngzi ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我穿多大码？</div><div class="py">Wǒ chuān duō dà mǎ?</div><div class="vi">Tôi nên mặc size bao nhiêu? (nhờ người bán tư vấn)</div>
+<div class="row"><button class="speak" data-say="我穿多大码？">🔊 Nghe</button><button class="showbig" data-zh="我穿多大码？" data-py="Wǒ chuān duō dà mǎ?">🖥️ Đưa người bán xem</button></div></div></div></section><section id="tra-gia"><h2>🤝 2. Trả giá <span class="cnt">(12 câu)</span></h2><div class="grid"><div class="card"><div class="zh">太贵了。</div><div class="py">Tài guì le.</div><div class="vi">Đắt quá.</div>
+<div class="row"><button class="speak" data-say="太贵了。">🔊 Nghe</button><button class="showbig" data-zh="太贵了。" data-py="Tài guì le.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">便宜一点吧。</div><div class="py">Piányi yìdiǎn ba.</div><div class="vi">Rẻ hơn một chút đi.</div>
+<div class="row"><button class="speak" data-say="便宜一点吧。">🔊 Nghe</button><button class="showbig" data-zh="便宜一点吧。" data-py="Piányi yìdiǎn ba.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">最低多少钱？</div><div class="py">Zuìdī duōshao qián?</div><div class="vi">Giá thấp nhất là bao nhiêu?</div>
+<div class="row"><button class="speak" data-say="最低多少钱？">🔊 Nghe</button><button class="showbig" data-zh="最低多少钱？" data-py="Zuìdī duōshao qián?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">还能再便宜吗？</div><div class="py">Hái néng zài piányi ma?</div><div class="vi">Còn rẻ hơn nữa được không?</div>
+<div class="row"><button class="speak" data-say="还能再便宜吗？">🔊 Nghe</button><button class="showbig" data-zh="还能再便宜吗？" data-py="Hái néng zài piányi ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">你说个实在价。</div><div class="py">Nǐ shuō ge shízài jià.</div><div class="vi">Anh/chị nói một cái giá thật đi.</div>
+<div class="row"><button class="speak" data-say="你说个实在价。">🔊 Nghe</button><button class="showbig" data-zh="你说个实在价。" data-py="Nǐ shuō ge shízài jià.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我出……元。</div><div class="py">Wǒ chū … yuán.</div><div class="vi">Tôi trả … tệ. (dùng Ô trả giá ở đầu trang để điền số)</div>
+<div class="row"><button class="speak" data-say="我出……元。">🔊 Nghe</button><button class="showbig" data-zh="我出……元。" data-py="Wǒ chū … yuán.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">还是太贵了。</div><div class="py">Hái shì tài guì le.</div><div class="vi">Vẫn còn đắt quá.</div>
+<div class="row"><button class="speak" data-say="还是太贵了。">🔊 Nghe</button><button class="showbig" data-zh="还是太贵了。" data-py="Hái shì tài guì le.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">两件一起，便宜一点吧。</div><div class="py">Liǎng jiàn yìqǐ, piányi yìdiǎn ba.</div><div class="vi">Tôi mua hai cái cùng lúc, rẻ hơn một chút đi.</div>
+<div class="row"><button class="speak" data-say="两件一起，便宜一点吧。">🔊 Nghe</button><button class="showbig" data-zh="两件一起，便宜一点吧。" data-py="Liǎng jiàn yìqǐ, piányi yìdiǎn ba.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">买三件呢？</div><div class="py">Mǎi sān jiàn ne?</div><div class="vi">Nếu tôi mua ba cái thì giá thế nào?</div>
+<div class="row"><button class="speak" data-say="买三件呢？">🔊 Nghe</button><button class="showbig" data-zh="买三件呢？" data-py="Mǎi sān jiàn ne?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我是真心想买。</div><div class="py">Wǒ shì zhēnxīn xiǎng mǎi.</div><div class="vi">Tôi thật lòng muốn mua đấy.</div>
+<div class="row"><button class="speak" data-say="我是真心想买。">🔊 Nghe</button><button class="showbig" data-zh="我是真心想买。" data-py="Wǒ shì zhēnxīn xiǎng mǎi.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我再看看吧。</div><div class="py">Wǒ zài kànkan ba.</div><div class="vi">Để tôi xem thêm đã.</div>
+<div class="row"><button class="speak" data-say="我再看看吧。">🔊 Nghe</button><button class="showbig" data-zh="我再看看吧。" data-py="Wǒ zài kànkan ba.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我去别家看看。</div><div class="py">Wǒ qù bié jiā kànkan.</div><div class="vi">Tôi sang hàng khác xem sao. (chiêu bỏ đi — người bán hay gọi lại và hạ giá)</div>
+<div class="row"><button class="speak" data-say="我去别家看看。">🔊 Nghe</button><button class="showbig" data-zh="我去别家看看。" data-py="Wǒ qù bié jiā kànkan.">🖥️ Đưa người bán xem</button></div></div></div></section><section id="thanh-toan"><h2>💰 3. Chốt mua & thanh toán <span class="cnt">(11 câu)</span></h2><div class="grid"><div class="card"><div class="zh">好，我买了。</div><div class="py">Hǎo, wǒ mǎi le.</div><div class="vi">Được, tôi mua cái này.</div>
+<div class="row"><button class="speak" data-say="好，我买了。">🔊 Nghe</button><button class="showbig" data-zh="好，我买了。" data-py="Hǎo, wǒ mǎi le.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">成交。</div><div class="py">Chéngjiāo.</div><div class="vi">Chốt giá nhé! (đồng ý giá)</div>
+<div class="row"><button class="speak" data-say="成交。">🔊 Nghe</button><button class="showbig" data-zh="成交。" data-py="Chéngjiāo.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我不买了，谢谢。</div><div class="py">Wǒ bù mǎi le, xièxie.</div><div class="vi">Tôi không mua nữa, cảm ơn.</div>
+<div class="row"><button class="speak" data-say="我不买了，谢谢。">🔊 Nghe</button><button class="showbig" data-zh="我不买了，谢谢。" data-py="Wǒ bù mǎi le, xièxie.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">可以用支付宝吗？</div><div class="py">Kěyǐ yòng Zhīfùbǎo ma?</div><div class="vi">Trả bằng Alipay được không?</div>
+<div class="row"><button class="speak" data-say="可以用支付宝吗？">🔊 Nghe</button><button class="showbig" data-zh="可以用支付宝吗？" data-py="Kěyǐ yòng Zhīfùbǎo ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">可以用微信支付吗？</div><div class="py">Kěyǐ yòng Wēixìn zhīfù ma?</div><div class="vi">Trả bằng WeChat Pay được không?</div>
+<div class="row"><button class="speak" data-say="可以用微信支付吗？">🔊 Nghe</button><button class="showbig" data-zh="可以用微信支付吗？" data-py="Kěyǐ yòng Wēixìn zhīfù ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我用越南的银行软件付款。</div><div class="py">Wǒ yòng Yuènán de yínháng ruǎnjiàn fùkuǎn.</div><div class="vi">Tôi thanh toán bằng ứng dụng ngân hàng Việt Nam. (quét mã Alipay+ bằng VCB Digibank/ZaloPay)</div>
+<div class="row"><button class="speak" data-say="我用越南的银行软件付款。">🔊 Nghe</button><button class="showbig" data-zh="我用越南的银行软件付款。" data-py="Wǒ yòng Yuènán de yínháng ruǎnjiàn fùkuǎn.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">可以刷卡吗？</div><div class="py">Kěyǐ shuākǎ ma?</div><div class="vi">Quẹt thẻ được không?</div>
+<div class="row"><button class="speak" data-say="可以刷卡吗？">🔊 Nghe</button><button class="showbig" data-zh="可以刷卡吗？" data-py="Kěyǐ shuākǎ ma?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">我付现金。</div><div class="py">Wǒ fù xiànjīn.</div><div class="vi">Tôi trả tiền mặt.</div>
+<div class="row"><button class="speak" data-say="我付现金。">🔊 Nghe</button><button class="showbig" data-zh="我付现金。" data-py="Wǒ fù xiànjīn.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">请给我一个袋子。</div><div class="py">Qǐng gěi wǒ yí ge dàizi.</div><div class="vi">Cho tôi một cái túi.</div>
+<div class="row"><button class="speak" data-say="请给我一个袋子。">🔊 Nghe</button><button class="showbig" data-zh="请给我一个袋子。" data-py="Qǐng gěi wǒ yí ge dàizi.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">请给我发票。</div><div class="py">Qǐng gěi wǒ fāpiào.</div><div class="vi">Cho tôi xin hóa đơn.</div>
+<div class="row"><button class="speak" data-say="请给我发票。">🔊 Nghe</button><button class="showbig" data-zh="请给我发票。" data-py="Qǐng gěi wǒ fāpiào.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">能退税吗？</div><div class="py">Néng tuìshuì ma?</div><div class="vi">Có hoàn thuế được không?</div>
+<div class="row"><button class="speak" data-say="能退税吗？">🔊 Nghe</button><button class="showbig" data-zh="能退税吗？" data-py="Néng tuìshuì ma?">🖥️ Đưa người bán xem</button></div></div></div></section><section id="nguoi-ban"><h2>👂 4. Người bán hay nói — nghe để hiểu <span class="cnt">(10 câu)</span></h2><div class="grid"><div class="card"><div class="zh">欢迎光临！</div><div class="py">Huānyíng guānglín!</div><div class="vi">Chào mừng quý khách! (vào cửa hàng nào cũng nghe câu này)</div>
+<div class="row"><button class="speak" data-say="欢迎光临！">🔊 Nghe</button><button class="showbig" data-zh="欢迎光临！" data-py="Huānyíng guānglín!">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">随便看。</div><div class="py">Suíbiàn kàn.</div><div class="vi">Cứ xem tự nhiên đi.</div>
+<div class="row"><button class="speak" data-say="随便看。">🔊 Nghe</button><button class="showbig" data-zh="随便看。" data-py="Suíbiàn kàn.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">这个质量很好。</div><div class="py">Zhège zhìliàng hěn hǎo.</div><div class="vi">Cái này chất lượng tốt lắm. (câu giới thiệu quen thuộc)</div>
+<div class="row"><button class="speak" data-say="这个质量很好。">🔊 Nghe</button><button class="showbig" data-zh="这个质量很好。" data-py="Zhège zhìliàng hěn hǎo.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">今天给你优惠。</div><div class="py">Jīntiān gěi nǐ yōuhuì.</div><div class="vi">Hôm nay ưu đãi riêng cho chị.</div>
+<div class="row"><button class="speak" data-say="今天给你优惠。">🔊 Nghe</button><button class="showbig" data-zh="今天给你优惠。" data-py="Jīntiān gěi nǐ yōuhuì.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">最低价了。</div><div class="py">Zuìdī jià le.</div><div class="vi">Giá thấp nhất rồi đấy.</div>
+<div class="row"><button class="speak" data-say="最低价了。">🔊 Nghe</button><button class="showbig" data-zh="最低价了。" data-py="Zuìdī jià le.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">不能再便宜了。</div><div class="py">Bù néng zài piányi le.</div><div class="vi">Không rẻ hơn được nữa đâu.</div>
+<div class="row"><button class="speak" data-say="不能再便宜了。">🔊 Nghe</button><button class="showbig" data-zh="不能再便宜了。" data-py="Bù néng zài piányi le.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">你出多少钱？</div><div class="py">Nǐ chū duōshao qián?</div><div class="vi">Thế chị trả bao nhiêu? (họ hỏi ngược lại — mở Ô trả giá ở đầu trang, nhập giá rồi đưa họ xem)</div>
+<div class="row"><button class="speak" data-say="你出多少钱？">🔊 Nghe</button><button class="showbig" data-zh="你出多少钱？" data-py="Nǐ chū duōshao qián?">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">不卖。</div><div class="py">Bú mài.</div><div class="vi">Không bán. (giá chị trả thấp quá, họ không bán)</div>
+<div class="row"><button class="speak" data-say="不卖。">🔊 Nghe</button><button class="showbig" data-zh="不卖。" data-py="Bú mài.">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">成交！</div><div class="py">Chéngjiāo!</div><div class="vi">Chốt! (họ đồng ý giá chị trả — mua thành công 🎉)</div>
+<div class="row"><button class="speak" data-say="成交！">🔊 Nghe</button><button class="showbig" data-zh="成交！" data-py="Chéngjiāo!">🖥️ Đưa người bán xem</button></div></div><div class="card"><div class="zh">慢走。</div><div class="py">Màn zǒu.</div><div class="vi">Đi cẩn thận nhé. (lời chào khi khách ra về)</div>
+<div class="row"><button class="speak" data-say="慢走。">🔊 Nghe</button><button class="showbig" data-zh="慢走。" data-py="Màn zǒu.">🖥️ Đưa người bán xem</button></div></div></div></section>
+
+<section><h2>🎨 Màu sắc — bấm để nghe và chỉ cho người bán</h2>
+<div><button class="colorchip speak" data-say="红色"><span class="dot" style="background:#d43a31"></span>红色 · hóngsè · Đỏ</button><button class="colorchip speak" data-say="白色"><span class="dot" style="background:#f5f5f5"></span>白色 · báisè · Trắng</button><button class="colorchip speak" data-say="黑色"><span class="dot" style="background:#222"></span>黑色 · hēisè · Đen</button><button class="colorchip speak" data-say="蓝色"><span class="dot" style="background:#2b6cb0"></span>蓝色 · lánsè · Xanh dương</button><button class="colorchip speak" data-say="绿色"><span class="dot" style="background:#3d9970"></span>绿色 · lǜsè · Xanh lá</button><button class="colorchip speak" data-say="黄色"><span class="dot" style="background:#f2c230"></span>黄色 · huángsè · Vàng</button><button class="colorchip speak" data-say="粉色"><span class="dot" style="background:#f2a7c3"></span>粉色 · fěnsè · Hồng</button><button class="colorchip speak" data-say="紫色"><span class="dot" style="background:#7d4fa6"></span>紫色 · zǐsè · Tím</button><button class="colorchip speak" data-say="灰色"><span class="dot" style="background:#9a9a9a"></span>灰色 · huīsè · Xám</button><button class="colorchip speak" data-say="金色"><span class="dot" style="background:#c9a227"></span>金色 · jīnsè · Vàng kim</button></div>
+<p class="small">Muốn hỏi màu khác: nói <b>有别的颜色吗？</b>(Có màu khác không?) rồi chỉ vào màu chị muốn ở hàng trên.</p></section>
+
+<section><h2>📏 Bảng size — size Trung Quốc thường nhỏ hơn của Việt Nam</h2>
+<h3>Giày dép (theo chiều dài bàn chân)</h3>
+<table><tr><th>Size châu Âu / Việt Nam</th><th>Chiều dài chân</th><th>Người bán ghi</th></tr>
+<tr><td>36</td><td>23 cm</td><td>230 / 码 36</td></tr>
+<tr><td>37</td><td>23,5 cm</td><td>235 / 码 37</td></tr>
+<tr><td>38</td><td>24 cm</td><td>240 / 码 38</td></tr>
+<tr><td>39</td><td>24,5 cm</td><td>245 / 码 39</td></tr>
+<tr><td>40</td><td>25 cm</td><td>250 / 码 40</td></tr>
+<tr><td>41</td><td>25,5 cm</td><td>255 / 码 41</td></tr>
+<tr><td>42</td><td>26 cm</td><td>260 / 码 42</td></tr></table>
+<h3>Quần áo</h3>
+<ul>
+<li>Trên mác quần áo Trung Quốc thường ghi dạng <b>165/88A</b>: số đầu là chiều cao (cm) vừa với người mặc, số sau là vòng ngực (cm), chữ A là dáng người thường.</li>
+<li>Kinh nghiệm chung: đồ Trung Quốc (nhất là hàng chợ, hàng nội địa) <b>nhỏ hơn đồ Việt khoảng 1–2 size</b> — chị mặc M ở nhà thì ở đây thường phải lấy L, thậm chí XL. <b>Luôn thử trực tiếp</b> (câu “可以试一下吗？”) và đừng tin mỗi chữ size.</li>
+<li>Sợ chật thì đưa người bán xem câu: <b>我穿多大码？</b> (Tôi nên mặc size bao nhiêu?) — họ nhìn người là chọn khá chuẩn.</li>
+</ul></section>
+
+<section><h2>🧭 Mẹo mặc cả &amp; mua sắm an toàn</h2>
+<div class="note"><ul style="margin:0;padding-left:20px">
+<li><b>Nơi mặc cả được:</b> chợ, quầy hàng lưu niệm, phố đi bộ, cửa hàng nhỏ không niêm yết giá. Ở những nơi này giá nói ra thường cao hơn giá bán thật nhiều: bắt đầu trả ở khoảng <b>40–50% giá họ nói</b>, rồi nâng dần từng bước nhỏ, điểm chốt thường ở khoảng 60–70%.</li>
+<li><b>Nơi KHÔNG mặc cả:</b> siêu thị, trung tâm thương mại, cửa hàng có giá niêm yết, nhà ga/sân bay, nhà thuốc — giá in trên tem là giá bán, trả giá chỉ mất thời gian.</li>
+<li><b>Quy trình mặc cả bằng ô số ở đầu trang:</b> người bán nhập giá → chị xem số tiền Việt → bấm mức gợi ý giảm 40–50% → đưa câu trả giá cho họ xem → họ nhập giá mới → chị nâng nhẹ một chút. Hai bên “nói chuyện” hoàn toàn bằng số, không cần tiếng Trung giỏi.</li>
+<li><b>Chiêu bỏ đi:</b> nếu giá chưa ưng, cảm ơn (谢谢), nói “我去别家看看” rồi đi thật chậm — ở chợ, người bán gọi lại và hạ thêm là chuyện rất thường. Họ không gọi thì quay lại mua vẫn chưa muộn.</li>
+<li>Đã gật đầu chốt giá (成交) thì nên mua — lật lọng sau khi chốt bị coi là rất thiếu lịch sự.</li>
+<li>Mua đồ điện tử, đồ giá trị: kiểm tra hàng ngay tại quầy, xin hóa đơn (发票), chụp lại; đồ lưu niệm dễ vỡ nhớ dặn gói kỹ và xách tay.</li>
+<li>Trả bằng app ngân hàng Việt Nam (VCB Digibank/ZaloPay quét Alipay+) hoặc Alipay như hướng dẫn ở <a href="Thong-Tin-Huu-Ich.html">file thông tin hữu ích</a>; trả tiền mặt thì đếm lại tiền thối ngay tại quầy.</li>
+</ul></div>
+<div class="warn"><b>⚠️ Tránh:</b> người lạ rủ đi xem “hàng đặc biệt giá rẻ” ở nơi khác, cân/đong không rõ ràng ở hàng ăn vặt bán theo cân (Trung Quốc tính giá theo <b>500 gram = 一斤 (yí jīn)</b> — biển giá “10 tệ” thường là 10 tệ/nửa cân, không phải 1 kg!), và mã QR dán chồng lên mã gốc của cửa hàng.</div>
+</section>
+
+<p>📚 Các file khác: <a href="Hoc-Cau-Thong-Dung.html"><b>102 câu thông dụng + bài kiểm tra</b></a> · <a href="Thong-Tin-Huu-Ich.html"><b>Thông tin hữu ích du lịch Trung Quốc</b></a> · <a href="index.html">Trang chủ bộ tài liệu</a></p>
+</div>
+
+<div id="bigModal"><div class="bzh" id="bigZh"></div><div class="bpy" id="bigPy"></div>
+<button id="bigSpeak">🔊 Nghe phát âm</button><button id="bigClose">✖ Đóng</button></div>
+
+<script>
+let voices=[];
+function loadVoices(){ voices=speechSynthesis.getVoices(); const zh=voices.filter(v=>/^zh/i.test(v.lang));
+ const sel=document.getElementById('voiceSel'); sel.innerHTML='<option value="">Giọng mặc định</option>'+zh.map(v=>'<option value="'+voices.indexOf(v)+'">'+(v.name||v.lang)+' ('+v.lang+')</option>').join(''); }
+if('speechSynthesis' in window){ speechSynthesis.onvoiceschanged=loadVoices; loadVoices(); }
+function speak(text){ if(!('speechSynthesis' in window)){ alert('Thiết bị không hỗ trợ phát âm.'); return; }
+ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); u.lang='zh-CN';
+ u.rate=parseFloat(document.getElementById('speed').value);
+ const vi=document.getElementById('voiceSel').value; if(vi!==''&&voices[+vi]) u.voice=voices[+vi]; speechSynthesis.speak(u); }
+function showBig(zh,py){ document.getElementById('bigZh').textContent=zh; document.getElementById('bigPy').textContent=py||'';
+ document.getElementById('bigModal').style.display='flex';
+ document.getElementById('bigSpeak').onclick=()=>speak(zh); }
+document.getElementById('bigClose').onclick=()=>document.getElementById('bigModal').style.display='none';
+document.addEventListener('click',e=>{ const s=e.target.closest('.speak'); if(s&&s.dataset.say){ speak(s.dataset.say); return; }
+ const b=e.target.closest('.showbig'); if(b){ showBig(b.dataset.zh,b.dataset.py); } });
+
+// ===== Số Hán tự + pinyin cho giá tiền =====
+const DIG=['零','一','二','三','四','五','六','七','八','九'];
+const PYMAP={'零':'líng','一':'yī','二':'èr','三':'sān','四':'sì','五':'wǔ','六':'liù','七':'qī','八':'bā','九':'jiǔ','十':'shí','百':'bǎi','千':'qiān','万':'wàn','元':'yuán','两':'liǎng'};
+function underWan(n){ let s=''; const th=Math.floor(n/1000),hu=Math.floor(n%1000/100),te=Math.floor(n%100/10),on=n%10; let zero=false;
+ if(th){s+=DIG[th]+'千';} if(hu){ if(th&&false){} s+=DIG[hu]+'百'; zero=false; } else if(th&& (te||on)) s+='零';
+ if(te){ if(te>1||s) s+=DIG[te]; s+='十'; zero=false; } else if((th||hu)&&on) s+='零';
+ if(on) s+=DIG[on]; return s||'零'; }
+function numHanzi(n){ if(n===2) return '两'; if(n<10000) return underWan(n);
+ const w=Math.floor(n/10000), r=n%10000; let s=underWan(w)+'万'; if(r){ if(r<1000) s+='零'; s+=underWan(r); } return s; }
+function numPinyin(n){ const hz=numHanzi(n); const chars=hz.split(''); const syl=chars.map(c=>PYMAP[c]||c);
+ for(let i=0;i<chars.length-1;i++){ if(chars[i]==='一'){ const nx=syl[i+1];
+   syl[i]=/[àèìòù]/.test(nx)?'yí':'yì'; } }
+ return syl.join(' '); }
+function offerSentence(n){ if(n===2) return {zh:'我出两元，可以吗？', py:'Wǒ chū liǎng yuán, kěyǐ ma?'};
+ const hz=numHanzi(n); return {zh:'我出'+hz+'元，可以吗？', py:'Wǒ chū '+numPinyin(n)+' yuán, kěyǐ ma?'}; }
+
+// ===== Ô trả giá =====
+let entry='', sellerPrice=0, myOffer=0, log=[];
+try{ log=JSON.parse(localStorage.getItem('mshue-bargain-log')||'[]'); }catch(_){ log=[]; }
+const rateEl=document.getElementById('rateIn');
+try{ const r=localStorage.getItem('mshue-rate'); if(r) rateEl.value=r; }catch(_){}
+function rate(){ return parseFloat(rateEl.value)||3650; }
+function fmtVnd(cny){ return Math.round(cny*rate()).toLocaleString('vi-VN')+' đồng'; }
+function renderDisplay(){ const v=parseFloat(entry)||0;
+ document.getElementById('display').textContent='¥ '+(entry===''?'0':entry);
+ document.getElementById('displayVnd').textContent='≈ '+fmtVnd(v); }
+document.querySelectorAll('.keys button').forEach(b=>{ b.onclick=()=>{ const k=b.dataset.k;
+ if(k==='C') entry=''; else if(k==='B') entry=entry.slice(0,-1);
+ else if(entry.replace('.','').length<7) entry+=k;
+ renderDisplay(); }; });
+rateEl.oninput=()=>{ try{ localStorage.setItem('mshue-rate',rateEl.value); }catch(_){} renderDisplay(); renderLog(); };
+function renderLog(){ const ul=document.getElementById('logList');
+ ul.innerHTML=log.map(e=>'<li>'+(e.role==='seller'?'🛒 Người bán ra giá':'🙋 Chị trả giá')+': <b>¥ '+e.price+'</b> (≈ '+fmtVnd(e.price)+')</li>').join('')||'<li style="color:#8a7a63">Chưa có lần ra giá nào.</li>'; }
+function pushLog(role,price){ log.push({role:role,price:price}); try{ localStorage.setItem('mshue-bargain-log',JSON.stringify(log)); }catch(_){} renderLog(); }
+document.getElementById('clearLog').onclick=()=>{ log=[]; try{ localStorage.removeItem('mshue-bargain-log'); }catch(_){} renderLog(); };
+document.getElementById('inviteBtn').onclick=()=>showBig('请在这里输入价格，谢谢！','Qǐng zài zhèlǐ shūrù jiàgé, xièxie!');
+function roundNice(v){ return v>=100? Math.round(v/5)*5 : Math.round(v); }
+function setOffer(n){ myOffer=n; const s=offerSentence(n);
+ document.getElementById('offerZh').textContent=s.zh; document.getElementById('offerPy').textContent=s.py;
+ document.getElementById('offerVnd').textContent='= ¥ '+n+' ≈ '+fmtVnd(n);
+ document.getElementById('offerBox').style.display='block';
+ document.getElementById('offerBox').scrollIntoView({behavior:'smooth',block:'center'}); }
+document.getElementById('btnSeller').onclick=()=>{ const v=parseFloat(entry); if(!v){ alert('Chưa có số nào — đưa người bán bấm giá trước đã.'); return; }
+ sellerPrice=v; pushLog('seller',v); entry=''; renderDisplay();
+ const box=document.getElementById('discounts'); box.style.display='block';
+ box.innerHTML='<b>Gợi ý mức trả từ giá người bán ¥ '+sellerPrice+' (≈ '+fmtVnd(sellerPrice)+'):</b><br>'+
+  [20,30,40,50].map(p=>{ const o=roundNice(sellerPrice*(100-p)/100); return '<button data-offer="'+o+'">Giảm '+p+'% → ¥ '+o+' (≈ '+fmtVnd(o)+')</button>'; }).join('');
+ box.querySelectorAll('button').forEach(b=>{ b.onclick=()=>{ setOffer(+b.dataset.offer); }; }); };
+document.getElementById('btnMine').onclick=()=>{ const v=parseFloat(entry); if(!v){ alert('Hãy bấm số giá chị muốn trả trước.'); return; }
+ pushLog('mine',v); entry=''; renderDisplay(); setOffer(Math.round(v)); };
+document.getElementById('offerSpeak').onclick=()=>{ if(myOffer) speak(offerSentence(myOffer).zh); };
+document.getElementById('offerShow').onclick=()=>{ if(myOffer){ const s=offerSentence(myOffer); showBig(s.zh,s.py); } };
+document.getElementById('dealBtn').onclick=()=>showBig('好，我买了！','Hǎo, wǒ mǎi le!');
+document.getElementById('stillExpBtn').onclick=()=>showBig('还是太贵了。','Hái shì tài guì le.');
+document.getElementById('vndIn').oninput=e=>{ const v=parseFloat(e.target.value)||0;
+ document.getElementById('vndToCny').textContent='¥ '+(v? Math.round(v/rate()) : 0); };
+renderDisplay(); renderLog();
+</script></body></html>
