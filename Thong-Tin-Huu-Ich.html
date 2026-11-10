@@ -25,6 +25,21 @@ button.ghost{background:#fff;color:#17518f}
 #emgPrint{display:none}
 @media print{ .noprint{display:none!important} body{background:#fff} #emgPrint{display:block;border:3px solid #b02a30;border-radius:12px;padding:16px} }
 .small{font-size:15.5px;color:#5b6570}
+.bankbox{background:#eef7ee;border:2px solid #7fb069;border-radius:14px;padding:16px 18px;margin:16px 0}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:14px 0}
+.step{text-align:center}
+.phone{width:150px;height:270px;margin:0 auto;border:3px solid #23272b;border-radius:24px;background:#fff;box-shadow:0 3px 8px #0002;padding:12px 8px;overflow:hidden}
+.phone .app{font-weight:800;color:#00703c;font-size:15px;border-bottom:1.5px solid #e3e8ee;padding-bottom:6px}
+.phone .qrbtn{margin:26px auto 8px;width:74px;height:74px;border:3px dashed #00703c;border-radius:14px;font-size:34px;line-height:68px}
+.phone .scanframe{margin:22px auto 8px;width:96px;height:96px;border:4px solid #17518f;border-radius:10px;font-size:44px;line-height:88px;background:#eef3f8}
+.phone .amt{font-size:23px;font-weight:800;margin-top:26px}
+.phone .vnd{color:#b3541e;font-weight:700}
+.phone .okic{font-size:52px;color:#4c9a3f;margin-top:22px}
+.phone .bar{background:#00703c;color:#fff;border-radius:8px;padding:6px 4px;font-size:14px;margin-top:12px}
+.step p{margin:8px 4px 0;font-size:16.5px}
+.step b.n{display:inline-block;background:#c0272d;color:#fff;width:26px;height:26px;border-radius:50%;line-height:26px;margin-right:4px}
+figure{margin:14px 0} figure img{width:100%;border-radius:12px;display:block}
+figcaption{font-size:15px;color:#5b6570;margin-top:6px}
 a{color:#17518f}
 </style></head><body>
 <header><h1>🧳 Thông tin hữu ích khi du lịch Trung Quốc</h1>
@@ -65,6 +80,29 @@ a{color:#17518f}
 <li>Vẫn nên mang theo <b>một ít tiền mặt</b> (khoảng 500–1.000 tệ, có cả tờ nhỏ 10–20 tệ) phòng khi điện thoại hết pin/mất sóng. Đổi tiền tại ngân hàng hoặc quầy đổi tiền uy tín ở Việt Nam trước; sân bay chỉ đổi ít khi cần gấp vì tỉ giá kém.</li>
 <li>Công cụ quy đổi nhanh ở dưới đây — tỉ giá chỉ là tham khảo, sửa được theo tỉ giá chị đổi thực tế.</li>
 </ul>
+<div class="bankbox">
+<h3 style="margin-top:0">💳 MỚI — Trả tiền ngay bằng ứng dụng ngân hàng Việt Nam, không cần cài Alipay</h3>
+<p>Tin vui cho chuyến đi của chị: từ năm 2026, người Việt đã có thể <b>mở chính ứng dụng ngân hàng quen thuộc ở nhà để quét mã QR của cửa hàng tại Trung Quốc</b> và trả tiền — tiền trừ thẳng từ <b>tài khoản VND</b>, không phải đổi nhân dân tệ, không phải mở tài khoản Alipay nội địa (vốn rất khó với người nước ngoài).</p>
+<p><b>Cách 1 — VCB Digibank của Vietcombank (cách đầy đủ nhất hiện nay):</b> qua mạng lưới <b>Alipay+</b>, từ tháng 4/2026 khách hàng Vietcombank quét được mã QR tại <b>hơn 80 triệu điểm chấp nhận ở Trung Quốc</b> (quầy có logo Alipay / Alipay+). Tỉ giá hiển thị rõ trên màn hình <b>trước khi</b> bấm xác nhận, xác thực bằng vân tay/khuôn mặt hoặc SmartOTP như ở nhà, lịch sử giao dịch lưu ngay trong app, và hiện Vietcombank đang <b>miễn phí</b> dịch vụ này (chính sách phí theo từng thời kỳ — xem trong app trước chuyến đi). Điều kiện: cập nhật VCB Digibank bản mới nhất, điện thoại có mạng, <b>bật định vị và cho phép app truy cập vị trí</b>, tài khoản đủ số dư.</p>
+<div class="steps">
+<div class="step"><div class="phone"><div class="app">VCB Digibank</div><div class="qrbtn">▦</div><div>Quét mã QR</div><div class="bar">Bấm nút quét mã</div></div><p><b class="n">1</b><b>Mở VCB Digibank</b>, chọn nút quét mã QR như khi trả tiền ở Việt Nam.</p></div>
+<div class="step"><div class="phone"><div class="app">Quét mã tại quầy</div><div class="scanframe">▦</div><div>Logo Alipay / Alipay+</div><div class="bar">Đưa camera vào mã QR</div></div><p><b class="n">2</b><b>Quét mã QR của cửa hàng</b> tại quầy — hoặc mở mã QR của mình để cửa hàng quét, tùy điểm bán.</p></div>
+<div class="step"><div class="phone"><div class="app">Kiểm tra số tiền</div><div class="amt">¥ 50</div><div class="vnd">≈ 182.500 ₫</div><div style="font-size:14px;color:#5b6570">Tỉ giá hiện rõ<br>trước khi xác nhận</div></div><p><b class="n">3</b><b>Xem số tiền và tỉ giá quy đổi ra VND</b> hiện trên màn hình, đối chiếu đúng tên cửa hàng rồi mới xác nhận.</p></div>
+<div class="step"><div class="phone"><div class="app">Hoàn tất</div><div class="okic">✓</div><div><b>Thanh toán thành công</b></div><div style="font-size:14px;color:#5b6570">Xác thực vân tay<br>hoặc SmartOTP</div><div class="bar">Lịch sử lưu trong app</div></div><p><b class="n">4</b><b>Xác thực giao dịch</b> bằng sinh trắc học hoặc SmartOTP — xong tức thì, tiền trừ từ tài khoản VND.</p></div>
+</div>
+<p class="small">Hình điện thoại ở trên là hình minh họa 4 bước thao tác (không phải ảnh chụp màn hình thật của ngân hàng). Nguồn bước thao tác: hướng dẫn dịch vụ QR xuyên biên giới của Vietcombank công bố 4–5/2026.</p>
+<figure>
+<img src="anh-thanh-toan-vcb-alipay.jpg" alt="Khách hàng quét mã QR Alipay+ tại quầy để thanh toán bằng ứng dụng ngân hàng Việt Nam" loading="lazy" onerror="this.onerror=null;this.src='https://images2.thanhnien.vn/528068263637045248/2026/10/12/anh-thanh-toan-outbound-opt-1-17917894700612117466896.jpg'">
+<figcaption>Ảnh thật: thanh toán bằng cách quét mã QR Alipay+ đặt tại quầy cửa hàng ở nước ngoài — chị chỉ cần mở app ngân hàng Việt Nam và quét như ở nhà. Ảnh: Vietcombank, đăng trên <a href="https://thanhnien.vn/vietcombank-tu-chiec-the-dau-tien-den-qr-khong-bien-gioi-tra-tien-moi-noi-nhu-o-nha-185261012142221196.htm" target="_blank" rel="noopener">Báo Thanh Niên (10/2026)</a>.</figcaption>
+</figure>
+<p><b>Cách 2 — Ví ZaloPay (ví điện tử Việt Nam):</b> từ tháng 9/2025, ZaloPay quét được QR tại Trung Quốc qua Alipay+: mở ZaloPay → <b>Quét QR</b> → chọn khu vực <b>“Trung Quốc”</b> → quét mã tại quầy → kiểm tra số tiền quy đổi + phí → xác nhận; ở siêu thị/cửa hàng lớn có thể mở <b>“Mã thanh toán” quốc tế</b> để thu ngân quét. Chuẩn bị trước: cập nhật app, xác thực tài khoản (CCCD + khuôn mặt), liên kết ngân hàng/thẻ quốc tế. Chỉ dùng được tại điểm bán có hỗ trợ Alipay+ / WeChat Pay International và mã QR của <b>doanh nghiệp</b> — mã QR cá nhân của người bán nhỏ có thể không quét được.</p>
+<p><b>Nói cho đúng để khỏi mừng hụt:</b> hiện <b>VCB Digibank là ứng dụng ngân hàng Việt Nam dùng được đầy đủ nhất tại Trung Quốc</b> nhờ đi qua Alipay+. Kết nối QR quốc gia <b>VietQRGlobal của NAPAS</b> giữa Việt Nam – Trung Quốc đã mở từ 4/2026 cho chiều khách Trung Quốc trả tiền tại Việt Nam; chiều người Việt dùng app của các ngân hàng khác (như Sacombank…) quét tại Trung Quốc đang được hoàn tất, dự kiến xong cuối năm 2026. Vì vậy: <b>trước chuyến đi, hãy mở app ngân hàng của chị tìm mục “QR xuyên biên giới / thanh toán quốc tế” và thử sẵn</b> — app nào có và chọn được Trung Quốc thì dùng app đó, chưa có thì dùng Cách 1, Cách 2 ở trên.</p>
+<ul>
+<li>⚠️ Cả hai cách đều cần <b>điện thoại có mạng ngay lúc trả tiền</b> (eSIM/roaming như mục 4) — hết mạng là không quét được, nên vẫn giữ Alipay liên kết thẻ + một ít tiền mặt làm phương án dự phòng.</li>
+<li>⚠️ Không đọc mã OTP cho nhân viên cửa hàng, không đưa điện thoại đã mở khóa cho người lạ tự thao tác; sau khi trả, xem biên lai/thông báo thành công trong app trước khi rời quầy.</li>
+</ul>
+</div>
+
 <p><b>Quy đổi nhanh:</b></p>
 <div class="grid2">
 <div><label>Số tiền (tệ ¥)<input type="number" id="cnyIn" value="100" min="0"></label></div>
@@ -87,6 +125,7 @@ a{color:#17518f}
 <table>
 <tr><th>Ứng dụng</th><th>Tên tiếng Trung để tìm</th><th>Dùng để làm gì</th></tr>
 <tr><td><b>Alipay</b></td><td class="zh">支付宝</td><td>Thanh toán QR, đi tàu điện (mở mã đi lại của thành phố), gọi xe, đặt vé — ứng dụng quan trọng số 1 cho khách nước ngoài.</td></tr>
+<tr><td><b>VCB Digibank / ZaloPay</b></td><td>— (app Việt Nam)</td><td>Quét mã QR Alipay+ tại Trung Quốc, trả thẳng bằng VND từ tài khoản ở nhà — xem hướng dẫn có hình ở mục 3.</td></tr>
 <tr><td><b>WeChat</b></td><td class="zh">微信</td><td>Nhắn tin/gọi với hướng dẫn viên, khách sạn, bạn bè tại Trung Quốc; thanh toán WeChat Pay; rất nhiều dịch vụ chỉ có trong WeChat.</td></tr>
 <tr><td><b>Cao Đức / Baidu Maps</b></td><td class="zh">高德地图 / 百度地图</td><td>Bản đồ &amp; chỉ đường tại Trung Quốc (Google Maps ở Trung Quốc rất thiếu chính xác). Apple Maps trên iPhone dùng được tương đối tốt.</td></tr>
 <tr><td><b>DiDi</b></td><td class="zh">滴滴出行</td><td>Gọi xe giống Grab — nhập điểm đến bằng tiếng Trung/tiếng Anh, khỏi phải nói với tài xế.</td></tr>
@@ -171,6 +210,7 @@ a{color:#17518f}
 <label class="chk"><input type="checkbox"> Vé máy bay/tàu + giấy đặt phòng khách sạn (bản in giấy 1 bộ + lưu trong điện thoại)</label>
 <label class="chk"><input type="checkbox"> Bảo hiểm du lịch có chi trả y tế nước ngoài</label>
 <label class="chk"><input type="checkbox"> Cài và đăng ký xong Alipay (+ liên kết thẻ, xác thực hộ chiếu); cài WeChat</label>
+<label class="chk"><input type="checkbox"> Mở sẵn app ngân hàng (VCB Digibank) / ZaloPay, tìm thấy mục quét QR xuyên biên giới chọn được Trung Quốc, tài khoản đủ số dư — phương án trả tiền không cần Alipay</label>
 <label class="chk"><input type="checkbox"> eSIM/roaming quốc tế đã mua và biết cách bật; hoặc đã có kế hoạch SIM + ứng dụng thay thế</label>
 <label class="chk"><input type="checkbox"> Tải sẵn gói dịch tiếng Trung ngoại tuyến + bản đồ ngoại tuyến; cài Pleco</label>
 <label class="chk"><input type="checkbox"> Đổi sẵn một ít tiền mặt nhân dân tệ (có tờ nhỏ 10–20 tệ)</label>
