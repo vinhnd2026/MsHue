@@ -3,20 +3,18 @@
 <title>Bộ tài liệu du lịch Trung Quốc cho chị Huệ — tất cả trong 1 file</title>
 <style>
 *{box-sizing:border-box} body{margin:0;font-family:-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:#fdf8f2;color:#26221e;font-size:18px;line-height:1.55}
-#topbar{position:sticky;top:0;z-index:40;background:#8f1d22;color:#fff;padding:8px 12px;box-shadow:0 2px 6px #0003}
+#topbar{position:fixed;top:10px;left:10px;z-index:50}
 .tb-row{display:flex;align-items:center;gap:12px}
-#menuBtn{background:#fff;color:#8f1d22;border:none;font-weight:800;font-size:25px;line-height:1;padding:9px 18px;border-radius:10px;cursor:pointer}
+#menuBtn{background:#fff;color:#8f1d22;border:2.5px solid #8f1d22;font-weight:800;font-size:25px;line-height:1;padding:9px 18px;border-radius:12px;cursor:pointer;box-shadow:0 3px 10px #0004}
 .voicebox{border-top:2px solid #eee;margin-top:10px;padding-top:10px;color:#26221e;font-size:16px}
 .voicebox select{font-size:16px;padding:7px 9px;border-radius:8px;border:2px solid #d8c3a5}
 #curCat{font-weight:700;font-size:18px}
-#panel{display:none;background:#fff;border-radius:14px;margin-top:10px;padding:10px;box-shadow:0 4px 14px #0003}
+#panel{display:none;position:absolute;top:58px;left:0;width:min(92vw,440px);max-height:76vh;overflow:auto;background:#fff;border-radius:14px;padding:10px;box-shadow:0 8px 28px #0006}
 #panel.open{display:block}
 #panel button{display:flex;width:100%;text-align:left;align-items:center;gap:10px;background:#fdf3e3;border:2px solid #ecd9ae;color:#26221e;font-size:18.5px;font-weight:600;padding:13px 14px;border-radius:11px;margin:5px 0;cursor:pointer}
 #panel button.on{background:#c0272d;color:#fff;border-color:#c0272d}
 .tb-row2{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px;font-size:15.5px}
 .tb-row2 select{font-size:15px;padding:6px 8px;border-radius:8px;border:none}
-header{background:linear-gradient(135deg,#8f1d22,#c0272d);color:#fff;padding:20px 16px 16px;text-align:center}
-header h1{margin:0 0 6px;font-size:28px} header p{margin:4px auto;max-width:800px;opacity:.95}
 .wrap{max-width:1020px;margin:0 auto;padding:14px}
 .tab{display:none}.tab.active{display:block}
 h2{color:#8f1d22;margin:26px 0 10px;font-size:23px}.cnt{color:#8a7a63;font-size:16px}
@@ -121,9 +119,8 @@ input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;bord
 #tab-thong-tin figure{margin:14px 0}#tab-thong-tin figure img{width:100%;border-radius:12px;display:block}
 #tab-thong-tin figcaption{font-size:15px;color:#5b6570;margin-top:6px}
 #emgPrint{display:none}
-@media print{#topbar,header,.tab{display:none!important}.tab.active{display:block!important}#tab-thong-tin .noprint{display:none!important}}
-@media(max-width:640px){ body{font-size:17px} .wrap{padding:10px} header{padding:12px 10px} header h1{font-size:21px}
- h2{font-size:20px;margin:20px 0 8px} h3{font-size:18px} .zh{font-size:22px} .grid{grid-template-columns:1fr}
+@media print{#topbar,.tab{display:none!important}.tab.active{display:block!important}#tab-thong-tin .noprint{display:none!important}}
+@media(max-width:640px){ body{font-size:17px} .wrap{padding:10px} h2{font-size:20px;margin:20px 0 8px} h3{font-size:18px} .zh{font-size:22px} .grid{grid-template-columns:1fr}
  #display{font-size:40px;min-height:66px} .keys button{font-size:24px;padding:12px 0} .pad{padding:12px}
  #menuBtn{font-size:23px;padding:8px 15px} #voiceNote{display:none}
  #panel button{padding:11px 12px;font-size:17px} .bigprice{font-size:36px} #offerZh{font-size:25px}
@@ -143,7 +140,6 @@ input[type=number]{padding:9px 11px;font-size:17px;border:2px solid #d8c3a5;bord
 <div id="prog" class="progress" style="margin-top:6px"></div></div>
 </div>
 </div>
-<header><h1>🇨🇳 Bộ tài liệu du lịch Trung Quốc của chị Huệ</h1></header>
 <main class="wrap">
 <div class="tab active" id="tab-mua-hang">
 <div class="pad" id="pad">
