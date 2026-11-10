@@ -162,7 +162,7 @@ a.navbtn{display:inline-block;background:#fff;border:2px solid #c0272d;color:#b3
 <input type="search" id="searchIn" placeholder="🔍 Gõ từ cần tìm…" style="width:100%;padding:13px 14px;font-size:18px;border:2.5px solid #c0272d;border-radius:12px">
 <div id="searchCount" style="font-weight:700;margin:10px 0 4px"></div>
 <div id="searchResults" class="grid"></div></div>
-<div class="tab" id="tab-dich"><p class="note" style="margin-top:0">Dịch ngay tại đây, kết quả hiện luôn bên dưới (có nút nghe và hiện chữ to). Dịch vụ dịch chính thức của Baidu/Youdao cần khóa đăng ký và chặn trang web bên ngoài gọi trực tiếp, nên phần dịch ngay dùng một API dịch mở; nếu đang ở Trung Quốc mà API không tải được, dùng hai nút mở <b>Baidu Dịch / Youdao</b> ở dưới — đó là dịch vụ của Trung Quốc, mở bình thường tại Trung Quốc (Google Dịch thì bị chặn).</p>
+<div class="tab" id="tab-dich"><p class="note" style="margin-top:0">Dịch ngay tại đây, kết quả hiện luôn bên dưới (có nút nghe và hiện chữ to). Dịch vụ dịch chính thức của Baidu/Youdao cần khóa đăng ký và chặn trang web bên ngoài gọi trực tiếp, nên phần dịch ngay thử <b>Google Dịch</b> trước (chất lượng tốt nhất), nếu không được sẽ tự chuyển sang API dịch mở MyMemory; nếu đang ở Trung Quốc (Google bị chặn) mà cả hai đều không tải được, dùng các nút mở <b>Baidu Dịch / Youdao</b> ở dưới — đó là dịch vụ của Trung Quốc, mở bình thường tại Trung Quốc (Google Dịch thì bị chặn).</p>
 <textarea id="trText" rows="3" placeholder="Gõ hoặc dán câu cần dịch vào đây…" style="width:100%;padding:12px 14px;font-size:18px;border:2px solid #d8c3a5;border-radius:12px"></textarea>
 <div class="padbtns" style="justify-content:flex-start">
 <button id="trDirBtn">Chiều dịch: 🇻🇳 Việt → 🇨🇳 Trung (bấm để đổi chiều)</button>
@@ -177,6 +177,7 @@ a.navbtn{display:inline-block;background:#fff;border:2px solid #c0272d;color:#b3
 <div class="padbtns" style="justify-content:flex-start">
 <button id="trBaidu">Mở Baidu Dịch 百度翻译</button>
 <button id="trYoudao">Mở Youdao 有道</button>
+<button id="trGoogleOpen">Mở Google Dịch</button>
 </div>
 <p class="small">Mẹo: cài sẵn app <b>Baidu Translate / Youdao</b> trên điện thoại để dịch bằng camera (chụp thực đơn, biển hiệu) và dịch hội thoại trực tiếp khi ở Trung Quốc.</p></div>
 <div class="tab active" id="tab-mua-hang">
@@ -1698,24 +1699,31 @@ let trDir='vi-zh', trLastOut='', trBusy=false;
 const TR_PAIR={'vi-zh':'vi|zh-CN','zh-vi':'zh-CN|vi'};
 document.getElementById('trDirBtn').onclick=()=>{ trDir=(trDir==='vi-zh')?'zh-vi':'vi-zh';
  document.getElementById('trDirBtn').textContent=(trDir==='vi-zh')?'Chiều dịch: 🇻🇳 Việt → 🇨🇳 Trung (bấm để đổi chiều)':'Chiều dịch: 🇨🇳 Trung → 🇻🇳 Việt (bấm để đổi chiều)'; };
+async function trViaGoogle(txt){ const sl=trDir==='vi-zh'?'vi':'zh-CN', tl=trDir==='vi-zh'?'zh-CN':'vi';
+ const r=await fetch('https://translate.googleapis.com/translate_a/single?client=gtx&sl='+sl+'&tl='+tl+'&dt=t&q='+encodeURIComponent(txt));
+ const j=await r.json(); const out=((j&&j[0])||[]).map(seg=>seg[0]).join(''); if(!out) throw new Error('gg-empty'); return out; }
+async function trViaMyMemory(txt){ const r=await fetch('https://api.mymemory.translated.net/get?q='+encodeURIComponent(txt)+'&langpair='+encodeURIComponent(TR_PAIR[trDir]));
+ const j=await r.json(); const main=j&&j.responseData&&j.responseData.translatedText; if(!main) throw new Error('mm-empty');
+ const alts=[]; (j.matches||[]).forEach(m=>{ if(m.translation&&m.translation!==main&&!alts.includes(m.translation)) alts.push(m.translation); });
+ return {main:main, alts:alts}; }
 async function doTranslate(){ const txt=document.getElementById('trText').value.trim();
  const st=document.getElementById('trStatus'), box=document.getElementById('trResult'), out=document.getElementById('trOut'), alt=document.getElementById('trAlt');
  if(!txt){ st.textContent='Hãy gõ câu cần dịch vào ô trước đã.'; return; }
  if(txt.length>450){ st.textContent='Câu dài quá (tối đa ~450 ký tự mỗi lần) — hãy chia nhỏ câu rồi dịch từng phần.'; return; }
  if(trBusy) return; trBusy=true; st.textContent='⏳ Đang dịch…'; box.style.display='none';
- try{ const r=await fetch('https://api.mymemory.translated.net/get?q='+encodeURIComponent(txt)+'&langpair='+encodeURIComponent(TR_PAIR[trDir]));
-  const j=await r.json(); const main=j&&j.responseData&&j.responseData.translatedText;
-  if(!main) throw new Error('empty');
-  trLastOut=main; out.textContent=main; box.style.display='';
-  const alts=[]; (j.matches||[]).forEach(m=>{ if(m.translation&&m.translation!==main&&!alts.includes(m.translation)) alts.push(m.translation); });
-  alt.textContent=alts.length?('Cách dịch khác: '+alts.slice(0,3).join('  ·  ')):'';
-  st.textContent='✅ Đã dịch xong:';
- }catch(e){ st.textContent='⚠️ Không dịch ngay được (mạng yếu hoặc đang ở nơi chặn API này). Hãy dùng nút mở Baidu Dịch / Youdao ở dưới.'; }
+ try{ const g=await trViaGoogle(txt); trLastOut=g; out.textContent=g; box.style.display=''; alt.textContent=''; st.textContent='✅ Đã dịch xong (bằng Google Dịch):'; }
+ catch(e1){ try{ const m=await trViaMyMemory(txt); trLastOut=m.main; out.textContent=m.main; box.style.display='';
+   alt.textContent=m.alts.length?('Cách dịch khác: '+m.alts.slice(0,3).join('  ·  ')):'';
+   st.textContent='✅ Đã dịch xong (bằng MyMemory — Google không tới được, có thể do đang ở Trung Quốc):'; }
+  catch(e2){ st.textContent='⚠️ Không dịch ngay được (mạng yếu hoặc đang ở nơi chặn cả hai API). Hãy dùng nút mở Baidu Dịch / Youdao ở dưới.'; } }
  trBusy=false; }
 document.getElementById('trGo').onclick=doTranslate;
 document.getElementById('trSpeak').onclick=()=>{ if(!trLastOut) return;
  if(trDir==='vi-zh') speak(trLastOut); else speakAs(trLastOut,'vi'); };
 document.getElementById('trShow').onclick=()=>{ if(trLastOut) showBig(trLastOut,''); };
+document.getElementById('trGoogleOpen').onclick=()=>{ const txt=document.getElementById('trText').value.trim();
+ if(!txt){ document.getElementById('trStatus').textContent='Hãy gõ câu cần dịch vào ô trước đã.'; return; }
+ window.open('https://translate.google.com/?sl='+(trDir==='vi-zh'?'vi':'zh-CN')+'&tl='+(trDir==='vi-zh'?'zh-CN':'vi')+'&text='+encodeURIComponent(txt)+'&op=translate','_blank'); };
 document.getElementById('trBaidu').onclick=()=>{ const txt=document.getElementById('trText').value.trim();
  if(!txt){ document.getElementById('trStatus').textContent='Hãy gõ câu cần dịch vào ô trước đã.'; return; }
  window.open('https://fanyi.baidu.com/#'+(trDir==='vi-zh'?'vie/zh/':'zh/vie/')+encodeURIComponent(txt),'_blank'); };
