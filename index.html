@@ -218,7 +218,7 @@ a.navbtn{display:inline-block;background:#fff;border:2px solid #c0272d;color:#b3
 <button class="green" id="dealBtn">🤝 Chốt: “Được, tôi mua!”</button>
 <button id="stillExpBtn">😅 “Vẫn đắt quá”</button>
 </div></div>
-<p style="text-align:center" class="small">Tỉ giá: 1 ¥ = <input type="number" id="rateShop" value="3650" style="width:100px"> đồng (tự sửa theo tỉ giá chị đổi thực tế — trang tự nhớ)</p>
+<p style="text-align:center" class="small">Tỉ giá: 1 ¥ = <input type="number" id="rateShop" value="3840" style="width:100px"> đồng (tự sửa theo tỉ giá chị đổi thực tế — trang tự nhớ)</p>
 </div>
 
 <div id="log"><b>📒 Diễn biến thương lượng</b> <span class="small">(lưu lại để chị theo dõi mình đang ở giá nào, trang tự nhớ)</span>
@@ -1429,7 +1429,7 @@ a.navbtn{display:inline-block;background:#fff;border:2px solid #c0272d;color:#b3
 <div class="steps">
 <div class="step"><div class="phone"><div class="app">VCB Digibank</div><div class="qrbtn">▦</div><div>Quét mã QR</div><div class="bar">Bấm nút quét mã</div></div><p><b class="n">1</b><b>Mở VCB Digibank</b>, chọn nút quét mã QR như khi trả tiền ở Việt Nam.</p></div>
 <div class="step"><div class="phone"><div class="app">Quét mã tại quầy</div><div class="scanframe">▦</div><div>Logo Alipay / Alipay+</div><div class="bar">Đưa camera vào mã QR</div></div><p><b class="n">2</b><b>Quét mã QR của cửa hàng</b> tại quầy — hoặc mở mã QR của mình để cửa hàng quét, tùy điểm bán.</p></div>
-<div class="step"><div class="phone"><div class="app">Kiểm tra số tiền</div><div class="amt">¥ 50</div><div class="vnd">≈ 182 500 ₫</div><div style="font-size:14px;color:#5b6570">Tỉ giá hiện rõ<br>trước khi xác nhận</div></div><p><b class="n">3</b><b>Xem số tiền và tỉ giá quy đổi ra VND</b> hiện trên màn hình, đối chiếu đúng tên cửa hàng rồi mới xác nhận.</p></div>
+<div class="step"><div class="phone"><div class="app">Kiểm tra số tiền</div><div class="amt">¥ 50</div><div class="vnd">≈ 192 000 ₫</div><div style="font-size:14px;color:#5b6570">Tỉ giá hiện rõ<br>trước khi xác nhận</div></div><p><b class="n">3</b><b>Xem số tiền và tỉ giá quy đổi ra VND</b> hiện trên màn hình, đối chiếu đúng tên cửa hàng rồi mới xác nhận.</p></div>
 <div class="step"><div class="phone"><div class="app">Hoàn tất</div><div class="okic">✓</div><div><b>Thanh toán thành công</b></div><div style="font-size:14px;color:#5b6570">Xác thực vân tay<br>hoặc SmartOTP</div><div class="bar">Lịch sử lưu trong app</div></div><p><b class="n">4</b><b>Xác thực giao dịch</b> bằng sinh trắc học hoặc SmartOTP — xong tức thì, tiền trừ từ tài khoản VND.</p></div>
 </div>
 <p class="small">Hình điện thoại ở trên là hình minh họa 4 bước thao tác (không phải ảnh chụp màn hình thật của ngân hàng). Nguồn bước thao tác: hướng dẫn dịch vụ QR xuyên biên giới của Vietcombank công bố 4–5/2026.</p>
@@ -1448,10 +1448,10 @@ a.navbtn{display:inline-block;background:#fff;border:2px solid #c0272d;color:#b3
 <p><b>Quy đổi nhanh:</b></p>
 <div class="grid2">
 <div><label>Số tiền (tệ ¥)<input type="number" id="cnyIn" value="100" min="0"></label></div>
-<div><label>Tỉ giá tham khảo (1 ¥ = … đồng)<input type="number" id="rateIn" value="3650" min="0"></label></div>
+<div><label>Tỉ giá tham khảo (1 ¥ = … đồng)<input type="number" id="rateIn" value="3840" min="0"></label></div>
 </div>
-<p style="font-size:21px">≈ <b id="vndOut">365 000 đồng</b></p>
-<p class="small">Mẹo nhớ nhanh khi mua sắm: nhân giá tệ với khoảng 3 600–3 700. Ví dụ món đồ 50 tệ ≈ 180 000 đồng; 200 tệ ≈ 730 000 đồng.</p>
+<p style="font-size:21px">≈ <b id="vndOut">384 000 đồng</b></p>
+<p class="small">Mẹo nhớ nhanh khi mua sắm: nhân giá tệ với khoảng 3 800–3 900. Ví dụ món đồ 50 tệ ≈ 192 000 đồng; 200 tệ ≈ 768 000 đồng.</p>
 </div>
 
 <h2>📱 4. Điện thoại, internet &amp; ứng dụng bắt buộc phải chuẩn bị ở nhà</h2>
@@ -1771,8 +1771,8 @@ function offerSentence(n,unit){ const base=(n===2)?{zh:'我出两元',py:'Wǒ ch
 let entry='', sellerPrice=0, myOffer=0, unit='', unitLabel='', bargLog=[];
 try{ bargLog=JSON.parse(localStorage.getItem('mshue-bargain-log')||'[]'); }catch(_){ bargLog=[]; }
 const rateEl=document.getElementById('rateShop');
-try{ const r=localStorage.getItem('mshue-rate'); if(r) rateEl.value=r; }catch(_){}
-function rate(){ return parseFloat(rateEl.value)||3650; }
+try{ const r=localStorage.getItem('mshue-rate'); if(r==='3650'){ rateEl.value='3840'; localStorage.setItem('mshue-rate','3840'); } else if(r) rateEl.value=r; }catch(_){}
+function rate(){ return parseFloat(rateEl.value)||3840; }
 function fmtNum(x){ const p=String(x).split('.'); p[0]=p[0].replace(/\B(?=(\d{3})+(?!\d))/g,'\u202f'); return p.join(','); }
 function fmtVnd(cny){ return fmtNum(Math.round(cny*rate()))+' đồng'; }
 function unitNoteUpdate(v){ const un=document.getElementById('unitNote'); if(!v){ un.textContent=''; return; }
